@@ -1,0 +1,60 @@
+/*
+  ru_RU.strings
+  Rave
+
+  Created by Developer on 21.05.2021.
+  Copyright © 2021 Zeit. All rights reserved.
+*/
+"auth_login_title" = "Войдите с помощью Yandex ID";
+"auth_login_hint" = "Имя пользователя, Email или номер телефона";
+"auth_enter_password" = "Введите пароль для логина";
+"auth_empty_login_error" = "Пустое поле логина";
+"auth_empty_pass_error" = "Пустое поле пароля";
+
+"landing_title" = "Главное";
+"landing_personal_playlists_title" = "Собрано для тебя";
+
+"playlist_tracks_count" = "Количество треков";
+"playlist_favourite_title" = "Мне нравится";
+"playlist_updated" = "Обновлено";
+
+"track_option_like" = "Нравится";
+"track_option_download" = "Скачать";
+"track_option_play_next" = "Играть следующим";
+"track_option_add_to_queue" = "Добавить в очередь";
+"track_option_dislike" = "Не нравится";
+
+"radio_title" = "Радио";
+"radio_recommended_stations" = "Рекомендованные станции";
+
+"favourite_title" = "Избранное";
+
+"profile_title" = "Профиль";
+"profile_logout_hint" = "Вы уверены, что хотите выйти из учетной записи?";
+"profile_traffic_economy" = "Экономия трафика";
+"profile_traffic_economy_hint" = "При включенной опции каждый трек будет загружаться в минимально возможном качестве";
+
+"search_title" = "Поиск";
+
+"player_not_playing" = "Не проигрывается";
+"player_unknown_track_title" = "Неизвестная песня";
+"player_unknown_track_artists" = "Неизвестный исполнитель";
+
+"general_register" = "Зарегистрироваться";
+"general_password" = "Пароль";
+"general_error" = "Ошибка";
+"general_next" = "Далее";
+"general_today" = "Сегодня";
+"general_yesterday" = "Вчера";
+"general_download" = "Скачать";
+"general_tracks" = "Треки";
+"general_albums" = "Альбомы";
+"general_artists" = "Исполнители";
+"general_playlists" = "Плейлисты";
+"general_podcasts" = "Подкасты";
+"general_downloaded_tracks" = "Скачанные треки";
+"general_settings" = "Настройки";
+"general_about" = "О приложении";
+"general_version" = "Версия";
+"general_yes" = "Да";
+"general_no" = "Нет";

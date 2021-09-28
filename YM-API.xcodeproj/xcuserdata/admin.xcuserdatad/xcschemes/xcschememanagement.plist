@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Rave.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>YM-iOS.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>YM-mac.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>rave-cli.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>84C5BBD2265D16BD006E41AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84C5BBDB265D16BD006E41AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84C5BBF3265D1775006E41AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84C5BBFB265D1775006E41AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84F6AC5926A0120B0051FD92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

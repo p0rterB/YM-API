@@ -1,0 +1,60 @@
+/*
+  en_UK.strings
+ Rave
+
+ Created by Developer on 21.05.2021.
+ Copyright © 2021 Zeit. All rights reserved.
+*/
+"auth_login_title" = "Log in with Yandex ID";
+"auth_login_hint" = "Username, email or phone number";
+"auth_enter_password" = "Enter password for user";
+"auth_empty_login_error" = "Empty username field";
+"auth_empty_pass_error" = "Empty password field";
+
+"landing_title" = "Main";
+"landing_personal_playlists_title" = "Collected for you";
+
+"playlist_tracks_count" = "Tracks count";
+"playlist_favourite_title" = "Liked tracks";
+"playlist_updated" = "Updated";
+
+"track_option_like" = "Like";
+"track_option_download" = "Download";
+"track_option_play_next" = "Play next";
+"track_option_add_to_queue" = "Add to queue";
+"track_option_dislike" = "Dislike";
+
+"radio_title" = "Radio";
+"radio_recommended_stations" = "Recommended stations";
+
+"favourite_title" = "Favourite";
+
+"profile_title" = "Profile";
+"profile_logout_hint" = "Are you sure to logout?";
+"profile_traffic_economy" = "Traffic economy";
+"profile_traffic_economy_hint" = "If enabled, each track will be loaded in the lowest possible quality";
+
+"search_title" = "Search";
+
+"player_not_playing" = "Not playing";
+"player_unknown_track_title" = "Unknown song";
+"player_unknown_track_artists" = "Unknown singer";
+
+"general_register" = "Register";
+"general_password" = "Password";
+"general_error" = "Error";
+"general_next" = "Next";
+"general_today" = "Today";
+"general_yesterday" = "Yesterday";
+"general_download" = "Download";
+"general_tracks" = "Tracks";
+"general_albums" = "Albums";
+"general_artists" = "Artists";
+"general_playlists" = "Playlists";
+"general_podcasts" = "Podcasts";
+"general_downloaded_tracks" = "Downloaded tracks";
+"general_settings" = "Settings";
+"general_about" = "About";
+"general_version" = "Version";
+"general_yes" = "Yes";
+"general_no" = "No";
