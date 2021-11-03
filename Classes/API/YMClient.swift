@@ -8,6 +8,8 @@
 import Foundation
 
 var xYmClient = "YandexMusicAndroid/23020251"
+var xTokenClientId = "c0ebe342af7d48fbbbfcf2d2eedb8f9e"
+var xTokenClientSecret = "ad0a908f0aa341a182a37ecd75bc319e"
 var clientId = "23cabbbdc6cd418abb4b39c32c41195d"
 var clientSecret = "53bc75238f0c4d08a118e51fe9203300"
 
@@ -29,6 +31,12 @@ var accountSecret: String {
     }
 }
 
+var passportSecret: String {
+    get {
+        return YMClient.shared.xToken
+    }
+}
+
 ///Represents YM API functions wrapper for easier access
 public class YMClient {
     
@@ -42,6 +50,8 @@ public class YMClient {
     
     ///Authorization token
     var token: String
+    ///Passport Yandex access token
+    var xToken: String
     ///User ID
     var userID: Int?
     ///API responses language
@@ -57,14 +67,16 @@ public class YMClient {
     
     init() {
         token = ""
+        xToken = ""
         userID = nil
         apiLang = ApiLanguage.en
-        device = YMDevice(os: "", osVer: "", manufacturer: "", model: "", clid: "", deviceId: "", uuid: "")
+        device = YMDevice(os: "", osVer: "", manufacturer: "", name: "", platform: "", model: "", clid: "", deviceId: "", uuid: "")
     }
     
-    init(token: String, uid: Int?, apiLang: ApiLanguage, device: YMDevice)
+    init(token: String, xToken: String, uid: Int?, apiLang: ApiLanguage, device: YMDevice)
     {
         self.token = token
+        self.xToken = xToken
         self.userID = uid
         self.apiLang = apiLang
         self.device = device
@@ -78,8 +90,9 @@ public class YMClient {
     ///- Parameter appClientSecret: Yandex Music client application secret
     ///- Parameter uid: User ID
     ///- Parameter token: User authorization token
+    ///- Parameter xToken: Passport Yandex access token
     ///- Returns: YMClient instance
-    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = "YandexMusicAndroid/23020251", appClientId: String = "23cabbbdc6cd418abb4b39c32c41195d", appClientSecret: String = "53bc75238f0c4d08a118e51fe9203300", uid: Int, token: String) -> YMClient{
+    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = "YandexMusicAndroid/23020251", appClientId: String = "23cabbbdc6cd418abb4b39c32c41195d", appClientSecret: String = "53bc75238f0c4d08a118e51fe9203300", uid: Int, token: String, xToken: String) -> YMClient{
         if (ymClientId.compare("") != .orderedSame)
         {
             xYmClient = ymClientId
@@ -92,7 +105,7 @@ public class YMClient {
         {
             clientSecret = appClientSecret
         }
-        let client = YMClient(token: token, uid: uid, apiLang: lang, device: device)
+        let client = YMClient(token: token, xToken: xToken, uid: uid, apiLang: lang, device: device)
         shared = client
         #if DEBUG
         print("Client initialized and ready for work")
@@ -108,7 +121,7 @@ public class YMClient {
     ///- Parameter appClientSecret: Yandex Music client application secret
     ///- Returns: YMClient instance
     public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = "YandexMusicAndroid/23020251", appClientId: String = "23cabbbdc6cd418abb4b39c32c41195d", appClientSecret: String = "53bc75238f0c4d08a118e51fe9203300") -> YMClient {
-        return initialize(device: device, lang: lang, uid: -1, token: "")
+        return initialize(device: device, lang: lang, uid: -1, token: "", xToken: "")
     }
     
     ///Send raw request and trying to parse response
@@ -164,6 +177,7 @@ public class YMClient {
     ///- Parameter captchaKey: Captcha ID key from previous authorization response
     ///- Parameter captchaCallback: Captcha parsed object from previous authorization response
     ///- Parameter completion: Authorization status response handler
+    @available(*, deprecated, message: "Use new authorization system, if you want to retrieve user avatar")
     public func authByCredentials(login: String, pass: String, captchaAnswer: String?, captchaKey: String?, captchaCallback: CaptchaResponse?, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
         authFromCredentialsByApi(login: login, password: pass, lang: apiLang, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback) { result in
             do {
@@ -173,6 +187,31 @@ public class YMClient {
             } catch {}
             completion(result)
         }
+    }
+    ///Initialize authorization procedure for the defined login
+    ///- Parameter login: Account login
+    ///- Parameter appId: Application identifier
+    ///- Parameter appVersion: Application version
+    ///- Parameter completion: Authorization initialize response handler (contains Track ID field)
+    public func initializeAuthorization(login: String, appId: String = "ru.yandex.mobile.music", appVersion: String = version, completion: @escaping (_ result: Result<String, YMError>) -> Void) {
+        initializeAuthorizationByApi(login: login, lang: apiLang, appId: appId, uuid: device.uuid, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, deviceName: device.name, platform: device.platform, model: device.model, completion: completion)
+    }
+    ///Authorize with the defined pasword
+    ///- Parameter pass: Account password
+    ///- Parameter captchaAnswer: Captcha answer from previous authorization response
+    ///- Parameter captchaKey: Captcha ID key from previous authorization response
+    ///- Parameter captchaCallback: Captcha parsed object from previous authorization response
+    ///- Parameter completion: Authorization status response handler
+    public func authorizeWithPassword(trackId: String, pass: String, captchaAnswer: String?, captchaKey: String?, captchaCallback: CaptchaResponse?, completion: @escaping (_ result: Result<XPassportObj, YMError>) -> Void) {
+        authByPasswordByApi(trackId: trackId, password: pass, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback, completion: completion)
+    }
+    ///Generate Yandex Music token from authorization X Token
+    ///- Parameter xToken: X Token from previous step of authorization
+    ///- Parameter appId: Application identifier
+    ///- Parameter appVersion: Application version
+    ///- Parameter completion: Authorization status response handler
+    public func generateYMTokenFromXToken(xToken: String, appId: String = "ru.yandex.mobile.music", appVersion: String = version, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
+        generateYMTokenByApi(xToken: xToken, appId: appId, uuid: device.uuid, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, deviceName: device.name, platform: device.platform, model: device.model, completion: completion)
     }
     ///Get account info
     ///- Parameter completion: Parsed account info response handler
@@ -241,6 +280,12 @@ public class YMClient {
             return block.rawValue
         }), completion: completion)
     }
+    ///Get landing promotions
+    ///- Parameter feedPromotionId: Promotion ID in feed API response (Promotion block -> Block entity -> Promotion instance ID)
+    ///- Parameter completion: Retrieved landing blocks response handler
+    public func getPromotions(feedPromotionId: String, completion: @escaping (_ result: Result<Promotion, YMError>) -> Void) {
+        getPromotionsByApi(token: accountSecret, feedBlockID: feedPromotionId, completion: completion)
+    }
     ///Get music chart
     ///Note: chart_option - это постфикс к запросу из поля `menu` чарта. Например, на сайте можно выбрать глобальный (world) чарт или российский (russia).
     ///- Parameter option: Chart retrieve option keyword. Available options: 'world', 'russia'
@@ -306,6 +351,21 @@ public class YMClient {
         setQueueCurrentIndexByApi(token: accountSecret, queueId: queueId, newIndex: newIndex, device: device.deviceHeader, completion: completion)
     }
     
+    ///Get label related artists
+    ///- Parameter labelId: Label ID
+    ///- Parameter page: Page index
+    ///- Parameter completion: Label related artists response handler
+    public func getLabelArtists(labelId: String, page: Int, completion: @escaping (_ result: Result<MusicLabel, YMError>) -> Void) {
+        getLabelArtistsByApi(token: accountSecret, labelID: labelId, page: page, completion: completion)
+    }
+    ///Get label related albums
+    ///- Parameter labelId: Label ID
+    ///- Parameter page: Page index
+    ///- Parameter completion: Label related albums response handler
+    public func getLabelAlbums(labelId: String, page: Int, completion: @escaping (_ result: Result<MusicLabel, YMError>) -> Void) {
+        getLabelAlbumsByApi(token: accountSecret, labelID: labelId, page: page, completion: completion)
+    }
+    
     
     ///Search tracks, albums, artists by text phrase
     ///- Parameter text: Search phrase
@@ -322,6 +382,32 @@ public class YMClient {
     ///- Parameter completion: Search suggestions array response handler
     public func getSearchSugggestion(text: String, completion: @escaping (_ result: Result<Suggestion, YMError>) -> Void) {
         getSearchSuggestionsByApi(token: accountSecret, part: text, completion: completion)
+    }
+    ///Get search history items
+    ///- Parameter completion: Search history items array response handler
+    public func getSearchHistory(completion: @escaping (_ result: Result<[SearchHistoryItem], YMError>) -> Void) {
+        getSearchHistoryByApi(token: accountSecret, userId: String(accountUid), completion: completion)
+    }
+    ///Feedback search history item (NOT TESTED PROPERLY!!!)
+    ///- Parameter feedback: Search history object info
+    ///- Parameter completion: Feedback search history status response handler
+    public func feedbackSearchHistory(_ feedback: SearchFeedback, completion: @escaping (_ result: Result<Bool, YMError>) -> Void) {
+        feedbackSearchHistoryByApi(token: accountSecret, absBlockPosition: feedback.absoluteBlockPosition, absPosition: feedback.absolutePosition, blockPosition: feedback.blockPosition, blockType: feedback.blockType, clickType: feedback.clickType, clientNow: feedback.clientNow, entityId: feedback.entityId, page: feedback.page, position: feedback.position, query: feedback.query, searchRequestId: feedback.searchRequestId, timestamp: feedback.timestamp, completion: completion)
+    }
+    ///Clear search history for account
+    ///- Parameter completion: Clear search history status response handler
+    public func clearSearchHistory(completion: @escaping (_ result: Result<Bool, YMError>) -> Void) {
+        clearSearchHistoryByApi(token: accountSecret, userId: String(accountUid), completion: completion)
+    }
+    
+    
+    ///Get account recent lsiten history
+    ///- Parameter tracksCount: Count of tracks data for each context object
+    ///- Parameter contextTypes: Acceptable context types for get (artists, albums, playlists etc)
+    ///- Parameter contextCount: Maximum count of context object in response
+    ///- Parameter completion: Recent listen history object response handler
+    public func getRecentListenHistory(tracksCount: Int, contextTypes: [ListenHistoryContextType], contextCount: Int = 30, completion: @escaping (_ result: Result<ListenHistory, YMError>) -> Void) {
+        getRecentListenListByApi(token: accountSecret, userId: String(accountUid), tracksCount: tracksCount, contextTypes: contextTypes.map({ type in return type.rawValue}), contextCount: contextCount, completion: completion)
     }
     
     

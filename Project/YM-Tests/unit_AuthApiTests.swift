@@ -29,7 +29,7 @@ class unit_AuthApiTests: XCTestCase {
         client = nil
     }
 
-    func testAuthorization()
+    func testAuthorizationResponse()
     {
         let exp = self.expectation(description: "Request time-out expectation")
         client.authByCredentials(login: login, pass: pass, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result in
@@ -48,6 +48,101 @@ class unit_AuthApiTests: XCTestCase {
             exp.fulfill()
         }
         waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testInitAuthResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        client.initializeAuthorization(login: login) { result in
+            do {
+                let trackId = try result.get()
+                XCTAssertFalse(trackId.isEmpty, "Authorization track ID is empty")
+            } catch {
+                print(error)
+                XCTAssert(false, "Nil authorization track ID: " + error.localizedDescription)
+            }
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testAuthByPassResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        client.initializeAuthorization(login: login) { result in
+            do {
+                let trackId = try result.get()
+                XCTAssertFalse(trackId.isEmpty, "Authorization track ID is empty")
+                self.client.authorizeWithPassword(trackId: trackId, pass: self.pass, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
+                    do {
+                        let xRespObj = try result2.get()
+                        XCTAssertTrue(xRespObj.status.compare("ok") == .orderedSame, xRespObj.errors?.joined(separator: ",") ?? "Invalid password")
+                    } catch {
+                        print(error)
+                        XCTAssert(false, "Empty X Authenticate object: " + error.localizedDescription)
+                    }
+                    exp.fulfill()
+                }
+            } catch {
+                print(error)
+                XCTAssert(false, "Nil authorization track ID: " + error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 7) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testGenerateYMTokenResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        client.initializeAuthorization(login: login) { result in
+            do {
+                let trackId = try result.get()
+                XCTAssertFalse(trackId.isEmpty, "Authorization track ID is empty")
+                self.client.authorizeWithPassword(trackId: trackId, pass: self.pass, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
+                    do {
+                        let xRespObj = try result2.get()
+                        XCTAssertTrue(xRespObj.status.compare("ok") == .orderedSame, xRespObj.errors?.joined(separator: ",") ?? "Invalid password")
+                        XCTAssertTrue(xRespObj.x_token != nil, "X Token is nil")
+                        self.client.generateYMTokenFromXToken(xToken: xRespObj.x_token!) { result3 in
+                            do {
+                                let dict = try result3.get()
+                                let actualToken: String = dict[.access_token] ?? ""
+                                XCTAssertFalse(actualToken.isEmpty, "Generated YM token is empty")
+                            } catch YMError.invalidResponseStatusCode(let errCode, let description) {
+                                let msg: String = "No actual response value of auth: code " + String(errCode) + " - " + description
+                                XCTAssert(false, msg)
+                            } catch {
+                                print(error)
+                                XCTAssert(false, "Nil YM token: " + error.localizedDescription)
+                            }
+                            exp.fulfill()
+                        }
+                    } catch {
+                        print(error)
+                        XCTAssert(false, "Empty X Authenticate object: " + error.localizedDescription)
+                    }
+                }
+            } catch {
+                print(error)
+                XCTAssert(false, "Nil authorization track ID: " + error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10) { error in
             if let g_error = error
             {
                 print(g_error)

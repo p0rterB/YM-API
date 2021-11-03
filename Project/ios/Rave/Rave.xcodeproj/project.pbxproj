@@ -321,13 +321,13 @@
 		847CB3042702627400269A9C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				847CB3052702627400269A9C /* PlaylistIntroTVCell.swift */,
-				847CB3062702627400269A9C /* LoadingTVCell.xib */,
-				847CB3072702627400269A9C /* TrackTVCell.swift */,
 				847CB3082702627400269A9C /* FavouriteIntroTVCell.swift */,
 				847CB3092702627400269A9C /* FavouriteIntroTVCell.xib */,
 				847CB30A2702627400269A9C /* LoadingTVCell.swift */,
+				847CB3062702627400269A9C /* LoadingTVCell.xib */,
+				847CB3052702627400269A9C /* PlaylistIntroTVCell.swift */,
 				847CB30B2702627400269A9C /* PlaylistIntroTVCell.xib */,
+				847CB3072702627400269A9C /* TrackTVCell.swift */,
 				847CB30C2702627400269A9C /* TrackTVCell.xib */,
 			);
 			path = Cell;
@@ -635,7 +635,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -643,7 +643,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -659,7 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -667,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.4;
+				MARKETING_VERSION = 0.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -7,18 +7,16 @@
 
 import Foundation
 
-///Short track version
+///Short track version (contains in recent listen blocks)
 public class TrackShortOld: Decodable {
-    
-    //Note: Данная версия менее богата полями и найдена позже первой, поэтому была принята как за старую версию. Другая версия сокращённого трека: :class:`yandex_music.TrackShort`.
-    
+
     ///Track UID
-    public let track_id: TrackId?
-    ///Date TODO
+    public let trackId: TrackId?
+    ///Recent listen date
     public let timestamp: String
 
-    public init(track_id: TrackId?, timestamp: String) {
-        self.track_id = track_id
+    public init(trackId: TrackId?, timestamp: String) {
+        self.trackId = trackId
         self.timestamp = timestamp
     }
 }

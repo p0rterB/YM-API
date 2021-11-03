@@ -1,3 +1,5 @@
+import Foundation
+
 class PlistWrapper
 {
     class func parsePropertyList<T:Codable>(filename plist_name: String) -> T?

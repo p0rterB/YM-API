@@ -14,36 +14,7 @@ class MainMenuTBC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let playerHeight: CGFloat = 64
-        let frame = CGRect(x: 0, y: self.tabBar.frame.minY - playerHeight, width: self.view.bounds.width, height: 64)
-        playerWidget = PlayerWidgetView(frame: frame)
-        playerWidget.setData(coverImg: UIImage(named: "ic_track_template"), trackName: AppService.localizedString(.player_not_playing), artist: "")
-        
-        let tapRec = UITapGestureRecognizer(target: self, action: #selector(playerWidgetTap))
-        let scroller = UIPanGestureRecognizer(target: self, action: #selector(playerWidgetUpGesture(with:)))
-        scroller.cancelsTouchesInView = false
-        scroller.delaysTouchesBegan = false
-        scroller.delaysTouchesEnded = false
-        view.addGestureRecognizer(scroller)
-        playerWidget.addGestureRecognizer(tapRec)
-        
-        playerQueue.setPlayerWidgetDelegateHandler(self)
-        self.view.addSubview(playerWidget)
-        let subs = self.view.subviews
-        for i in 0 ... subs.count - 1 {
-            let sub = subs[i]
-            if !(sub is UITabBar) {
-                sub.translatesAutoresizingMaskIntoConstraints = false
-                sub.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-                sub.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-                sub.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-                sub.bottomAnchor.constraint(equalTo: playerWidget.bottomAnchor, constant: -12).isActive = true
-                break
-            }
-        }
-        localeUI()
-        
+            
         client.getLikedTracks(modifiedRevision: nil) { result in
             do {
                 appService.likedLibrary = try result.get()
@@ -63,6 +34,36 @@ class MainMenuTBC: UITabBarController {
                 #endif
             }
         }
+        localeUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let playerHeight: CGFloat = 64
+        let frame = CGRect(x: 0, y: self.tabBar.frame.minY - playerHeight, width: self.view.bounds.width, height: playerHeight)
+        playerWidget = PlayerWidgetView(frame: frame)
+        playerWidget.setData(coverImg: UIImage(named: "ic_track_template"), trackName: AppService.localizedString(.player_not_playing), artist: "")
+        playerQueue.setPlayerWidgetDelegateHandler(self)
+        let tapRec = UITapGestureRecognizer(target: self, action: #selector(playerWidgetTap))
+        let scroller = UIPanGestureRecognizer(target: self, action: #selector(playerWidgetUpGesture(with:)))
+        scroller.cancelsTouchesInView = false
+        scroller.delaysTouchesBegan = false
+        scroller.delaysTouchesEnded = false
+        view.addGestureRecognizer(scroller)
+        playerWidget.addGestureRecognizer(tapRec)
+        self.view.addSubview(playerWidget)
+        let subs = self.view.subviews
+        for i in 0 ... subs.count - 1 {
+            let sub = subs[i]
+            if !(sub is UITabBar) && !(sub is PlayerWidgetView) {
+                sub.translatesAutoresizingMaskIntoConstraints = false
+                sub.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+                sub.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+                sub.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+                sub.bottomAnchor.constraint(equalTo: playerWidget.bottomAnchor, constant: -16).isActive = true
+                break
+            }
+        }
     }
     
     @objc fileprivate func playerWidgetUpGesture(with scroller: UIPanGestureRecognizer) {
@@ -71,10 +72,11 @@ class MainMenuTBC: UITabBarController {
         let abs_y = abs(transitionPoint.y)
         if (abs_y > abs_x)
         {
-            //horizontal scroll
-            if (transitionPoint.y < -50)
+            //horizontal scroll prevent
+            if (transitionPoint.y < -50 && playerQueue.tracks.count > 0)
             {
-                playerWidgetTap()
+                let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: AudioPlayerVC.className) as! AudioPlayerVC
+                self.present(vc, animated: true, completion: nil)
             }
         }
     }
@@ -115,7 +117,7 @@ class MainMenuTBC: UITabBarController {
 extension MainMenuTBC: PlayerQueueDelegate {
     func trackChanged(_ track: Track, queueIndex: Int) {
         DispatchQueue.main.async {
-            self.playerWidget.setData(coverImg: UIImage(named: "ic_track_template"), trackName: track.title, artist: track.artistsName.joined(separator: ","))
+            self.playerWidget.setData(coverImg: UIImage(named: "ic_track_template"), trackName: track.trackTitle, artist: track.artistsName.joined(separator: ","))
         }
     }
     

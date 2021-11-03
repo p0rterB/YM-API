@@ -12,8 +12,8 @@ public enum YMError: Error
 {
     case general(errCode: Int, data: [String: Any])
     case badRequest(errCode: Int, description: String)
-    case requestTimeout(errCode: Int, description: String)
     case badResponseData(errCode: Int, data: [String: Any])
+    case userNotExists(errCode: Int, description: String)
     case invalidResponseStatusCode(errCode: Int, description: String)
     case captchaRequired(errCode: Int, data: [String: Any])
     case wrongCaptcha(errCode: Int, description: String)

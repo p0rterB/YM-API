@@ -11,7 +11,19 @@ extension ApiFunction {
 
         case .download: return [:]
 
-        case .auth_pass(let login, let pass, _, let captchaAnswer, let captchaKey):
+        case .auth_init(let login, let lang, _, _, _, _, _, _, _, _): return [
+            "client_id": clientId, "client_secret": clientSecret, "display_language": lang.rawValue, "login": login,
+            "payment_auth_retpath": "yandexmusic%3A%2F%2Fam%2Fpayment_auth", "x_token_client_id": xTokenClientId, "x_token_client_secret": xTokenClientSecret
+        ]
+        case .auth_pass(let trackId, let pass, let captchaAnswer, let captchaKey):
+            var dict: [String: Any] = ["password": pass, "track_id": trackId]
+            if let g_answer = captchaAnswer, let g_key = captchaKey {
+                dict["x_captcha_answer"] = g_answer
+                dict["x_captcha_key"] = g_key
+            }
+            return dict
+        case .auth_generate_token(let xToken, _, _, _, _, _, _, _): return ["access_token": xToken, "client_id": clientId, "client_secret": clientSecret, "grant_type": "x-token", "payment_auth_retpath": "yandexmusic%3A%2F%2Fam%2Fpayment_auth"]
+        case .auth_legacy(let login, let pass, _, let captchaAnswer, let captchaKey):
             var dict: [String: Any] = ["grant_type": "password", "client_id": clientId, "client_secret": clientSecret, "username": login, "password": pass]
             if let g_answer = captchaAnswer, let g_key = captchaKey {
                 dict["x_captcha_answer"] = g_answer
@@ -20,6 +32,7 @@ extension ApiFunction {
             return dict
 
         case .account_status: return [:]
+        case .account_avatar: return [:]
         case .rotor_account_status: return [:]
         case .account_experiments: return [:]
         case .account_settings: return [:]
@@ -87,10 +100,18 @@ extension ApiFunction {
         case .playlist_edit_title(_, _, let newTitle, _): return ["value": newTitle]
         case .playlist_edit_visibility(_, _, let newVisibility, _): return ["value": newVisibility]
             
+        case .label_data: return [:]
+            
         case .search: return [:]
         case .search_suggest: return [:]
+        case .search_history: return [:]
+        case .search_history_feedback(let absBlockPosition, let absPosition, let blockPosition, let blockType, let clickType, let clientNow, let entityId, let page, let position, let query, let searchRequestId, let timestamp, _): return ["absoluteBlockPosition": absBlockPosition, "absolutePosition": absPosition, "blockPosition": blockPosition, "blockType": blockType, "clickType": clickType, "clientNow": clientNow, "entityId": entityId, "page": page, "position": position, "query": query, "searchRequestId": searchRequestId, "timestamp": timestamp]
+        case .search_history_clear: return [:]
+            
+        case .recent_listen: return [:]
             
         case .landing: return [:]
+        case .promotions: return [:]
         case .chart: return [:]
         case .podcasts: return [:]
         case .genres: return [:]

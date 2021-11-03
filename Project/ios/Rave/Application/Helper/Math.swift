@@ -1,3 +1,5 @@
+import Foundation
+
 extension Double
 {
     func rounded(signes_after: Int) -> Double

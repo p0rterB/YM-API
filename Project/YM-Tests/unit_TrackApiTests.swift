@@ -19,10 +19,11 @@ class unit_TrackApiTests: XCTestCase {
     var device: YMDevice {get {return TestConstants.device}}
     var apiLang: ApiLanguage {get {return TestConstants.apiLang}}
     var token: String {get {return TestConstants.token}}
+    var xToken: String {get {return TestConstants.xToken}}
     var uid: Int {get {return TestConstants.uid}}
     
     override func setUp() {
-        client = YMClient.initialize(device: device, lang: apiLang, uid: uid, token: token)
+        client = YMClient.initialize(device: device, lang: apiLang, uid: uid, token: token, xToken: xToken)
     }
     
     override func tearDown() {
@@ -108,7 +109,6 @@ class unit_TrackApiTests: XCTestCase {
         client.getTracks(trackIds: tracksId, positions: false) { result in
             do {
                 let tracks = try result.get()
-                XCTAssertNotNil(tracks, "Track is nil")
                 XCTAssert(tracks.count > 0, "Tracks' array is empty")
                 XCTAssert(tracks.count == tracksId.count, "Response doesn't contain all tracks")
                 for i in 0...tracksId.count - 1 {

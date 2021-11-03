@@ -26,9 +26,9 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OEH-KI-2gx">
-                        <rect key="frame" x="273" y="0.0" width="47" height="54"/>
+                        <rect key="frame" x="275" y="0.0" width="45" height="54"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="OEH-KI-2gx" secondAttribute="height" multiplier="1:1.15" id="iA4-nz-FYN"/>
+                            <constraint firstAttribute="width" secondItem="OEH-KI-2gx" secondAttribute="height" multiplier="1:1.2" id="iA4-nz-FYN"/>
                         </constraints>
                         <color key="tintColor" systemColor="labelColor"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
@@ -39,17 +39,17 @@
                             <action selector="btn_options_Tap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xjb-2y-gHQ"/>
                         </connections>
                     </button>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ufQ-LG-B4j">
-                        <rect key="frame" x="48" y="8" width="225" height="38"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ufQ-LG-B4j">
+                        <rect key="frame" x="48" y="8" width="227" height="38"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="TRACK_NAME_LONG_LONG_NAME" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOd-0g-WK4">
-                                <rect key="frame" x="0.0" y="0.0" width="225" height="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACK_NAME_LONG_LONG_NAME" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOd-0g-WK4">
+                                <rect key="frame" x="0.0" y="0.0" width="227" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ARTIST_NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8p-we-AJ7">
-                                <rect key="frame" x="0.0" y="25" width="225" height="13"/>
+                                <rect key="frame" x="0.0" y="23" width="227" height="15"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>

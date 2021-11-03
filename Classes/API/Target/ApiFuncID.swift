@@ -8,9 +8,13 @@ enum ApiFunction {
     //General
     case download(fullPath: String)
     //Reg,Auth
-    case auth_pass(login: String, pass: String, lang: ApiLanguage, captchaAnswer: String?, captchaKey: String?)
+    case auth_init(login: String, lang: ApiLanguage, appId: String, uuid: String, appVersionName: String, manufacturer: String, deviceId: String, deviceName: String, platform: String, model: String)
+    case auth_pass(trackId: String, pass: String, captchaAnswer: String?, captchaKey: String?)
+    case auth_generate_token(xToken: String, appId: String, appVersionName: String, deviceId: String, manufacturer: String, deviceName: String, platform: String, model: String)
+    case auth_legacy(login: String, pass: String, lang: ApiLanguage, captchaAnswer: String?, captchaKey: String?)
     //Account
     case account_status(secret: String)
+    case account_avatar(size: Int, secret: String)
     case rotor_account_status(secret: String)
     case account_experiments(secret: String)
     case account_settings(secret: String)
@@ -51,9 +55,16 @@ enum ApiFunction {
     case playlist_edit_visibility(ownerId: String, playlistId: String, newVisibility: String, secret: String)
     case playlist_content_change(ownerId: String, playlistId: String, revision: Int, changeOperationsJson: String, secret: String)
     case playlist_delete(ownerId: String, playlistId: String, secret: String)
+    //Labels
+    case label_data(labelID: String, dataType: String, page: Int, secret: String)
     //Search
     case search(text: String, noCorrect: Bool, type: String, page: Int, includeBestPlaylists: Bool, secret: String)//type_`: `all`, `artist`, `user`, `album`, `playlist`, `track`, `podcast`, `podcast_episode`
     case search_suggest(part: String, secret: String)
+    case search_history(userID: String, secret: String)
+    case search_history_feedback(absBlockPosition: Int, absPosition: Int, blockPosition: Int, blockType: String, clickType: String, clientNow: String, entityId: String, page: Int, position: Int, query: String, searchRequestId: String, timestamp: String, secret: String)
+    case search_history_clear(userID: String, secret: String)
+    //Recent listen
+    case recent_listen(userID: String, tracksCount: Int, contextTypes: [String], contextCount: Int, secret: String)
     //Liked
     case like_action(userdID: String, objectsId: [String], objectsType: String, performRemove: Bool, secret: String)
     case dislike_action(userdID: String, objectsId: [String], objectsType: String, performRemove: Bool, secret: String)
@@ -64,6 +75,7 @@ enum ApiFunction {
     case liked_playlists(userId: String, secret: String)
     
     case landing(blocks: [String], secret: String)
+    case promotions(feedBlockID: String, secret: String)
     case chart(option: String, secret: String)
     case podcasts(secret: String)
     case genres(secret: String)

@@ -14,6 +14,8 @@ public class YMDevice {
         case os
         case osVersion = "os_version"
         case manufacturer
+        case name
+        case platform
         case model
         case clid
         case deviceId = "device_id"
@@ -26,6 +28,10 @@ public class YMDevice {
     public let osVersion: String
     ///Device manufacturer name (Apple, Samsung and others)
     public let manufacturer: String
+    ///Device name
+    public let name: String
+    ///Device platform
+    public let platform: String
     ///Device model name
     public let model: String
     ///Device app client ID (google-play, for example)
@@ -51,9 +57,11 @@ public class YMDevice {
         }
     }
     
-    public init(os: String, osVer: String, manufacturer: String, model: String, clid: String, deviceId: String, uuid: String) {
+    public init(os: String, osVer: String, manufacturer: String, name: String, platform: String, model: String, clid: String, deviceId: String, uuid: String) {
         self.os = os
         self.osVersion = osVer
+        self.name = name
+        self.platform = platform
         self.model = model
         self.manufacturer = manufacturer
         self.clid = clid

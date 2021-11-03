@@ -23,11 +23,12 @@ PRs should be done in the *development* branch. PR hasn't any specific design te
 
 At the moment, the integration tests cover the part of the code responsible for the regular behavior of the module (Sending a request - checking the response, checking the parsing of entities). Therefore, what is required now is tests for erroneous input data for API requests, tests for receiving non-standard responses from the API for requests (if any).
 
-To deploy the test infrastructure, you must specify in [TestConstants.swift](https://github.com/p0rterB/YM-API/blob/main/Project/YM-Tests/TestConstants.swift) account data: **uid** and **token** for all API requests, except for login (mail) and password. To request an account login, you also need to specify **login** and **pass** to login to your account.
+To deploy the test infrastructure, you must specify in [TestConstants.swift](https://github.com/p0rterB/YM-API/blob/main/Project/YM-Tests/TestConstants.swift) account data: **uid** and **token** for all API requests, **xToken** needs only for retrieving user avatar in app context, except for login (mail) and password. To request an account login, you also need to specify **login** and **pass** to login to your account.
 ```swift
 public static let login: String = "YOUR_LOGIN_OR_EMAIL"
 public static let pass: String = "YOUR_PASS"
 
+public static let xToken: String = "YOUR_XTOKEN"//after success pasword auth you can paste x_token here
 public static let token: String = "YOUR_TOKEN"//after login you can paste got token here
 public static let uid: Int = 12345678//your account uid
 ```

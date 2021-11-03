@@ -23,11 +23,6 @@ class AudioPlayerVC: UIViewController {
     @IBOutlet weak var imagevView_trackCover: UIImageView!
     @IBOutlet weak var lbl_trackTitle: UILabel!
     @IBOutlet weak var lbl_trackArtists: UILabel!
-    @IBAction func btn_trackActions_Tap(_ sender: UIButton) {
-        if let g_track = playerQueue.currTrack {
-            showTrackActionsPopup(sourceControl: sender, track: g_track)
-        }
-    }
     @IBOutlet weak var slider_trackPlaybackPosition: UISlider!
     @IBAction func slider_trackPlaybackPosition_Changed(_ sender: UISlider) {
         lbl_trackPlaybackPosition.text = DateUtil.formattedTrackTime(TimeInterval(sender.value))
@@ -155,7 +150,7 @@ class AudioPlayerVC: UIViewController {
     }
     
     fileprivate func refreshUI() {        
-        lbl_trackTitle.text = playerQueue.currTrack?.title ?? AppService.localizedString(.player_unknown_track_title)
+        lbl_trackTitle.text = playerQueue.currTrack?.trackTitle ?? AppService.localizedString(.player_unknown_track_title)
         lbl_trackArtists.text = playerQueue.currTrack?.artistsName.joined(separator: ",") ?? AppService.localizedString(.player_unknown_track_artists)
         refreshPlaybackSlider()
     }
@@ -311,8 +306,7 @@ extension AudioPlayerVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let track = playerQueue.tracks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: TrackTVCell.className, for: indexPath) as! TrackTVCell
-        let trackTitle = track.title ?? AppService.localizedString(.player_unknown_track_title)
-        cell.initializeCell(trackTitle: trackTitle, artists: track.artistsName, cover: nil, available: track.available ?? false, onOptionsPress: {
+        cell.initializeCell(trackTitle: track.trackTitle, artists: track.artistsName, cover: nil, available: track.available ?? false, onOptionsPress: {
             self.showTrackActionsPopup(sourceControl: cell.btn_options, track: track)
         })
         if (playerQueue.currIndex == indexPath.row) {

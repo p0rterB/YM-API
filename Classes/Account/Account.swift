@@ -27,7 +27,7 @@ public class Account: Decodable {
     public let firstName: String?
     ///Display name
     public let displayName: String?
-    ///Является ли пользователем чьим-то другим.
+    ///Account not only user type marker
     public let hostedUser: Bool?
     ///User birthday date
     public let birthday: String?
@@ -69,11 +69,32 @@ public class Account: Decodable {
         self.hasInfoForAppMetrica = hasInfoForAppMetrica
     }
     
-    ///Downloads user avatar image
-    ///- Parameter format: Available avatar sizes: normal, orig, small, big
+    ///Downloads user avatar image. Returns data only if user authorized by new system (passport.yandex)
+    ///- Parameter size: Size of user avatar rect in pixels
     ///- Parameter completion: User avatar image data response handler
-    public func downloadAvatar(format: String = "normal", completion: @escaping (_ result: Result<Data, YMError>) -> Void) {
-        let url = "https://upics.yandex.net/" + String(accountUidStr) + "/" + format
-        download(fullPath: url, completion: completion)
+    public func downloadAvatar(size: Int = 200, completion: @escaping (_ result: Result<Data, YMError>) -> Void) {
+        if (passportSecret.isEmpty) {
+            completion(.failure(.invalidInputParameter(name: "xToken", description: "X Token is empty")))
+            return
+        }
+        downloadAccountAvatarByApi(xToken: passportSecret, size: size) { result in
+            do {
+                let responseStatus = try result.get()
+                if let g_avatarUrl = responseStatus.avatar_url {
+                    download(fullPath: g_avatarUrl, completion: completion)
+                    return
+                }
+                var message = "Unable to retrieve account avatar"
+                if (responseStatus.errors != nil && responseStatus.errors!.count > 0) {
+                    message += ": " + responseStatus.errors!.joined(separator: ";")
+                }
+                completion(.failure(.badResponseData(errCode: -1, data: ["description": message])))
+            } catch {
+                #if DEBUG
+                print(error)
+                #endif
+                completion(.failure(.badResponseData(errCode: -1, data: ["description": "Unable to retrieve account avatar", "error": error])))
+            }
+        }
     }
 }

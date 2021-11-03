@@ -59,14 +59,14 @@ YM-API доступно с помощью CocoaPods. Чтобы установи
 ```ruby
 platform :ios, '10.0'
 ...
-pod "YM-API"
+pod 'YM-API'
 ```
 
 - Для macOS
 ```ruby
 platform :osx, '10.14'
 ...
-pod "YM-API"
+pod 'YM-API'
 ```
 
 ## Начало работы
@@ -84,8 +84,8 @@ let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage)
 ```
 Параметр **device** - Информация об устройстве. Необходим, в основном, при работе с очередями воспроизведения
 ```swift
-let device = YMDevice(os: "iOS", osVer: 14.6, manufacturer: "Apple",
-    model: iPhone8,4, clid: "app-store", 
+let device = YMDevice(os: "iOS", osVer: "14.6", manufacturer: "Apple",
+    model: "iPhone8,4", clid: "app-store", 
     deviceId: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased(),
     uuid: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())
 ```
@@ -107,19 +107,42 @@ enum ApiLanguage: String {
 ```swift
 import YM_API
 
-let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, uid: Int, token: String)
+let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, uid: Int,
+    token: String, xToken: String)
 ```
 Параметр **uid** - Идентификатор учетной записи
+
 Параметр **token** - Токен активной сессии
+
+Параметр **xToken** - Токен доступа к Passport Yandex
 
 Для работы с сервисом при отсутствии активной сессии необходимо авторизоваться.
 
-Вход по логину и паролю:
+Вход по логину и паролю (помечен как *устаревший*, но Яндексом поддерживается):
 
 ```swift
 client.authByCredentials(login: String, pass: String, captchaAnswer: nil, 
     captchaKey: nil, captchaCallback: nil) { result in
     //Действия с результатом выполнения запроса
+}
+```
+
+Вход по логину и паролю через новую систему входа (passport.yandex):
+
+```swift
+client.initializeAuthorization(login: login) { result in
+    //Получить trackID для продолжения процесса
+    ...
+    self.client.authorizeWithPassword(trackId: trackId, pass: pass, 
+    captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
+        //Получить XPassport объект со статусом авторизации
+        //('ok' вместе с 'xToken' или ошибка с описанием)
+        //'xToken' также можно сохранить для получения аватарки пользователя
+        ...
+        self.client.generateYMTokenFromXToken(xToken: xRespObj.x_token!) { result3 in
+        ///Получить сгенерированный токен доступа к сервису API Яндекс Музыки
+        }
+    }
 }
 ```
 
@@ -200,7 +223,7 @@ track.getDownloadLink(codec: .mp3, bitrate: .kbps_192) {result in
 Если вы нашли проблемы или хотите предложить новую фичу в самом API
 создайте [issue](https://github.com/p0rterB/YM-API/issues/new/choose)
 
-По самому приложению дополнять ничего не планирую - оно в качестве примера использования API
+По самому приложению дополнять кардинально нового ничего не планирую - оно в качестве примера использования API
 
 
 ## Лицензия

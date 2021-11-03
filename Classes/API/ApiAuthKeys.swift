@@ -7,7 +7,7 @@
 
 import Foundation
 
-///Represents response json keys
+///Represents authorization response json keys
 public enum ApiAuthKeys: Int
 {
     case access_token

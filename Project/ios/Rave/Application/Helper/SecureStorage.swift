@@ -1,11 +1,5 @@
+import Foundation
 import Security
-
-//NOTICE: Data onyo keychain availability is relied on provisioning profile - change developer and signing properties and all gone(( You can't gain access to it (for read, edit, clear)
-//Apple disappoints
-
-// Arguments for the keychain queries
-
-
 
 class SecureStorage {
     let kSecClassValue = NSString(format: kSecClass)

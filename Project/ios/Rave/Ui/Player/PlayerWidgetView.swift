@@ -14,7 +14,6 @@ class PlayerWidgetView: UIView {
     
     @IBOutlet var imageView_songPic: UIImageView!
     @IBOutlet var lbl_trackName: UILabel!
-    @IBOutlet var lbl_trackArtists: UILabel!
     
     @IBOutlet var btn_playPause: UIButton!
     @IBAction func btn_playPause_Tap(_ sender: UIButton) {
@@ -56,12 +55,6 @@ class PlayerWidgetView: UIView {
         set {lbl_trackName.text = newValue}
     }
     
-    @IBInspectable var trackArtists: String {
-        get {return lbl_trackArtists.text ?? ""}
-        set {lbl_trackArtists.text = newValue}
-    }
-
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         Bundle.main.loadNibNamed(PlayerWidgetView.className, owner: self, options: nil)
@@ -91,7 +84,6 @@ class PlayerWidgetView: UIView {
     func setData(coverImg: UIImage?, trackName: String?, artist: String?) {
         trackImage = coverImg
         trackTitle = trackName ?? AppService.localizedString(.player_unknown_track_title)
-        trackArtists = artist ?? AppService.localizedString(.player_unknown_track_artists)
         setupUI()
     }
     

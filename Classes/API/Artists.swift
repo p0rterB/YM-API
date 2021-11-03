@@ -7,7 +7,7 @@
 
 import Foundation
 
-func getArtistsByApi(token: String, artistIds: [String], completion: @escaping (_ result: Result<[Artist], YMError>) -> Void) {
+func getArtistsByApi(token: String, artistIds: [String], completion: @escaping (_ result: Result<[Artist], YMError>) -> Void) {    
     guard let req: URLRequest = buildRequest(for: .artists(ids: artistIds, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build artists info request"))); return}
     requestYMResponse(req) { result in
         var response: YMResponse?

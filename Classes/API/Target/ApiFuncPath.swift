@@ -11,9 +11,13 @@ extension ApiFunction {
         //General
         case .download: return ""
         //Auth
-        case .auth_pass: return "token"
+        case .auth_init(_, _, let appId, let uuid, let appVersionName, let manufacturer, let deviceId, let deviceName, let platform, let model): return "2/bundle/mobile/start/?app_id=" + appId + "&uuid=" + uuid + "&app_version_name=" + appVersionName + "&manufacturer=" + manufacturer + "&deviceid=" + deviceId + "&device_name" + deviceName + "&device_id=" + deviceId + "&app_platform=" + platform + "&model=" + model
+        case .auth_pass: return "1/bundle/mobile/auth/password"
+        case .auth_generate_token(_, let appId, let appVersionName, let deviceId, let manufacturer, let deviceName, let platform, let model): return "1/token?app_id=" + appId + "&app_version_name=" + appVersionName + "&manufacturer=" + manufacturer + "&deviceid=" + deviceId + "&device_name" + deviceName + "&device_id=" + deviceId + "&app_platform=" + platform + "&model=" + model
+        case .auth_legacy: return "token"
         //Account
         case .account_status: return "account/status"
+        case .account_avatar(let size, _): return "1/bundle/account/short_info?avatar_size=islands-" + String(size)
         case .rotor_account_status: return "rotor/account/status"
         case .account_experiments: return "account/experiments"
         case .account_settings, .account_settings_edit: return "account/settings"
@@ -61,10 +65,20 @@ extension ApiFunction {
         case .playlist_delete(let ownerId, let playlistId, _): return "users/" + ownerId + "/playlists/" + playlistId + "/delete"
         case .playlist_edit_title(let ownerId, let playlistId, _, _): return "users/" + ownerId + "/playlists/" + playlistId + "/name"
         case .playlist_edit_visibility(let ownerId, let playlistId, _, _): return "users/" + ownerId + "/playlists/" + playlistId + "/visibility"
+            
+        case .label_data(let labelID, let dataType, let page, _): return "/labels/" + labelID + "/" + dataType + "?page=" + String(page)
+            
         case .search(let text, let noCorrect, let type, let page, let includeBestPlaylists, _):
             let queryParams = "text=" + text + "&nocorrect=" + String(noCorrect) + "&type=" + type + "&page=" + String(page) + "&playlist-in-best=" + String(includeBestPlaylists)
             return "search?" + queryParams
         case .search_suggest(let part, _): return "search/suggest?part=" + part
+        case .search_history(let userID, _): return "users/" + userID + "/search-history"
+        case .search_history_feedback: return "search/feedback"
+        case .search_history_clear(let userID, _): return "users/" + userID + "/search-history/clear"
+            
+        case .recent_listen(let userID, let tracksCount, let contextTypes, let contextCount, _):
+            let contexts: String = contextTypes.joined(separator: ",")
+            return "users/" + userID + "/contexts?trackCount=" + String(tracksCount) + "&types=" + contexts + "&contextCount=" + String(contextCount)
             
         case .landing(let blocks, _):
             var blocksStr: String = ""
@@ -73,6 +87,7 @@ extension ApiFunction {
             }
             blocksStr = String(blocksStr[blocksStr.startIndex..<blocksStr.endIndex])
             return "landing3?blocks=" + blocksStr + "&eitherUserId=10254713668400548221"
+        case .promotions(let feedBlockID, _): return "/feed/promotions/" + feedBlockID
         case .chart(let option, _):
             var path = "landing3/chart"
             if (option.compare("") != .orderedSame)

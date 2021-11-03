@@ -43,14 +43,14 @@ Thanks to [MarshalX](https://github.com/MarshalX) for his [Yandex Music API rese
 
 The library provides an interface for interacting with the Yandex Music API.
 
-macOs 10.14+ and iOS 10.0+ are supported by the module.
+macOS 10.14+ and iOS 10.0+ are supported by the module.
 
 ### Yandex personal data access
 
-Constant values [CLIENT_ID и CLIENT_SECRET](https://github.com/p0rterB/YM-API/blob/master/Classes/API/YMClient.swift#L11)
+Constant values [CLIENT_ID and CLIENT_SECRET](https://github.com/p0rterB/YM-API/blob/master/Classes/API/YMClient.swift#L11)
 were borrowed from the Yandex Music official application at Microsoft Store. 
 Since the API is private and only used internally, it is impossible to register own application for now on
-[oauth.yandex.ru] (https://oauth.yandex.ru), and therefore, use your own constant values.
+[oauth.yandex.ru](https://oauth.yandex.ru), and therefore, use your own constant values.
 
 ## Setup
 
@@ -60,14 +60,14 @@ YM-API is available with CocoaPods. To install a module, just add the module nam
 ```ruby
 platform :ios, '10.0'
 ...
-pod "YM-API"
+pod 'YM-API'
 ```
 
 - macOS
 ```ruby
 platform :osx, '10.14'
 ...
-pod "YM-API"
+pod 'YM-API'
 ```
 
 ## Getting started
@@ -76,7 +76,7 @@ You can interact with the API throw [YMClient](https://github.com/p0rterB/YM-API
 
 You can initialize the client in 2 ways:
 
-### Basic, at first lauch or logout state
+### Basic, at first launch or logout state
 
 ```swift
 import YM_API
@@ -85,8 +85,8 @@ let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage)
 ```
 **device** parameter - Device info. Essentially needed during working with play queues
 ```swift
-let device = YMDevice(os: "iOS", osVer: 14.6, manufacturer: "Apple",
-    model: iPhone8,4, clid: "app-store", 
+let device = YMDevice(os: "iOS", osVer: "14.6", manufacturer: "Apple",
+    model: "iPhone8,4", clid: "app-store", 
     deviceId: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased(),
     uuid: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())
 ```
@@ -108,19 +108,42 @@ enum ApiLanguage: String {
 ```swift
 import YM_API
 
-let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, uid: Int, token: String)
+let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, 
+    uid: Int, token: String, xToken: String)
 ```
 **uid** parameter - Account ID
+
 **token** parameter - Account token
+
+**xToken** parameter - Passport Yandex access token
 
 To work with the service in the absence of an active session, you must sign in.
 
-Login by login and password:
+Sigin by login and password (mark as *deprecated*, but is supported by Yandex for now):
 
 ```swift
 client.authByCredentials(login: String, pass: String, captchaAnswer: nil, 
     captchaKey: nil, captchaCallback: nil) { result in
     //Actions with the result of the query
+}
+```
+
+Signin by login and password by new authorization system (passport.yandex):
+
+```swift
+client.initializeAuthorization(login: login) { result in
+    //Get trackID for continue process
+    ...
+    self.client.authorizeWithPassword(trackId: trackId, pass: pass, 
+    captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
+        //Get XPassport response object with authorization status 
+        //(ok with xToken or error with description)
+        //'xToken' may be also saved for user avatar retrieving
+        ...
+        self.client.generateYMTokenFromXToken(xToken: xRespObj.x_token!) { result3 in
+        ///Get generated access token for Yandex Music API service
+        }
+    }
 }
 ```
 
@@ -186,7 +209,6 @@ This application can be installed on your device for testing in several ways:
  
  ### Advanced and paid
  You need mac and and a developer account with a paid license.
- Необходимо иметь мак и аккаунт разработчика с проплаченной лицензией.
  On the [Apple Developer site](https://developer.apple.com/account/) you need to prepare the infrastructure for uploading: certificates, application ID (basic capabilities set), provision profiles set.
   So you can use the application not only on your personal device (App Store Connect public testing throw TestFlight) and not for 7 days.
   P.S. And if you want to show the whole breadth of your soul and, perhaps, thank the creator, you can upload the application to TestFlight for open testing and share the link, which I will post here =)
@@ -196,7 +218,7 @@ This application can be installed on your device for testing in several ways:
 If you find problems or want to suggest a new feature in the API itself
 create an [issue](https://github.com/p0rterB/YM-API/issues/new/choose)
 
-I don't plan to add anything to the application itself - it is an example of using the API
+I don't plan to add anything cardinal to the application itself - it is an example of using the API
 
 ## License
 

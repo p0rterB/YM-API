@@ -19,10 +19,11 @@ class unit_FeedApiTests: XCTestCase {
     var device: YMDevice {get {return TestConstants.device}}
     var apiLang: ApiLanguage {get {return TestConstants.apiLang}}
     var token: String {get {return TestConstants.token}}
+    var xToken: String {get {return TestConstants.xToken}}
     var uid: Int {get {return TestConstants.uid}}
     
     override func setUp() {
-        client = YMClient.initialize(device: device, lang: apiLang, uid: uid, token: token)
+        client = YMClient.initialize(device: device, lang: apiLang, uid: uid, token: token, xToken: xToken)
     }
     
     override func tearDown() {
@@ -34,7 +35,6 @@ class unit_FeedApiTests: XCTestCase {
         client.getFeed { result in
             do {
                 let feed = try result.get()
-                XCTAssertNotNil(feed, "Feed is nil")
                 XCTAssertNotNil(feed.generatedPlaylists, "Feed generated playlists is null")
                 XCTAssert(feed.generatedPlaylists.count > 0, "Feed generated playlists is empty")
             } catch {

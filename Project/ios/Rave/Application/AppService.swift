@@ -27,11 +27,12 @@ class AppService
     
     init() {
         properties = Properties.load()
+        properties.refreshLocale()
         playerQueue = PlayerQueue(queueKey: 0, tracks: [], playIndex: -1, playNow: false, playerWidgetDelegate: nil, delegate: nil)
-        let device = YMDevice(os: "iOS", osVer: FeedbackInfoCarver.osVer, manufacturer: "Apple", model: FeedbackInfoCarver.model, clid: "app-store", deviceId: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased(), uuid: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())
+        let device = YMDevice(os: "iOS", osVer: FeedbackInfoCarver.osVer, manufacturer: "Apple", name: "iPhone_13m", platform: "iPhone", model: FeedbackInfoCarver.model, clid: "app-store", deviceId: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased(), uuid: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())
         let lang = ApiLanguage.ru
         if (properties.isAuthed) {
-            client = YMClient.initialize(device: device, lang: lang, uid: properties.uid, token: AppService.getToken())
+            client = YMClient.initialize(device: device, lang: lang, uid: properties.uid, token: AppService.getToken(), xToken: "")
         } else {
             client = YMClient.initialize(device: device, lang: lang)
         }

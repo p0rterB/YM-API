@@ -8,9 +8,13 @@ extension ApiFunction {
     
     var headers: [String: String] {
         switch self {
-        case .auth_pass(_, _, let lang, _, _): return ["Accept-Language": lang.rawValue]
+        case .auth_init(_, let lang, _, _, _, _, _, _, _, _): return ["Accept-Language": lang.rawValue]
+        case .auth_pass: return [:]
+        case .auth_generate_token: return [:]
+        case .auth_legacy(_, _, let lang, _, _): return ["Accept-Language": lang.rawValue]
         case .rotor_account_status(let secret): return ["Authorization": "OAuth " + secret]
         case .account_status(let secret): return ["Authorization": "OAuth " + secret]
+        case .account_avatar(_, let secret): return ["Ya-Consumer-Authorization": "OAuth " + secret]
         case .account_experiments(let secret): return ["Authorization": "OAuth " + secret]
         case .account_settings(let secret): return ["Authorization": "OAuth " + secret]
         case .account_settings_edit(let secret, _): return ["Authorization": "OAuth " + secret]
@@ -54,10 +58,22 @@ extension ApiFunction {
         case .playlist_edit_title(_, _, _, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_edit_visibility(_, _, _, let secret): return ["Authorization": "OAuth " + secret]
             
+        case .label_data(_, _, _, let secret): return ["Authorization": "OAuth " + secret]
+            
         case .search(_, _, _, _, _, let  secret): return ["Authorization": "OAuth " + secret]
         case .search_suggest(_, let secret): return ["Authorization": "OAuth " + secret]
+        case .search_history(_, let secret): return ["Authorization": "OAuth " + secret]
+        case .search_history_feedback(_, _, _, _, _, _, _, _, _, _, _, _, let secret): return
+            [
+                "Content-Type": "application/json; charset=UTF-8",
+                "Authorization": "OAuth " + secret
+            ]
+        case .search_history_clear(_, let secret): return ["Authorization": "OAuth " + secret]
+            
+        case .recent_listen(_, _, _, _, let secret): return ["Authorization": "OAuth " + secret]
             
         case .landing(_, let secret): return ["Authorization": "OAuth " + secret]
+        case .promotions(_, let secret): return ["Authorization": "OAuth " + secret]
         case .chart(_, let secret): return ["Authorization": "OAuth " + secret]
         case .podcasts(let secret): return ["Authorization": "OAuth " + secret]
         case .genres(let secret): return ["Authorization": "OAuth " + secret]

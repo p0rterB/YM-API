@@ -25,11 +25,12 @@ PR'ы должны быть сделаны в *development* ветку. Опре
 
 На данный момент интеграционные тесты покрывают часть кода, ответственную за штатное поведение модуля (Отправка запроса - проверка ответа, проверка парсинга сущностей). Поэтому сейчас требутеся — тесты на ошибочные вводные данные для запросов API, тесты получения нестандартных ответов от API по запросам (если имеются). А также необходимы тесты API для входа в учетную запись при необходимости ввести капчу
 
-Для развертывания тестовой инфраструктуры необходимо указать в [TestConstants.swift](https://github.com/p0rterB/YM-API/blob/main/Project/YM-Tests/TestConstants.swift) данные аккаунта: **uid** и **token** всех запросов API, кроме входа по логину (почте) и паролю. Для запроса входа в учетную запись также необходимо указать **login** и **pass** для входа в учетную запись.
+Для развертывания тестовой инфраструктуры необходимо указать в [TestConstants.swift](https://github.com/p0rterB/YM-API/blob/main/Project/YM-Tests/TestConstants.swift) данные аккаунта: **uid** и **token** всех запросов API, **xToken** нужен только для получения аватарки пользователя в контексте приложения, кроме входа по логину (почте) и паролю. Для запроса входа в учетную запись также необходимо указать **login** и **pass** для входа в учетную запись.
 ```swift
 public static let login: String = "YOUR_LOGIN_OR_EMAIL"
 public static let pass: String = "YOUR_PASS"
 
+public static let xToken: String = "YOUR_XTOKEN"//after success pasword auth you can paste x_token here
 public static let token: String = "YOUR_TOKEN"//after login you can paste got token here
 public static let uid: Int = 12345678//your account uid
 ```

@@ -18,7 +18,9 @@ class SearchVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchBar.becomeFirstResponder()
+        if (_searchResult == nil) {
+            searchBar.becomeFirstResponder()
+        }
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -223,6 +225,12 @@ extension SearchVC: UITableViewDataSource, UITableViewDelegate {
                 search(g_text)
                 return
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (_searchResult != nil) {
+            hideKeyboard()
         }
     }
 }

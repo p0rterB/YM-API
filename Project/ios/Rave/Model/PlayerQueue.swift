@@ -152,10 +152,10 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     }
     
     func playPreviousTrack(play: Bool = true) -> Bool {
-        if (playing && trackPlaybackPosition > 5) {
+        if (trackPlaybackPosition > 5) {
             let seekTime: CMTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
             _player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
-            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = seekTime.seconds
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
             return true
         }
         if (_currIndex - 1 >= 0 && _currIndex < _tracks.count) {
@@ -316,6 +316,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         if (_player.currentItem != nil) {
             if (!playing) {
                 _player.play()
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = _player.currentTime().seconds
                 _delegate?.playStateChanged(playing: true)
                 _playerWidgetDelegate?.playStateChanged(playing: true)
             }

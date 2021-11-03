@@ -10,6 +10,10 @@ import Foundation
 
 func getAlbumsByApi(token: String, albumIds: [String], completion: @escaping (_ result: Result<[Album], YMError>) -> Void)
 {
+    if (albumIds.count == 0) {
+        completion(.failure(.invalidInputParameter(name: "albumIds", description: "Empty albums' IDs array")))
+        return
+    }
     guard let req: URLRequest = buildRequest(for: .albums(ids: albumIds, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build albums info request"))); return}
     requestYMResponse(req) { result in
         var response: YMResponse?
@@ -69,6 +73,10 @@ func getNewAlbumsByApi(token: String, completion: @escaping (_ result: Result<La
 
 func getAlbumWithTracksByApi(token: String, albumId: String, completion: @escaping (_ result: Result<Album, YMError>) -> Void)
 {
+    if (albumId.isEmpty) {
+        completion(.failure(.invalidInputParameter(name: "albumId", description: "Empty album ID")))
+        return
+    }
     guard let req: URLRequest = buildRequest(for: .album_with_tracks(albumId: albumId, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build album with tracks info request"))); return}
     requestYMResponse(req) { result in
         var response: YMResponse?

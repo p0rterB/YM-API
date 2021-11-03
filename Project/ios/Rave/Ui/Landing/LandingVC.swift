@@ -81,6 +81,7 @@ extension LandingVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (_feed == nil) {
             let cell = tableView.dequeueReusableCell(withIdentifier: LoadingTVCell.className, for: indexPath) as! LoadingTVCell
+            cell.loadingIndicator.startAnimating()
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: PersonalPlaylistsTVCell.className, for: indexPath) as! PersonalPlaylistsTVCell
