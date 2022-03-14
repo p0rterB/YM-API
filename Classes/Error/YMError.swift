@@ -5,8 +5,6 @@
 //  Created by Developer on 04.06.2021.
 //
 
-import Foundation
-
 ///Represents general exceptions of API work
 public enum YMError: Error
 {
@@ -19,6 +17,7 @@ public enum YMError: Error
     case wrongCaptcha(errCode: Int, description: String)
     case invalidInputParameter(name: String, description: String)
     case invalidObject(objType: String, description: String)
+    case unfinishedAuthorization(trackId: String?, xToken: String?, innerErr: Error?)
     case invalidToken(description: String)
     case invalidBitrate(description: String)
     case trackDownloadInfoNotExists(description: String)

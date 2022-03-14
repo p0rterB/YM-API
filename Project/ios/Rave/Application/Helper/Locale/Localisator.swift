@@ -95,6 +95,7 @@ enum LocalizationKeys: String
     case track_option_play_next
     case track_option_add_to_queue
     case track_option_dislike
+    case track_option_share
     
     case radio_title
     case radio_recommended_stations
@@ -119,6 +120,8 @@ enum LocalizationKeys: String
     case general_today
     case general_yesterday
     case general_download
+    case general_copy
+    case general_remove
     case general_tracks
     case general_albums
     case general_artists

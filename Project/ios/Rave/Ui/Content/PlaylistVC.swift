@@ -74,9 +74,9 @@ class PlaylistVC: UIViewController {
                                 self.tableView.reloadRows(at: [IndexPath(row: i, section: 1)], with: .automatic)
                             }
                         } catch {
-                            #if DEBUG
+#if DEBUG
                             print(error)
-                            #endif
+#endif                            
                         }
                     })
                 }
@@ -91,68 +91,6 @@ class PlaylistVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-    }
-    
-    fileprivate func isTrackLiked(_ track: Track, likeLib: LikeLibrary) -> Bool {
-        return likeLib.contains(track: track)
-    }
-    
-    fileprivate func isTrackDisliked(_ track: Track, dislikeLib: LikeLibrary) -> Bool {
-        return dislikeLib.contains(track: track)
-    }
-    
-    fileprivate func likeTrack(_ track: Track) {
-        if let g_lib = appService.likedLibrary, isTrackLiked(track, likeLib: g_lib) {
-            //remove like
-            let removeSuccess = appService.likedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete like status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeLike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let addSuccess = appService.likedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add like status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.like { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        }
-    }
-    
-    fileprivate func dislikeTrack(_ track: Track) {
-        if let g_lib = appService.dislikedLibrary, isTrackDisliked(track, dislikeLib: g_lib) {
-            //remove dislike
-            let removeSuccess = appService.dislikedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete dislike status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeDislike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let res = playerQueue.dislikeTrack(track)
-            #if DEBUG
-            print("Player queue delete track by dislike:" + String(res))
-            #endif
-            let addSuccess = appService.dislikedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add dislike status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.dislike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        }
     }
 }
 
@@ -174,10 +112,7 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
             //Intro
             if let g_playlist = playlist {
                 let cell = tableView.dequeueReusableCell(withIdentifier: PlaylistIntroTVCell.className, for: indexPath) as! PlaylistIntroTVCell
-                cell.initalizeCell(title: g_playlist.title, count: g_playlist.tracks?.count ?? 0, img: nil, onDownloadPress: {
-                    //TODO
-                    //cache data
-                })
+                cell.initalizeCell(title: g_playlist.title, count: g_playlist.tracks?.count ?? 0, img: nil)
                 return cell
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: LoadingTVCell.className, for: indexPath) as! LoadingTVCell
@@ -188,26 +123,7 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
             if let g_tracks = playlist?.tracks, let g_track = g_tracks[indexPath.row].track {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TrackTVCell.className, for: indexPath) as! TrackTVCell
                 cell.initializeCell(trackTitle: g_track.trackTitle, artists: g_track.artistsName, cover: nil, available: g_track.available ?? false, onOptionsPress: {
-                    //TODO
-                    let liked = appService.likedLibrary?.contains(track: g_track) ?? false
-                    let disliked = appService.likedLibrary?.contains(track: g_track) ?? false
-                    
-                    let popupMenuVC = PopupContextMenuVC.initializeTrackMenuVC(liked: liked, disliked: disliked) { index, keys in
-                        switch(index) {
-                        case 0:
-                            self.likeTrack(g_track)
-                            break
-                        case 1:
-                            #if DEBUG
-                            print("Download press")
-                            #endif
-                            break
-                        case 2:
-                            self.dislikeTrack(g_track)
-                            break
-                        default: break
-                        }
-                    }
+                    let popupMenuVC = PopupTrackMenuVC.initializeVC(parentVC: self, track: g_track, selectHandler: nil)
                     popupMenuVC.initializePopoverVC(sourceControl: cell.btn_options, delegate: self)
                     self.present(popupMenuVC, animated: true, completion: nil)
                 })
@@ -244,6 +160,18 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
             }
             playerQueue.setNewTracks(playlistTracks, queueKey: playlistQueueKey, playIndex: _playingIndex, playNow: true)
         }
+    }
+    
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if indexPath.section == 1, let g_tracks = playlist?.tracks, let g_track = g_tracks[indexPath.row].track {
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions in
+                return PopupTrackMenuVC.initializeContextMenu(parentVC: self, track: g_track)
+                
+            }
+            
+        }
+        return nil
     }
 }
 

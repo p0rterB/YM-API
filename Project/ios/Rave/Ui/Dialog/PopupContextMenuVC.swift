@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YmuzApi
 
 class PopupContextMenuVC: UIViewController {
     
@@ -27,7 +28,7 @@ class PopupContextMenuVC: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    class func initializeGeneralVC(keys: [String], values: [String: UIImage?], selectHandler: ((_ index: Int, _ items: [String]) -> Void)?) -> PopupContextMenuVC
+    class func initializeVC(keys: [String], values: [String: UIImage?], selectHandler: ((_ index: Int, _ items: [String]) -> Void)?) -> PopupContextMenuVC
     {
         let vc = UIStoryboard(name: "Dialog", bundle: nil).instantiateViewController(withIdentifier: PopupContextMenuVC.className) as! PopupContextMenuVC
         vc.modalPresentationStyle = .popover
@@ -37,27 +38,9 @@ class PopupContextMenuVC: UIViewController {
         return vc
     }
     
-    class func initializeTrackMenuVC(liked: Bool, disliked: Bool, selectHandler: ((_ index: Int, _ items: [String]) -> Void)?) -> PopupContextMenuVC {
-        let vc = UIStoryboard(name: "Dialog", bundle: nil).instantiateViewController(withIdentifier: PopupContextMenuVC.className) as! PopupContextMenuVC
-        vc.modalPresentationStyle = .popover
-        vc.keys = [
-            AppService.localizedString(.track_option_like),
-            AppService.localizedString(.track_option_download),
-            AppService.localizedString(.track_option_dislike)
-        ]
-        
-        vc.items = [
-            AppService.localizedString(.track_option_download): UIImage(named: "ic_download"),
-        ]
-        vc.items[AppService.localizedString(.track_option_like)] = liked && !disliked ? UIImage(named: "ic_liked") : UIImage(named: "ic_like")
-        vc.items[AppService.localizedString(.track_option_dislike)] = disliked && !liked ? UIImage(named: "ic_stopped") : UIImage(named: "ic_stop")
-        vc.selectHandler = selectHandler
-        return vc
-    }
-    
-    func initializePopoverVC(sourceControl: UIView, delegate: UIPopoverPresentationControllerDelegate?)
+    func initializePopoverVC(sourceControl: UIView, bounds: CGRect, delegate: UIPopoverPresentationControllerDelegate?)
     {
-        let sBounds = sourceControl.bounds
+        let sBounds = bounds
         guard let popOverVC = self.popoverPresentationController else {return}
         popOverVC.permittedArrowDirections = .up.union(.down)
         popOverVC.delegate = delegate
@@ -76,6 +59,11 @@ class PopupContextMenuVC: UIViewController {
         popOverVC.sourceRect = CGRect(x: sBounds.maxX / 2, y: sBounds.maxY / 2, width: 0, height: 0)
         self.preferredContentSize = CGSize(width: contentWidth, height: height)
     }
+    
+    func initializePopoverVC(sourceControl: UIView, delegate: UIPopoverPresentationControllerDelegate?)
+    {
+        initializePopoverVC(sourceControl: sourceControl, bounds: sourceControl.bounds, delegate: delegate)
+    }
 }
 
 extension PopupContextMenuVC: UITableViewDataSource, UITableViewDelegate
@@ -88,6 +76,10 @@ extension PopupContextMenuVC: UITableViewDataSource, UITableViewDelegate
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         let key = keys[indexPath.row]
         cell.textLabel?.text = key
+        if (keys.count == 1) {
+            cell.textLabel?.textAlignment = .center
+            tableView.separatorColor = .clear
+        }
         cell.imageView?.image = items[key] ?? UIImage()
         return cell
     }
@@ -97,5 +89,5 @@ extension PopupContextMenuVC: UITableViewDataSource, UITableViewDelegate
         {
             self.selectHandler?(indexPath.row, self.keys)
         }
-    }
+    }        
 }

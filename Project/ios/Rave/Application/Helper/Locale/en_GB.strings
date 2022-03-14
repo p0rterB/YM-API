@@ -23,6 +23,7 @@
 "track_option_play_next" = "Play next";
 "track_option_add_to_queue" = "Add to queue";
 "track_option_dislike" = "Dislike";
+"track_option_share" = "Share";
 
 "radio_title" = "Radio";
 "radio_recommended_stations" = "Recommended stations";
@@ -47,6 +48,8 @@
 "general_today" = "Today";
 "general_yesterday" = "Yesterday";
 "general_download" = "Download";
+"general_copy" = "Copy";
+"general_remove" = "Remove";
 "general_tracks" = "Tracks";
 "general_albums" = "Albums";
 "general_artists" = "Artists";

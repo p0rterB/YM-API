@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "YM-API"
-  spec.version      = "0.6.0"
+  spec.version      = "0.6.1"
   spec.summary      = "Unofficial Yandex Music API"
   spec.homepage     = "https://github.com/p0rterB/YM-API"
   spec.license      = { :type => "GNU LGPL v3.0", :file => "LICENSE" }

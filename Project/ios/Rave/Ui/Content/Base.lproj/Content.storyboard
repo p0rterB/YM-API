@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -120,14 +120,14 @@
                                     <constraint firstAttribute="width" secondItem="CWn-B3-plZ" secondAttribute="height" multiplier="1:1" id="2T0-KG-9zc"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="TRACK_TITLE" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-bj-KGn">
-                                <rect key="frame" x="16" y="357" width="288" height="23"/>
+                            <label opaque="NO" contentMode="left" text="TRACK_TITLE" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-bj-KGn">
+                                <rect key="frame" x="16" y="357" width="118.5" height="23"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="TRACK_ARTISTS" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMn-p5-dhe">
-                                <rect key="frame" x="16" y="384" width="288" height="17"/>
+                            <label opaque="NO" contentMode="left" text="TRACK_ARTISTS" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMn-p5-dhe">
+                                <rect key="frame" x="16" y="384" width="110.5" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
@@ -158,7 +158,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6iM-8G-MXW">
-                                <rect key="frame" x="16" y="480" width="288" height="64"/>
+                                <rect key="frame" x="16" y="460" width="288" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6b-Rb-jiF">
                                         <rect key="frame" x="0.0" y="12" width="40" height="40"/>
@@ -230,6 +230,39 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="lgV-GY-IEf">
+                                <rect key="frame" x="16" y="532" width="288" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkK-Dj-DmJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="dal-Sn-vA2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="ic_repeat_off"/>
+                                        <state key="selected" image="ic_repeat_on"/>
+                                        <connections>
+                                            <action selector="btn_playRepeat_Tap:" destination="hhZ-73-B2E" eventType="touchUpInside" id="8nN-nU-Z07"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3m-54-D0w">
+                                        <rect key="frame" x="248" y="0.0" width="40" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="zvB-jK-Rhf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="ic_shuffle_off"/>
+                                        <state key="selected" image="ic_shuffle_on"/>
+                                        <connections>
+                                            <action selector="btn_playShuffle_Tap:" destination="hhZ-73-B2E" eventType="touchUpInside" id="hYZ-Xp-HBu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-Fm-8Pz">
                                 <rect key="frame" x="0.0" y="60" width="320" height="508"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -245,34 +278,39 @@
                             <constraint firstItem="6iM-8G-MXW" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" constant="16" id="9Pu-3O-IpR"/>
                             <constraint firstItem="vhn-2B-XBZ" firstAttribute="centerX" secondItem="SzA-xL-bsK" secondAttribute="centerX" id="9cL-DB-za3"/>
                             <constraint firstItem="141-LN-Vl4" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" constant="16" id="9x8-XR-fgg"/>
-                            <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="ahQ-bj-KGn" secondAttribute="trailing" constant="16" id="HXE-Mh-Bnb"/>
+                            <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ahQ-bj-KGn" secondAttribute="trailing" constant="16" id="HXE-Mh-Bnb"/>
                             <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CWn-B3-plZ" secondAttribute="trailing" constant="16" id="HgY-XV-dr4"/>
                             <constraint firstItem="vhn-2B-XBZ" firstAttribute="top" secondItem="onj-Ca-TDp" secondAttribute="top" id="IFi-m3-nwm"/>
                             <constraint firstAttribute="trailing" secondItem="6iM-8G-MXW" secondAttribute="trailing" constant="16" id="L4y-Zd-h9F"/>
                             <constraint firstItem="CWn-B3-plZ" firstAttribute="centerX" secondItem="SzA-xL-bsK" secondAttribute="centerX" id="Nso-Jh-hy5"/>
-                            <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="MMn-p5-dhe" secondAttribute="trailing" constant="16" id="OeI-mi-R3K"/>
+                            <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MMn-p5-dhe" secondAttribute="trailing" constant="16" id="OeI-mi-R3K"/>
                             <constraint firstItem="Rfp-Fm-8Pz" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" id="QIt-Xn-4pA"/>
                             <constraint firstItem="xTd-Wg-WyR" firstAttribute="top" secondItem="141-LN-Vl4" secondAttribute="bottom" id="SVE-JP-JSk"/>
                             <constraint firstItem="CWn-B3-plZ" firstAttribute="top" secondItem="vhn-2B-XBZ" secondAttribute="bottom" constant="28" id="VIh-ft-BOA"/>
                             <constraint firstItem="lHW-SB-ocQ" firstAttribute="top" secondItem="onj-Ca-TDp" secondAttribute="top" id="W37-M5-4hN"/>
                             <constraint firstItem="ahQ-bj-KGn" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" constant="16" id="WUW-QI-hU9"/>
                             <constraint firstItem="KML-M6-Jfb" firstAttribute="top" secondItem="onj-Ca-TDp" secondAttribute="top" id="YZ0-4x-o31"/>
+                            <constraint firstItem="lgV-GY-IEf" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" constant="16" id="aBg-ee-Zlg"/>
                             <constraint firstItem="MMn-p5-dhe" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" constant="16" id="bLl-5u-vL6"/>
+                            <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="lgV-GY-IEf" secondAttribute="trailing" constant="16" id="bzY-Ii-ioK"/>
                             <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="Rfp-Fm-8Pz" secondAttribute="trailing" id="cHY-y8-yX6"/>
                             <constraint firstItem="ahQ-bj-KGn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CWn-B3-plZ" secondAttribute="bottom" constant="16" id="djh-vA-xST"/>
                             <constraint firstItem="141-LN-Vl4" firstAttribute="top" secondItem="MMn-p5-dhe" secondAttribute="bottom" constant="8" id="eJa-3E-r59"/>
                             <constraint firstItem="KML-M6-Jfb" firstAttribute="leading" secondItem="onj-Ca-TDp" secondAttribute="leading" id="gZn-f9-9yf"/>
                             <constraint firstItem="MMn-p5-dhe" firstAttribute="top" secondItem="ahQ-bj-KGn" secondAttribute="bottom" constant="4" id="hKt-e5-u4p"/>
-                            <constraint firstItem="onj-Ca-TDp" firstAttribute="bottom" secondItem="6iM-8G-MXW" secondAttribute="bottom" constant="24" id="mt8-FQ-nNb"/>
+                            <constraint firstItem="onj-Ca-TDp" firstAttribute="bottom" secondItem="lgV-GY-IEf" secondAttribute="bottom" constant="12" id="l3Y-2l-cz0"/>
                             <constraint firstItem="onj-Ca-TDp" firstAttribute="bottom" secondItem="Rfp-Fm-8Pz" secondAttribute="bottom" id="oga-FN-g9W"/>
                             <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="xTd-Wg-WyR" secondAttribute="trailing" constant="16" id="p5w-KL-04T"/>
+                            <constraint firstItem="lgV-GY-IEf" firstAttribute="top" secondItem="6iM-8G-MXW" secondAttribute="bottom" constant="8" id="rkq-au-0ND"/>
                             <constraint firstItem="onj-Ca-TDp" firstAttribute="trailing" secondItem="lHW-SB-ocQ" secondAttribute="trailing" id="wHa-MZ-IE4"/>
-                            <constraint firstItem="6iM-8G-MXW" firstAttribute="top" secondItem="xTd-Wg-WyR" secondAttribute="bottom" constant="24" id="z6F-j8-etN"/>
+                            <constraint firstItem="6iM-8G-MXW" firstAttribute="top" secondItem="xTd-Wg-WyR" secondAttribute="bottom" constant="4" id="z6F-j8-etN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btn_nextTrack" destination="w14-16-FrN" id="dJg-2p-2aG"/>
                         <outlet property="btn_playPauseTrack" destination="GCo-zk-WBl" id="cnM-Ai-Qia"/>
+                        <outlet property="btn_playRepeat" destination="SkK-Dj-DmJ" id="2Y8-R3-Chv"/>
+                        <outlet property="btn_playShuffle" destination="y3m-54-D0w" id="tRD-pb-tnc"/>
                         <outlet property="btn_prevTrack" destination="bip-AA-Rq4" id="4HG-Zl-ayQ"/>
                         <outlet property="btn_trackDislike" destination="y6b-Rb-jiF" id="fa6-hq-1Ua"/>
                         <outlet property="btn_trackLike" destination="a4E-Tp-mfL" id="duW-YS-fwH"/>
@@ -299,6 +337,10 @@
         <image name="ic_pause" width="32" height="32"/>
         <image name="ic_play" width="32" height="32"/>
         <image name="ic_previous" width="32" height="32"/>
+        <image name="ic_repeat_off" width="24" height="24"/>
+        <image name="ic_repeat_on" width="24" height="24"/>
+        <image name="ic_shuffle_off" width="24" height="24"/>
+        <image name="ic_shuffle_on" width="24" height="24"/>
         <image name="ic_stop" width="32" height="32"/>
         <image name="ic_stopped" width="32" height="32"/>
         <image name="playlist_template" width="200" height="200"/>

@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UIApplication.shared.beginReceivingRemoteControlEvents()
         NotificationCenter.default.addObserver(self, selector: #selector(onAudioRouteChange(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AVInterruptionChanged(_:)), name: AVAudioSession.interruptionNotification, object: nil)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -49,8 +50,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (!playerQueue.playing) {
             let result = playerQueue.pauseTrack(force: true)
             #if DEBUG
-            print("Audio session has paused state. Refresh paused UI state:" + String(result))
+            print("Audio session has paused state. Refresh paused UI state:", result)
             #endif
+        }
+    }
+    
+    @objc fileprivate func AVInterruptionChanged(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue)
+        else {return}
+        switch interruptionType {
+        case .began:
+#if DEBUG
+        print("AV Session Interruption began")
+#endif
+        case .ended:
+            playerQueue.setupNowPlaying()
+#if DEBUG
+        print("AV Session Interruption ended")
+#endif
+        default:
+#if DEBUG
+        print("AV Session Interruption unknown state")
+#endif
         }
     }
 
@@ -66,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     if output.portType == AVAudioSession.Port.headphones || output.portType == AVAudioSession.Port.airPlay || output.portType == AVAudioSession.Port.bluetoothA2DP {
                         let result = playerQueue.pauseTrack(force: true)
                         #if DEBUG
-                        print("Old audio route unavailable. Pausing audio:" + String(result))
+                        print("Old audio route unavailable. Pausing audio:", result)
                         #endif
                         break
                     }

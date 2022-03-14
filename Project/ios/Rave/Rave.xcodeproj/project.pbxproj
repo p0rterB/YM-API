@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840C8B7D27AC577800393E2B /* PopupTrackMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */; };
+		8411CE1927C610A500ADC355 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8411CE1B27C610A500ADC355 /* Auth.storyboard */; };
+		8411CE1D27C610C100ADC355 /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8411CE1F27C610C100ADC355 /* Content.storyboard */; };
 		847CB31C2702627400269A9C /* SelectorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2D42702627400269A9C /* SelectorDelegate.swift */; };
 		847CB31E2702627400269A9C /* PlayerQueueDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2D62702627400269A9C /* PlayerQueueDelegate.swift */; };
 		847CB31F2702627400269A9C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2D82702627400269A9C /* Constants.swift */; };
@@ -34,10 +37,8 @@
 		847CB3362702627400269A9C /* RadioDashboardTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CB2F82702627400269A9C /* RadioDashboardTVCell.xib */; };
 		847CB3372702627400269A9C /* RadioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2F92702627400269A9C /* RadioVC.swift */; };
 		847CB3382702627400269A9C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FB2702627400269A9C /* LoginVC.swift */; };
-		847CB3392702627400269A9C /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847CB2FC2702627400269A9C /* Auth.storyboard */; };
 		847CB33A2702627400269A9C /* PopPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FD2702627400269A9C /* PopPasswordVC.swift */; };
 		847CB33B2702627400269A9C /* MainMenuTBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FE2702627400269A9C /* MainMenuTBC.swift */; };
-		847CB33C2702627400269A9C /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847CB3002702627400269A9C /* Content.storyboard */; };
 		847CB33D2702627400269A9C /* PlaylistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB3012702627400269A9C /* PlaylistVC.swift */; };
 		847CB33E2702627400269A9C /* AudioPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB3022702627400269A9C /* AudioPlayerVC.swift */; };
 		847CB33F2702627400269A9C /* FavouriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB3032702627400269A9C /* FavouriteVC.swift */; };
@@ -77,6 +78,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTrackMenuVC.swift; sourceTree = "<group>"; };
+		8411CE1727C60F8F00ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8411CE1827C60FB100ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8411CE1A27C610A500ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Auth.storyboard; sourceTree = "<group>"; };
+		8411CE1C27C610AF00ADC355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Auth.storyboard; sourceTree = "<group>"; };
+		8411CE1E27C610C100ADC355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Content.storyboard; sourceTree = "<group>"; };
+		8411CE2127C610C700ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Content.strings; sourceTree = "<group>"; };
 		847CB14727025EBF00269A9C /* Rave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847CB2D42702627400269A9C /* SelectorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorDelegate.swift; sourceTree = "<group>"; };
 		847CB2D62702627400269A9C /* PlayerQueueDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerQueueDelegate.swift; sourceTree = "<group>"; };
@@ -106,10 +114,8 @@
 		847CB2F82702627400269A9C /* RadioDashboardTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RadioDashboardTVCell.xib; sourceTree = "<group>"; };
 		847CB2F92702627400269A9C /* RadioVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioVC.swift; sourceTree = "<group>"; };
 		847CB2FB2702627400269A9C /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		847CB2FC2702627400269A9C /* Auth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		847CB2FD2702627400269A9C /* PopPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopPasswordVC.swift; sourceTree = "<group>"; };
 		847CB2FE2702627400269A9C /* MainMenuTBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuTBC.swift; sourceTree = "<group>"; };
-		847CB3002702627400269A9C /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
 		847CB3012702627400269A9C /* PlaylistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistVC.swift; sourceTree = "<group>"; };
 		847CB3022702627400269A9C /* AudioPlayerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerVC.swift; sourceTree = "<group>"; };
 		847CB3032702627400269A9C /* FavouriteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteVC.swift; sourceTree = "<group>"; };
@@ -224,9 +230,9 @@
 		847CB2DE2702627400269A9C /* Locale */ = {
 			isa = PBXGroup;
 			children = (
-				847CB2DF2702627400269A9C /* ru_RU.strings */,
 				847CB2E02702627400269A9C /* Localisator.swift */,
 				847CB2E12702627400269A9C /* en_GB.strings */,
+				847CB2DF2702627400269A9C /* ru_RU.strings */,
 			);
 			path = Locale;
 			sourceTree = "<group>";
@@ -300,7 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				847CB2FB2702627400269A9C /* LoginVC.swift */,
-				847CB2FC2702627400269A9C /* Auth.storyboard */,
+				8411CE1B27C610A500ADC355 /* Auth.storyboard */,
 				847CB2FD2702627400269A9C /* PopPasswordVC.swift */,
 			);
 			path = Auth;
@@ -309,11 +315,11 @@
 		847CB2FF2702627400269A9C /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				847CB3002702627400269A9C /* Content.storyboard */,
+				847CB3042702627400269A9C /* Cell */,
 				847CB3012702627400269A9C /* PlaylistVC.swift */,
 				847CB3022702627400269A9C /* AudioPlayerVC.swift */,
 				847CB3032702627400269A9C /* FavouriteVC.swift */,
-				847CB3042702627400269A9C /* Cell */,
+				8411CE1F27C610C100ADC355 /* Content.storyboard */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				847CB3142702627400269A9C /* PopupContextMenuVC.swift */,
+				840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */,
 				847CB3152702627400269A9C /* Dialog.storyboard */,
 			);
 			path = Dialog;
@@ -395,7 +402,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					847CB14627025EBF00269A9C = {
 						CreatedOnToolsVersion = 12.5;
@@ -410,6 +417,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 847CB13E27025EBF00269A9C;
 			productRefGroup = 847CB14827025EBF00269A9C /* Products */;
@@ -427,12 +435,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				847CB3412702627400269A9C /* LoadingTVCell.xib in Resources */,
-				847CB3392702627400269A9C /* Auth.storyboard in Resources */,
+				8411CE1927C610A500ADC355 /* Auth.storyboard in Resources */,
 				847CB3482702627400269A9C /* LaunchScreen.storyboard in Resources */,
 				847CB3252702627400269A9C /* en_GB.strings in Resources */,
 				847CB34E2702627400269A9C /* PlayerWidgetView.xib in Resources */,
 				847CB3362702627400269A9C /* RadioDashboardTVCell.xib in Resources */,
-				847CB33C2702627400269A9C /* Content.storyboard in Resources */,
+				8411CE1D27C610C100ADC355 /* Content.storyboard in Resources */,
 				847CB3302702627400269A9C /* PersonalPlaylistCVCell.xib in Resources */,
 				847CB3322702627400269A9C /* PersonalPlaylistsTVCell.xib in Resources */,
 				847CB3442702627400269A9C /* FavouriteIntroTVCell.xib in Resources */,
@@ -472,6 +480,7 @@
 				847CB3202702627400269A9C /* NSObject.swift in Sources */,
 				847CB3342702627400269A9C /* RadioCVCell.swift in Sources */,
 				847CB32B2702627400269A9C /* Properties.swift in Sources */,
+				840C8B7D27AC577800393E2B /* PopupTrackMenuVC.swift in Sources */,
 				847CB3452702627400269A9C /* LoadingTVCell.swift in Sources */,
 				847CB3282702627400269A9C /* PlistWrapper.swift in Sources */,
 				847CB3312702627400269A9C /* PersonalPlaylistCVCell.swift in Sources */,
@@ -493,10 +502,29 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8411CE1B27C610A500ADC355 /* Auth.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8411CE1A27C610A500ADC355 /* ru */,
+				8411CE1C27C610AF00ADC355 /* Base */,
+			);
+			name = Auth.storyboard;
+			sourceTree = "<group>";
+		};
+		8411CE1F27C610C100ADC355 /* Content.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8411CE1E27C610C100ADC355 /* Base */,
+				8411CE2127C610C700ADC355 /* ru */,
+			);
+			name = Content.storyboard;
+			sourceTree = "<group>";
+		};
 		847CB30D2702627400269A9C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				847CB30E2702627400269A9C /* Base */,
+				8411CE1727C60F8F00ADC355 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -505,6 +533,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				847CB3102702627400269A9C /* Base */,
+				8411CE1827C60FB100ADC355 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -516,6 +545,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -563,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -577,6 +607,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -618,7 +649,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -634,8 +665,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -643,9 +675,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -659,7 +692,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -667,7 +700,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.5;
+				MARKETING_VERSION = 0.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

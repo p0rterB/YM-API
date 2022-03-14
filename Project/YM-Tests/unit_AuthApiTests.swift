@@ -37,14 +37,14 @@ class unit_AuthApiTests: XCTestCase {
                 let dict = try result.get()
                 let actualToken: String = dict[.access_token] ?? ""
                 let expected = TestConstants.token
-                XCTAssert(actualToken.compare(expected) == .orderedSame, "Actual response value of auth" + actualToken)
+                XCTAssert(actualToken.compare(expected) == .orderedSame, "Actual response value of auth " + actualToken)
             } catch YMError.invalidResponseStatusCode(let errCode, let description) {
                 let msg: String = "No actual response value of auth: code " + String(errCode) + " - " + description
                 XCTAssert(false, msg)
-                } catch {
-                    print(error)
-                    XCTAssert(false, "No actual response value of auth: " + error.localizedDescription)
-                }
+            } catch {
+                print(error)
+                XCTAssert(false, "No actual response value of auth: " + error.localizedDescription)
+            }
             exp.fulfill()
         }
         waitForExpectations(timeout: 5) { error in
@@ -143,6 +143,46 @@ class unit_AuthApiTests: XCTestCase {
             }
         }
         waitForExpectations(timeout: 10) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testNewPassportAuthorizationResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        client.authByCredentials(login: login, pass: pass, trackId: nil, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil, xToken: nil) { result in
+            do {
+                let dict = try result.get()
+                let actualToken: String = dict[.access_token] ?? ""
+                let xToken = dict[.x_token] ?? ""
+                XCTAssert(!actualToken.isEmpty, "Actual response token value of auth " + actualToken)
+                XCTAssert(!xToken.isEmpty, "Actual response token value of auth " + xToken)
+            } catch YMError.invalidResponseStatusCode(let errCode, let description) {
+                let msg: String = "No actual response value of auth: code " + String(errCode) + " - " + description
+                XCTAssert(false, msg)
+            } catch YMError.unfinishedAuthorization(let trackId, let xToken, let innerErr) {
+                var msg: String = "Authorization error: "
+                if let g_trackId = trackId {
+                    msg += "trackID - " + g_trackId + "; "
+                }
+                if let g_xToken = xToken {
+                    msg += "xToken - " + g_xToken + "; "
+                }
+                if let g_err = innerErr {
+                    msg += "Inner error - " + g_err.localizedDescription
+                    print(g_err)
+                }
+                XCTAssert(false, msg)
+            } catch {
+                print(error)
+                XCTAssert(false, "No actual response value of auth: " + error.localizedDescription)
+            }
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 5) { error in
             if let g_error = error
             {
                 print(g_error)

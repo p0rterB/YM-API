@@ -23,6 +23,7 @@
 "track_option_play_next" = "Играть следующим";
 "track_option_add_to_queue" = "Добавить в очередь";
 "track_option_dislike" = "Не нравится";
+"track_option_share" = "Поделиться";
 
 "radio_title" = "Радио";
 "radio_recommended_stations" = "Рекомендованные станции";
@@ -47,6 +48,8 @@
 "general_today" = "Сегодня";
 "general_yesterday" = "Вчера";
 "general_download" = "Скачать";
+"general_copy" = "Скопировать";
+"general_remove" = "Удалить";
 "general_tracks" = "Треки";
 "general_albums" = "Альбомы";
 "general_artists" = "Исполнители";

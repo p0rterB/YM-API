@@ -73,11 +73,11 @@ func removeLikesTrackByApi(token: String, userId: String, tracksIds: [String], c
 }
 
 func addLikesArtistByApi(token: String, userId: String, artistIds: [String], completion: @escaping (_ result: Result<Bool, YMError>) -> Void) {
-    likeActionByApi(token: token, userId: userId, objectIds: artistIds, objType: "atrist", performRemove: false, completion: completion)
+    likeActionByApi(token: token, userId: userId, objectIds: artistIds, objType: "artist", performRemove: false, completion: completion)
 }
 
 func removeLikesArtistByApi(token: String, userId: String, artistIds: [String], completion: @escaping (_ result: Result<Bool, YMError>) -> Void) {
-    likeActionByApi(token: token, userId: userId, objectIds: artistIds, objType: "atrist", performRemove: true, completion: completion)
+    likeActionByApi(token: token, userId: userId, objectIds: artistIds, objType: "artist", performRemove: true, completion: completion)
 }
 
 func addLikesAlbumByApi(token: String, userId: String, albumIds: [String], completion: @escaping (_ result: Result<Bool, YMError>) -> Void) {

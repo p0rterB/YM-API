@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <accessibilityOverrides dynamicTypePreference="2"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="PlaylistIntroTVCell" customModule="Rave" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="205" id="KGk-i7-Jjw" customClass="PlaylistIntroTVCell" customModule="Rave" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="205"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="205"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playlist_template" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-1C-jte">
@@ -26,62 +27,41 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="PLAYLIST_TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3Y-4G-RON">
-                        <rect key="frame" x="24" y="144" width="272" height="23"/>
+                        <rect key="frame" x="24" y="144" width="272" height="24"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKS_COUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQ3-vC-Hdq">
-                        <rect key="frame" x="24" y="171" width="272" height="20"/>
+                        <rect key="frame" x="24" y="172" width="272" height="21"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" systemColor="systemGrayColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKV-kf-TwM">
-                        <rect key="frame" x="24" y="199" width="272" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="6E7-B1-Gyu"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <state key="normal" title="DOWNLOAD" image="ic_download">
-                            <color key="titleColor" systemColor="linkColor"/>
-                        </state>
-                        <connections>
-                            <action selector="btn_download_Tap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ebg-Oo-9H0"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="aKV-kf-TwM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="1mp-2p-tkn"/>
                     <constraint firstAttribute="trailingMargin" secondItem="pQ3-vC-Hdq" secondAttribute="trailing" constant="8" id="Iul-Tr-sAJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="v3Y-4G-RON" secondAttribute="trailing" constant="8" id="LBe-0j-QVA"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="aKV-kf-TwM" secondAttribute="bottom" constant="8" id="OPt-YA-xl8"/>
                     <constraint firstItem="pQ3-vC-Hdq" firstAttribute="top" secondItem="v3Y-4G-RON" secondAttribute="bottom" constant="4" id="Qoi-hy-8Wa"/>
                     <constraint firstItem="v3Y-4G-RON" firstAttribute="top" secondItem="eeg-1C-jte" secondAttribute="bottom" constant="16" id="UEc-JU-pQ5"/>
                     <constraint firstItem="v3Y-4G-RON" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="axc-3F-nc0"/>
                     <constraint firstItem="pQ3-vC-Hdq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="dhv-9d-uyx"/>
+                    <constraint firstAttribute="bottom" secondItem="pQ3-vC-Hdq" secondAttribute="bottom" constant="12" id="jjR-E1-kd1"/>
                     <constraint firstItem="eeg-1C-jte" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="mZX-iv-dGA"/>
-                    <constraint firstItem="aKV-kf-TwM" firstAttribute="top" secondItem="pQ3-vC-Hdq" secondAttribute="bottom" constant="8" id="sai-jJ-w5D"/>
                     <constraint firstItem="eeg-1C-jte" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="tTO-zX-8vp"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="aKV-kf-TwM" secondAttribute="trailing" constant="8" id="wbj-ur-FlD"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="btn_download" destination="aKV-kf-TwM" id="EkN-mx-dJV"/>
                 <outlet property="imgView_playlistLogo" destination="eeg-1C-jte" id="uLh-pX-y8x"/>
                 <outlet property="lbl_title" destination="v3Y-4G-RON" id="T4C-Zq-8rH"/>
                 <outlet property="lbl_tracksCount" destination="pQ3-vC-Hdq" id="Xe2-au-q12"/>
             </connections>
-            <point key="canvasLocation" x="131.25" y="171.12676056338029"/>
+            <point key="canvasLocation" x="131.25" y="145.77464788732394"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_download" width="32" height="32"/>
         <image name="playlist_template" width="200" height="200"/>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

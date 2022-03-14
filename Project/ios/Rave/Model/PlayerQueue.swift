@@ -12,9 +12,15 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     
     fileprivate var _queueKey: Int
     var queueKey: Int {get {return _queueKey}}
+    fileprivate var _playFlags: BitBool8
     fileprivate var _currIndex: Int = -1
     fileprivate var _tracks: [Track] = []
-    var tracks: [Track] {get {return _tracks}}
+    var tracks: [Track]
+    {
+        get {
+            return _tracks
+        }
+    }
     var currIndex: Int {
         return _currIndex
     }
@@ -23,10 +29,25 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             if (_tracks.count == 0 || _currIndex < 0 || _currIndex >= _tracks.count ) {
                 return nil
             }
-            return _tracks[_currIndex]
+            return tracks[_currIndex]
         }
     }
-    var playing: Bool {get {return _player.timeControlStatus == .playing || (_player.rate != 0 && _player.error == nil)}}
+    var playing: Bool {
+        get {
+            #if DEBUG
+            print("Player: time control status", _player.timeControlStatus.rawValue, "; rate", _player.rate)
+            if let g_err = _player.error {
+                print("Player error", g_err)
+            }
+            if let g_currItem = _player.currentItem, let g_err = g_currItem.error {
+                print("Player current item: error", g_err)
+            }
+            #endif
+            
+            return _player.timeControlStatus == .playing || (_player.rate != 0 && _player.error == nil && _player.currentItem?.error == nil)
+        }
+        
+    }
     
     fileprivate var _delegate: PlayerQueueDelegate?
     var playerDelegate: PlayerQueueDelegate? {get {return _delegate}}
@@ -59,20 +80,77 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         }
     }
     
+    var shuffleTracks: Bool {
+        get { return _playFlags.getFlagPropertyValue(for: 0) }
+        set {
+            _playFlags.setFlagPropertyValue(for: 0, value: newValue)
+        }
+    }
+    
+    var repeatTracks: Bool {
+        get { return _playFlags.getFlagPropertyValue(for: 1) }
+    }
+    
+    var repeatSingleTrack: Bool {
+        get { return _playFlags.getFlagPropertyValue(for: 2) }
+    }
+    
     init(queueKey: Int, tracks: [Track], playIndex: Int, playNow: Bool, playerWidgetDelegate: PlayerQueueDelegate?, delegate: PlayerQueueDelegate?) {
+        _playFlags = BitBool8(initVal: 0)
         _queueKey = queueKey
         _tracks = tracks
         _currIndex = playIndex
         _player = AVPlayer()
-        _player.allowsExternalPlayback = true
         _player.automaticallyWaitsToMinimizeStalling = false
         _player.allowsExternalPlayback = true
-        super.init()
+        super.init()        
         setupRemoteTransportControls()
         _delegate = delegate
         _playerWidgetDelegate = playerWidgetDelegate
         if (playNow) {
             initPlay()
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if let g_avItem = object as? AVPlayerItem {
+            if keyPath == "status", g_avItem.status == .failed {
+                if let g_statusErr = g_avItem.error {
+    #if DEBUG
+                    print(g_statusErr)
+    #endif
+                    _ = pauseTrack(force: true)
+                }
+            }
+            else if keyPath == "isPlaybackLikelyToKeepUp" && !playing {
+                #if DEBUG
+                print("Observe value for player item 'isPlaybackLikelyToKeepUp' and track isn't playing -> resuming...")
+                #endif
+                _ = playTrack()
+            }
+        }
+    }
+    
+    
+    func toggleShuffleTracks() {
+        shuffleTracks = !shuffleTracks
+    }
+    
+    func toggleRepeatMode() {
+        if (!repeatTracks && !repeatSingleTrack) {
+            _playFlags.setFlagPropertyValue(for: 1, value: true)
+        }
+        else if (repeatTracks && !repeatSingleTrack) {
+            _playFlags.setFlagPropertyValue(for: 1, value: false)
+            _playFlags.setFlagPropertyValue(for: 2, value: true)
+        }
+        else if (!repeatTracks && repeatSingleTrack) {
+            _playFlags.setFlagPropertyValue(for: 1, value: false)
+            _playFlags.setFlagPropertyValue(for: 2, value: false)
+        }
+        else {
+            _playFlags.setFlagPropertyValue(for: 1, value: false)
+            _playFlags.setFlagPropertyValue(for: 2, value: false)
         }
     }
     
@@ -84,7 +162,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                     //current playing track
                     let result = playNextTrack()
                     #if DEBUG
-                    print("Forward track after dislike procedure:" + String(result))
+                    print("Next track after dislike procedure:", result)
                     #endif
                     return result
                 }
@@ -158,12 +236,17 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
             return true
         }
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: _player.currentItem)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
+        _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
+        _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
         if (_currIndex - 1 >= 0 && _currIndex < _tracks.count) {
             _currIndex -= 1
             if (playing) {
                 _player.pause()
                 let seekTime: CMTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
                 _player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = _player.currentTime().seconds
                 _delegate?.playStateChanged(playing: false)
                 _playerWidgetDelegate?.playStateChanged(playing: false)
             }
@@ -192,31 +275,43 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     }
     
     func playNextTrack(play: Bool = true) -> Bool {
-        if (_currIndex + 1 < _tracks.count) {
-            _currIndex += 1
+        if (_currIndex < _tracks.count) {
             if (playing) {
                 _player.pause()
                 let seekTime: CMTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
                 _player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = _player.currentTime().seconds
                 _delegate?.playStateChanged(playing: false)
                 _playerWidgetDelegate?.playStateChanged(playing: false)
             }
-            while _currIndex < tracks.count && tracks[_currIndex].available == false {
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: _player.currentItem)
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
+            _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
+            _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+            if (_currIndex + 1 < tracks.count) {
                 _currIndex += 1
-            }
-            if let g_track = currTrack, g_track.available == true {
-                _delegate?.trackChanged(g_track, queueIndex: _currIndex)
-                _playerWidgetDelegate?.trackChanged(g_track, queueIndex: _currIndex)
+                while _currIndex < tracks.count && tracks[_currIndex].available == false {
+                    _currIndex += 1
+                }
+                
+                if let g_track = currTrack, g_track.available == true {
+                    _delegate?.trackChanged(g_track, queueIndex: _currIndex)
+                    _playerWidgetDelegate?.trackChanged(g_track, queueIndex: _currIndex)
+                    setupNowPlaying()
+                    if (play) {
+                        initPlay()
+                    }
+                    return true
+                }
             } else {
+#if DEBUG
+                print("Last track. Can't move forward")
+#endif
+                
                 clearNowPlaying()
                 _player.replaceCurrentItem(with: nil)
                 return true
             }
-            setupNowPlaying()
-            if (play) {
-                initPlay()
-            }
-            return true
         }
         return false
     }
@@ -256,7 +351,13 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                 let item = AVPlayerItem(url: g_url)
                 _player.replaceCurrentItem(with: item)
                 setupNowPlaying()
+                //End play handler
                 NotificationCenter.default.addObserver(self, selector: #selector(self.audioPlayerDidFinishPlaying(_:)), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: item)
+                //Track buffering error
+                NotificationCenter.default.addObserver(self, selector: #selector(self.audioPlayerStalledError(_:)), name: .AVPlayerItemPlaybackStalled, object: item)
+                //Track load properties
+                item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+                item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
                 _player.play()
                 if let g_track = self.currTrack {
                     self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
@@ -276,7 +377,13 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                                     let item = AVPlayerItem(url: g_url)
                                     self._player.replaceCurrentItem(with: item)
                                     self.setupNowPlaying()
+                                    //End play handler
                                     NotificationCenter.default.addObserver(self, selector: #selector(self.audioPlayerDidFinishPlaying(_:)), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: item)
+                                    //Track buffering error
+                                    NotificationCenter.default.addObserver(self, selector: #selector(self.audioPlayerStalledError(_:)), name: .AVPlayerItemPlaybackStalled, object: item)
+                                    //Track load properties
+                                    item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+                                    item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
                                     self._player.play()
                                     if let g_track = self.currTrack {
                                         self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
@@ -313,10 +420,10 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     }
     
     func playTrack() -> Bool {
-        if (_player.currentItem != nil) {
+        if let g_currItem = _player.currentItem {
             if (!playing) {
                 _player.play()
-                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = _player.currentTime().seconds
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = g_currItem.currentTime().seconds
                 _delegate?.playStateChanged(playing: true)
                 _playerWidgetDelegate?.playStateChanged(playing: true)
             }
@@ -361,17 +468,41 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             nowPlayingInfo[MPMediaItemPropertyTitle] = g_track.title ?? AppService.localizedString(.player_unknown_track_title)
             nowPlayingInfo[MPMediaItemPropertyArtist] = g_track.artistsName.joined(separator: ",")
             nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = g_track.durationMs / 1000
+            // Set the metadata
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         }
-        // Set the metadata
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     func clearNowPlaying() {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
     }
     
+    @objc func audioPlayerStalledError(_ notification: Notification) {
+#if DEBUG
+        print("Playback stalled pause. Waiting for buffering track 1 sec")
+#endif
+        //TODO check for internet connection: false -> pauseTrack
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            _ = self.pauseTrack(force: true)
+            _ = self.playTrack()
+        }
+    }
+    
     @objc func audioPlayerDidFinishPlaying(_ notification: Notification) {
+        if (repeatSingleTrack) {
+            clearNowPlaying()
+            let result = setPlaybackPosition(position: TimeInterval(0.0))
+    #if DEBUG
+            print("Current track repeat play: " + String(result))
+    #endif            
+            setupNowPlaying()
+            _player.play()
+            return
+        }
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: _player.currentItem)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
+        _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
+        _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
         if (_currIndex + 1 < _tracks.count) {
             _currIndex += 1
             if let g_track = currTrack {
@@ -380,6 +511,18 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             }
             initPlay()
         } else {
+            if (repeatTracks) {
+                _currIndex = 0
+#if DEBUG
+        print("Tracks play repeat")
+#endif
+                if let g_track = currTrack {
+                    _delegate?.trackChanged(g_track, queueIndex: _currIndex)
+                    _playerWidgetDelegate?.trackChanged(g_track, queueIndex: _currIndex)
+                }
+                initPlay()
+                return
+            }
             clearNowPlaying()
             _player.replaceCurrentItem(with: nil)
         }

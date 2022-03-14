@@ -18,8 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="160" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATION_TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azY-cc-tgi">
-                        <rect key="frame" x="8" y="176" width="144" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATION_TITLE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azY-cc-tgi">
+                        <rect key="frame" x="8" y="179.5" width="144" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -48,10 +48,10 @@
             <constraints>
                 <constraint firstItem="7qw-bh-JnE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0km-DD-Ud3"/>
                 <constraint firstItem="azY-cc-tgi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="2ty-YK-Exx"/>
-                <constraint firstItem="azY-cc-tgi" firstAttribute="top" secondItem="7qw-bh-JnE" secondAttribute="bottom" constant="16" id="Fic-mo-ucN"/>
+                <constraint firstItem="azY-cc-tgi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7qw-bh-JnE" secondAttribute="bottom" constant="2" id="Fic-mo-ucN"/>
                 <constraint firstItem="7qw-bh-JnE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="K3P-U4-EVR"/>
                 <constraint firstAttribute="trailing" secondItem="7qw-bh-JnE" secondAttribute="trailing" id="X4Q-u3-9QE"/>
-                <constraint firstAttribute="bottom" secondItem="azY-cc-tgi" secondAttribute="bottom" constant="8" id="YXA-hJ-CQd"/>
+                <constraint firstAttribute="bottom" secondItem="azY-cc-tgi" secondAttribute="bottom" id="YXA-hJ-CQd"/>
                 <constraint firstAttribute="trailing" secondItem="azY-cc-tgi" secondAttribute="trailing" constant="8" id="aBV-2J-ViU"/>
             </constraints>
             <connections>

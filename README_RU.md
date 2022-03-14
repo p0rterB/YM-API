@@ -129,6 +129,7 @@ client.authByCredentials(login: String, pass: String, captchaAnswer: nil,
 
 Вход по логину и паролю через новую систему входа (passport.yandex):
 
+**Method 1**
 ```swift
 client.initializeAuthorization(login: login) { result in
     //Получить trackID для продолжения процесса
@@ -141,6 +142,30 @@ client.initializeAuthorization(login: login) { result in
         ...
         self.client.generateYMTokenFromXToken(xToken: xRespObj.x_token!) { result3 in
         ///Получить сгенерированный токен доступа к сервису API Яндекс Музыки
+        }
+    }
+}
+```
+
+**Method 2**
+```swift
+client.authByCredentials(login: login, pass: pass, trackId: trackId, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil, xToken: xToken) { result in
+    do {
+        let dict = try result.get()
+        //Fully authorized account (with X Token)
+        completion(.success(dict))
+    } catch YMError.unfinishedAuthorization(let apiTrackId, let apiXToken, let err) {
+        //Error during some authorization step (generating trackId, sending pass and getting XPassport instacne)
+        if (retries - 1 >= 0) {
+            self.newAuthMethod(login: login, pass: pass, trackId: apiTrackId, xToken: apiXToken, retries: retries - 1, completion: completion)
+        } else {
+            completion(.failure(YMError.unfinishedAuthorization(trackId: apiTrackId, xToken: apiXToken, innerErr: err)))
+        }
+    } catch {
+        if (retries - 1 >= 0) {
+            self.newAuthMethod(login: login, pass: pass, trackId: trackId, xToken: xToken, retries: retries - 1, completion: completion)
+        } else {
+            completion(.failure(.unfinishedAuthorization(trackId: trackId, xToken: xToken, innerErr: error)))
         }
     }
 }
@@ -188,10 +213,15 @@ track.getDownloadLink(codec: .mp3, bitrate: .kbps_192) {result in
 
 ## Приложение пример
 
+<p align="center">
+<img src="https://github.com/p0rterB/YM-API/blob/main/Project/ios/Images/appIcon.png?raw=true">
+</p>
+
 Под данное API было создано приложение под iOS (10.0+).
 В нем реализован рабочий минимум: генерируемые Яндексом плейлисты, отображение содержимого этих плейлистов,
 проигрывание композиций, возможность их лайкнуть или дизлайкнуть,
 отображение 'моей коллекции' треков с возможностью прослушивания и поиск по трекам.
+Также проигрыванием в приложении можно управлять в CarPlay через Центр Управления.
 Его исходный код находится в открытом доступе.
 
 <p align="center">

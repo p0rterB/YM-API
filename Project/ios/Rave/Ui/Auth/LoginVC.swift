@@ -25,6 +25,109 @@ class LoginVC: UIViewController {
             UIView.animate(withDuration: 0.2) {
                 self.loadingIndicator.transform = CGAffineTransform(translationX: 0, y: self.loadingIndicator.frame.height * 1.5)
             }
+            
+            /*client.initializeAuthorization(login: tb_login.text ?? "") { result in
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.2) {
+                        self.loadingIndicator.transform = .identity
+                    } completion: { (finished) in
+                        if (finished) {
+                            self.loadingIndicator.stopAnimating()
+                            self.loadingIndicator.isHidden = true
+                        }
+                    }
+                }
+                do {
+                    let trackID = try result.get()
+                    client.authorizeWithPassword(trackId: trackID, pass: self._pass, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
+                        do {
+                            let passport = try result2.get()
+                            client.generateYMTokenFromXToken(xToken: passport.x_token!) { result3 in
+                                do {
+                                    let dict = try result3.get()
+                                    let uid = Int(dict[.uid] ?? "") ?? -1
+                                    let actualToken: String = dict[.access_token] ?? ""
+                                    if (uid == -1 && actualToken.compare("") == .orderedSame) {
+                                        self._pass = ""
+                                        DispatchQueue.main.async {
+                                            let alertVC = UIAlertController(title: AppService.localizedString(.general_error), message: AppService.localizedString(.general_error), preferredStyle: .alert)
+                                            self.present(alertVC, animated: true) {
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0)
+                                                {
+                                                    alertVC.dismiss(animated: true, completion: nil)
+                                                }
+                                            }
+                                        }
+                                        return
+                                    }
+                                    appService.properties.uid = uid
+                                    appService.properties.save()
+                                    AppService.saveToken(actualToken)
+                                    DispatchQueue.main.async {
+                                        let clientVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainMenuTBC") as! UITabBarController
+                                        self.navigationController?.setViewControllers([clientVC], animated: true)
+                                        self.navigationController?.popToRootViewController(animated: true)
+                                    }
+                                } catch {
+                                    #if DEBUG
+                                    print(error)
+                                    #endif
+                                    self._pass = ""
+                                    DispatchQueue.main.async {
+                                        let alertVC = UIAlertController(title: AppService.localizedString(.general_error), message: AppService.localizedString(.general_error), preferredStyle: .alert)
+                                        self.present(alertVC, animated: true) {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0)
+                                            {
+                                                alertVC.dismiss(animated: true, completion: nil)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } catch {
+                            #if DEBUG
+                            print(error)
+                            #endif
+                            self._pass = ""
+                            DispatchQueue.main.async {
+                                let alertVC = UIAlertController(title: AppService.localizedString(.general_error), message: AppService.localizedString(.general_error), preferredStyle: .alert)
+                                self.present(alertVC, animated: true) {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0)
+                                    {
+                                        alertVC.dismiss(animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch YMError.invalidResponseStatusCode(let errCode, let description) {
+                    self._pass = ""
+                    let msg: String = "No actual response value of auth: code " + String(errCode) + " - " + description
+                    DispatchQueue.main.async {
+                        let alertVC = UIAlertController(title: AppService.localizedString(.general_error), message: msg, preferredStyle: .alert)
+                        self.present(alertVC, animated: true) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0)
+                            {
+                                alertVC.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    }
+                    } catch {
+                        #if DEBUG
+                        print(error)
+                        #endif
+                        self._pass = ""
+                        DispatchQueue.main.async {
+                            let alertVC = UIAlertController(title: AppService.localizedString(.general_error), message: AppService.localizedString(.general_error), preferredStyle: .alert)
+                            self.present(alertVC, animated: true) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0)
+                                {
+                                    alertVC.dismiss(animated: true, completion: nil)
+                                }
+                            }
+                        }
+                    }
+            }*/
             client.authByCredentials(login: tb_login.text ?? "", pass: _pass, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result in
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.2) {
@@ -119,6 +222,28 @@ class LoginVC: UIViewController {
             loadingIndicator.style = .large
         }
         setupUI()
+    }
+    
+    fileprivate func newAuthMethod(login: String, pass: String, trackId: String?, xToken: String?, retries: Int = 5, completion: @escaping (Result<[ApiAuthKeys: String], YMError>) -> Void) {
+        client.authByCredentials(login: login, pass: pass, trackId: trackId, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil, xToken: xToken) {
+            result in
+            do {
+                let dict = try result.get()
+                completion(.success(dict))
+            } catch YMError.unfinishedAuthorization(let apiTrackId, let apiXToken, let err) {
+                if (retries - 1 >= 0) {
+                    self.newAuthMethod(login: login, pass: pass, trackId: apiTrackId, xToken: apiXToken, retries: retries - 1, completion: completion)
+                } else {
+                    completion(.failure(YMError.unfinishedAuthorization(trackId: apiTrackId, xToken: apiXToken, innerErr: err)))
+                }
+            } catch {
+                if (retries - 1 >= 0) {
+                    self.newAuthMethod(login: login, pass: pass, trackId: trackId, xToken: xToken, retries: retries - 1, completion: completion)
+                } else {
+                    completion(.failure(.unfinishedAuthorization(trackId: trackId, xToken: xToken, innerErr: error)))
+                }
+            }
+        }
     }
     
     fileprivate func setupUI() {

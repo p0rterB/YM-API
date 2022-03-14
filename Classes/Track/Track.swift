@@ -84,6 +84,12 @@ public class Track: YMBaseObject, Decodable {
             return id
         }
     }
+    ///Track link for sharing
+    public var shareUrl: String {
+        get {
+            return "https://music.yandex.ru/track/" + id
+        }
+    }
     ///Track available for listening marker
     public let available: Bool?
     ///Track available for listening marker (for users with premium subscription)

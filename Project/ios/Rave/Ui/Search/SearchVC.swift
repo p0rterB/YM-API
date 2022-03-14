@@ -66,71 +66,9 @@ class SearchVC: UIViewController {
                     self.tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .automatic)
                 }
             } catch {
-                #if DEBUG
+#if DEBUG
                 print(error)
-                #endif
-            }
-        }
-    }
-    
-    fileprivate func isTrackLiked(_ track: Track, likeLib: LikeLibrary) -> Bool {
-        return likeLib.contains(track: track)
-    }
-    
-    fileprivate func isTrackDisliked(_ track: Track, dislikeLib: LikeLibrary) -> Bool {
-        return dislikeLib.contains(track: track)
-    }
-    
-    fileprivate func likeTrack(_ track: Track) {
-        if let g_lib = appService.likedLibrary, isTrackLiked(track, likeLib: g_lib) {
-            //remove like
-            let removeSuccess = appService.likedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete like status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeLike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let addSuccess = appService.likedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add like status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.like { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        }
-    }
-    
-    fileprivate func dislikeTrack(_ track: Track) {
-        if let g_lib = appService.dislikedLibrary, isTrackDisliked(track, dislikeLib: g_lib) {
-            //remove dislike
-            let removeSuccess = appService.dislikedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete dislike status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeDislike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let res = playerQueue.dislikeTrack(track)
-            #if DEBUG
-            print("Player queue delete track by dislike:" + String(res))
-            #endif
-            let addSuccess = appService.dislikedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add dislike status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.dislike { result in
-                #if DEBUG
-                print(result)
-                #endif
+#endif
             }
         }
     }
@@ -144,7 +82,7 @@ class SearchVC: UIViewController {
     }
 }
 
-extension SearchVC: UITableViewDataSource, UITableViewDelegate {
+extension SearchVC: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -163,40 +101,11 @@ extension SearchVC: UITableViewDataSource, UITableViewDelegate {
         if let g_tracks = _searchResult?.tracks {
             let track = g_tracks.results[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: TrackTVCell.className, for: indexPath) as! TrackTVCell
-            cell.initializeCell(trackTitle: track.title ?? "", artists: track.artistsName, cover: nil, available: track.available ?? false) {
-                //TODO
-                let liked = appService.likedLibrary?.contains(track: track) ?? false
-                let disliked = appService.likedLibrary?.contains(track: track) ?? false
-                
-                let popupMenuVC = PopupContextMenuVC.initializeTrackMenuVC(liked: liked, disliked: disliked) { index, keys in
-                    switch(index) {
-                    case 0:
-                        self.likeTrack(track)
-                        break
-                    case 1:
-                        #if DEBUG
-                        print("Download press")
-                        #endif
-                        break
-                    case 2:
-                        #if DEBUG
-                        print("Play next press")
-                        #endif
-                        break
-                    case 3:
-                        #if DEBUG
-                        print("Add to queue press")
-                        #endif
-                        break
-                    case 4:
-                        self.dislikeTrack(track)
-                        break
-                    default: break
-                    }
-                }
+            cell.initializeCell(trackTitle: track.title ?? "", artists: track.artistsName, cover: nil, available: track.available ?? false, onOptionsPress: {
+                let popupMenuVC = PopupTrackMenuVC.initializeVC(parentVC: self, track: track, selectHandler: nil)
                 popupMenuVC.initializePopoverVC(sourceControl: cell.btn_options, delegate: self)
                 self.present(popupMenuVC, animated: true, completion: nil)
-            }
+            })
             return cell
         }
         if let g_suggestion = _suggestion {
@@ -227,11 +136,18 @@ extension SearchVC: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (_searchResult != nil) {
-            hideKeyboard()
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        hideKeyboard()
+    }
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if let g_tracks = _searchResult?.tracks {
+            let track = g_tracks.results[indexPath.row]
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions in
+                return PopupTrackMenuVC.initializeContextMenu(parentVC: self, track: track)
+            }
         }
+        return nil
     }
 }
 

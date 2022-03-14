@@ -62,19 +62,5 @@ class TrackTVCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if (selected) {
-            if #available(iOS 11.0, *) {
-                self.backgroundColor = UIColor(named: "TrackPlayingColor")
-            } else {
-                self.backgroundColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0)
-            }
-        } else {
-            if #available(iOS 13.0, *) {
-                self.backgroundColor = UIColor.systemBackground
-            } else {
-                self.backgroundColor = UIColor.white
-            }
-        }
-    }
-    
+    }    
 }

@@ -1,5 +1,20 @@
 #  Changelog
 
+## Version 0.6.1
+**14.03.2022**
+
+**API related changes**
+
+- New sign in method (passport.yandex) *YMClient's instance.authByCredentials*
+- *Artist likes* fix;
+- Tracks' JSON parser fix
+- Radios' JSON parser fix
+
+**Sample app changes**
+
+- Small UI fixes
+_____________________________
+
 ## Version 0.6.0
 **03.11.2021**
 

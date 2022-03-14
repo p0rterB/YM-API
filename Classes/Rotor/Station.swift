@@ -18,9 +18,9 @@ public class Station: Decodable {
     ///Radio station icon
     public let icon: Icon
     ///Radio station icon
-    public let mtsIcon: Icon
+    public let mtsIcon: Icon?
     ///Radio station icon
-    public let geocellIcon: Icon
+    public let geocellIcon: Icon?
     ///Radio station category (type)
     public let idForFrom: String
     ///Legacy radio station restrictions settings
@@ -39,12 +39,12 @@ public class Station: Decodable {
         return id?.stationId
     }
     
-    public init(id: RadioId?, name: String, icon: Icon, mtsIco: Icon, geocellIco: Icon, idForFrom: String, restrictions: RadioRestrictions, restrictions2: RadioRestrictions, fullImgUrl: String?, mtsFullImgUrl: String?, parentId: RadioId?) {
+    public init(id: RadioId?, name: String, icon: Icon, mtsIcon: Icon?, geocellIcon: Icon?, idForFrom: String, restrictions: RadioRestrictions, restrictions2: RadioRestrictions, fullImgUrl: String?, mtsFullImgUrl: String?, parentId: RadioId?) {
         self.id = id
         self.name = name
         self.icon = icon
-        self.mtsIcon = mtsIco
-        self.geocellIcon = geocellIco
+        self.mtsIcon = mtsIcon
+        self.geocellIcon = geocellIcon
         self.idForFrom = idForFrom
         self.restrictions = restrictions
         self.restrictions2 = restrictions2

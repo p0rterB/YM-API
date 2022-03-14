@@ -28,9 +28,9 @@ class AudioPlayerVC: UIViewController {
         lbl_trackPlaybackPosition.text = DateUtil.formattedTrackTime(TimeInterval(sender.value))
         _refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(self.refreshPlaybackSlider), userInfo: nil, repeats: true)
         let result = playerQueue.setPlaybackPosition(position: TimeInterval(slider_trackPlaybackPosition.value))
-        #if DEBUG
+#if DEBUG
         print("Track playback position change:" + String(result))
-        #endif
+#endif
     }
     @IBAction func slider_trackPlaybackPosition_DragInside(_ sender: UISlider) {
         _refreshTimer.invalidate()
@@ -51,9 +51,9 @@ class AudioPlayerVC: UIViewController {
     @IBOutlet weak var btn_prevTrack: UIButton!
     @IBAction func btn_prevTrack_Tap(_ sender: UIButton) {
         let result = playerQueue.playPreviousTrack()
-        #if DEBUG
+#if DEBUG
         print("Previous track setup:" + String(result))
-        #endif
+#endif
     }
     @IBOutlet weak var btn_playPauseTrack: UIButton!
     @IBAction func btn_playPauseTrack_Tap(_ sender: UIButton) {
@@ -63,26 +63,26 @@ class AudioPlayerVC: UIViewController {
             if (result) {
                 sender.isSelected = false
             }
-            #if DEBUG
-            print("Pause track success:" + String(result))
-            #endif
+#if DEBUG
+            print("Pause track:" + String(result))
+#endif
         } else {
             //paused
             let result = playerQueue.playTrack()
             if (result) {
                 sender.isSelected = true
             }
-            #if DEBUG
+#if DEBUG
             print("Play track success:" + String(result))
-            #endif
+#endif
         }
     }
     @IBOutlet weak var btn_nextTrack: UIButton!
     @IBAction func btn_nextTrack_Tap(_ sender: UIButton) {
         let result = playerQueue.playNextTrack()
-        #if DEBUG
+#if DEBUG
         print("Next track setup:" + String(result))
-        #endif
+#endif
     }
     @IBOutlet weak var btn_trackLike: UIButton!
     @IBAction func btn_trackLike_Tap(_ sender: UIButton) {
@@ -90,6 +90,16 @@ class AudioPlayerVC: UIViewController {
             likeTrack(g_track)
             btn_trackLike.isSelected = !btn_trackLike.isSelected
         }
+    }
+    @IBOutlet weak var btn_playRepeat: UIButton!
+    @IBAction func btn_playRepeat_Tap(_ sender: UIButton) {
+        playerQueue.toggleRepeatMode()
+        repeatRepeatShuffleModesRefreshUI()
+    }
+    @IBOutlet weak var btn_playShuffle: UIButton!
+    @IBAction func btn_playShuffle_Tap(_ sender: UIButton) {
+        playerQueue.toggleShuffleTracks()
+        repeatRepeatShuffleModesRefreshUI()
     }
     
     fileprivate var _parentPlayerDelegate: PlayerQueueDelegate?
@@ -105,6 +115,12 @@ class AudioPlayerVC: UIViewController {
         super.viewDidLoad()
         btn_playPauseTrack.layer.cornerRadius = 32
         imagevView_trackCover.layer.cornerRadius = 16
+        var longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(trackTitleLblLongPress))
+        longPressRecognizer.cancelsTouchesInView = false
+        lbl_trackTitle.addGestureRecognizer(longPressRecognizer)
+        longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(trackArtistsLblLongPress))
+        longPressRecognizer.cancelsTouchesInView = false
+        lbl_trackArtists.addGestureRecognizer(longPressRecognizer)
         
         if playerQueue.playing {
             btn_playPauseTrack.isSelected = true
@@ -120,7 +136,28 @@ class AudioPlayerVC: UIViewController {
         playerQueue.setDelegateHandler(self)
         
         refreshUI()
+        repeatRepeatShuffleModesRefreshUI()
         setupTableView()
+    }
+    
+    @objc fileprivate func trackTitleLblLongPress() {
+        let popCopyVC = PopupContextMenuVC.initializeVC(keys: [AppService.localizedString(.general_copy)], values: [AppService.localizedString(.general_copy): nil]) { index, items in
+            if (index == 0) {
+                UIPasteboard.general.string = self.lbl_trackTitle.text
+            }
+        }
+        popCopyVC.initializePopoverVC(sourceControl: lbl_trackTitle, delegate: self)
+        self.present(popCopyVC, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func trackArtistsLblLongPress() {
+        let popCopyVC = PopupContextMenuVC.initializeVC(keys: [AppService.localizedString(.general_copy)], values: [AppService.localizedString(.general_copy): nil]) { index, items in
+            if (index == 0) {
+                UIPasteboard.general.string = self.lbl_trackArtists.text
+            }
+        }
+        popCopyVC.initializePopoverVC(sourceControl: lbl_trackArtists, delegate: self)
+        self.present(popCopyVC, animated: true, completion: nil)
     }
     
     @objc fileprivate func initRefreshTimer() {
@@ -128,24 +165,86 @@ class AudioPlayerVC: UIViewController {
         _refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(self.refreshPlaybackSlider), userInfo: nil, repeats: true)
     }
     
-    fileprivate func isTrackLiked(_ track: Track, likeLib: LikeLibrary) -> Bool {
-        return likeLib.contains(track: track)
-    }
-    
-    fileprivate func isTrackDisliked(_ track: Track, dislikeLib: LikeLibrary) -> Bool {
-        return dislikeLib.contains(track: track)
+    fileprivate func repeatRepeatShuffleModesRefreshUI() {
+        if (playerQueue.repeatSingleTrack) {
+            btn_playRepeat.setImage(UIImage(named: "ic_repeat_on_single"), for: .selected)
+            btn_playRepeat.isSelected = true
+        }
+        else if (playerQueue.repeatTracks) {
+            btn_playRepeat.setImage(UIImage(named: "ic_repeat_on"), for: .selected)
+            btn_playRepeat.isSelected = true
+        }
+        else {
+            btn_playRepeat.setImage(UIImage(named: "ic_repeat_on"), for: .selected)
+            btn_playRepeat.isSelected = false
+        }
+        btn_playShuffle.isSelected = playerQueue.shuffleTracks
     }
     
     fileprivate func likeDislikeRefreshUI(currTrack: Track) {
         if let g_lib = appService.likedLibrary {
-            btn_trackLike.isSelected = isTrackLiked(currTrack, likeLib: g_lib)
+            btn_trackLike.isSelected = g_lib.contains(track: currTrack)
         } else {
             btn_trackLike.isSelected = false
         }
         if let g_lib = appService.dislikedLibrary {
-            btn_trackDislike.isSelected = isTrackDisliked(currTrack, dislikeLib: g_lib)
+            btn_trackDislike.isSelected = g_lib.contains(track: currTrack)
         } else {
             btn_trackDislike.isSelected = false
+        }
+    }
+    
+    fileprivate func likeTrack(_ track: Track) {
+        if let g_lib = appService.likedLibrary, g_lib.contains(track: track) {
+            //remove like
+            let removeSuccess = appService.likedLibrary?.remove(track: track) ?? false
+#if DEBUG
+            print("Delete like status for track with id " + track.id + ":" + String(removeSuccess))
+#endif
+            track.removeLike { result in
+#if DEBUG
+                print(result)
+#endif
+            }
+        } else {
+            let addSuccess = appService.likedLibrary?.add(track: track) ?? false
+#if DEBUG
+            print("Add like status for track with id " + track.id + ":" + String(addSuccess))
+#endif
+            track.like { result in
+#if DEBUG
+                print(result)
+#endif
+            }
+        }
+    }
+    
+    fileprivate func dislikeTrack(_ track: Track) {
+        if let g_lib = appService.dislikedLibrary, g_lib.contains(track: track) {
+            //remove dislike
+            let removeSuccess = appService.dislikedLibrary?.remove(track: track) ?? false
+#if DEBUG
+            print("Delete dislike status for track with id " + track.id + ":" + String(removeSuccess))
+#endif
+            track.removeDislike { result in
+#if DEBUG
+                print(result)
+#endif
+            }
+        } else {
+            let res = playerQueue.dislikeTrack(track)
+#if DEBUG
+            print("Player queue delete track by dislike:" + String(res))
+#endif
+            let addSuccess = appService.dislikedLibrary?.add(track: track) ?? false
+#if DEBUG
+            print("Add dislike status for track with id " + track.id + ":" + String(addSuccess))
+#endif
+            track.dislike { result in
+#if DEBUG
+                print(result)
+#endif
+            }
         }
     }
     
@@ -191,111 +290,6 @@ class AudioPlayerVC: UIViewController {
             }
         }
     }
-    
-    fileprivate func likeTrack(_ track: Track) {
-        if let g_lib = appService.likedLibrary, isTrackLiked(track, likeLib: g_lib) {
-            //remove like
-            let removeSuccess = appService.likedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete like status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeLike { result in
-                DispatchQueue.main.async {
-                    self.btn_trackLike.isSelected = false
-                }
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let addSuccess = appService.likedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add like status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.like { result in
-                DispatchQueue.main.async {
-                    self.btn_trackLike.isSelected = true
-                }
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        }
-    }
-    
-    fileprivate func dislikeTrack(_ track: Track) {
-        if let g_lib = appService.dislikedLibrary, isTrackDisliked(track, dislikeLib: g_lib) {
-            //remove dislike
-            let removeSuccess = appService.dislikedLibrary?.remove(track: track) ?? false
-            #if DEBUG
-            print("Delete dislike status for track with id " + track.id + ":" + String(removeSuccess))
-            #endif
-            track.removeDislike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        } else {
-            let res = playerQueue.dislikeTrack(track)
-            #if DEBUG
-            print("Player queue delete track by dislike:" + String(res))
-            #endif
-            let addSuccess = appService.dislikedLibrary?.add(track: track) ?? false
-            #if DEBUG
-            print("Add dislike status for track with id " + track.id + ":" + String(addSuccess))
-            #endif
-            track.dislike { result in
-                #if DEBUG
-                print(result)
-                #endif
-            }
-        }
-    }
-    
-    fileprivate func showTrackActionsPopup(sourceControl: UIView, track: Track) {
-        
-        var liked = false
-        if let g_lib = appService.likedLibrary, let g_likes = g_lib.tracks {
-            for likedTrack in g_likes {
-                guard let g_id = likedTrack.id else {continue}
-                if (g_id.compare(track.id) == .orderedSame)
-                {
-                    liked = true
-                    break
-                }
-            }
-        }
-        var disliked = false
-        if let g_lib = appService.dislikedLibrary, let g_dislikes = g_lib.tracks {
-            for dislikedTrack in g_dislikes {
-                guard let g_id = dislikedTrack.id else {continue}
-                if (g_id.compare(track.id) == .orderedSame)
-                {
-                    disliked = true
-                    break
-                }
-            }
-        }
-        
-        let popupMenuVC = PopupContextMenuVC.initializeTrackMenuVC(liked: liked, disliked: disliked) { index, keys in
-            switch(index) {
-            case 0:
-                self.likeTrack(track)
-                break
-            case 1:
-                #if DEBUG
-                print("Download press")
-                #endif
-                break
-            case 2:
-                self.dislikeTrack(track)
-                break
-            default: break
-            }
-        }
-        popupMenuVC.initializePopoverVC(sourceControl: sourceControl, delegate: self)
-        self.present(popupMenuVC, animated: true, completion: nil)
-    }
 }
 
 extension AudioPlayerVC: UITableViewDataSource, UITableViewDelegate {
@@ -307,7 +301,13 @@ extension AudioPlayerVC: UITableViewDataSource, UITableViewDelegate {
         let track = playerQueue.tracks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: TrackTVCell.className, for: indexPath) as! TrackTVCell
         cell.initializeCell(trackTitle: track.trackTitle, artists: track.artistsName, cover: nil, available: track.available ?? false, onOptionsPress: {
-            self.showTrackActionsPopup(sourceControl: cell.btn_options, track: track)
+            let popupMenuVC = PopupTrackMenuVC.initializeVC(parentVC: self, track: track) { index, keys in
+                if let g_currTrack = playerQueue.currTrack {
+                    self.likeDislikeRefreshUI(currTrack: g_currTrack)
+                }
+            }
+            popupMenuVC.initializePopoverVC(sourceControl: cell.btn_options, delegate: self)
+            self.present(popupMenuVC, animated: true, completion: nil)
         })
         if (playerQueue.currIndex == indexPath.row) {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
@@ -327,6 +327,14 @@ extension AudioPlayerVC: UITableViewDataSource, UITableViewDelegate {
             return
         }
         playerQueue.setPlayingTrackByIndex(indexPath.row)
+    }
+    
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let track = playerQueue.tracks[indexPath.row]
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions in
+            return PopupTrackMenuVC.initializeContextMenu(parentVC: self, track: track)
+        }
     }
 }
 
