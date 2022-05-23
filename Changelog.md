@@ -1,5 +1,26 @@
 #  Changelog
 
+## Version 0.6.3
+**23.05.2022**
+
+**New API methods**
+
+- Import tracks for new playlist method (including import status check method)
+- User info retrieve method by UID or login (can be executed without active session)
+
+**API related changes**
+
+- Updated *User* class, adopting for user search method (*statistics* and *socialProfiles* fields)
+- New *SocialProfile* class
+- New *UserStatistics* class
+- New *PlaylistImportStatus* class
+
+**Sample app changes**
+
+- *Fast track skip* crash fix
+- *My playlists* retrieve and play its tracks support
+- Main radio stations full support
+
 ## Version 0.6.1
 **14.03.2022**
 

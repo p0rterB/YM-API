@@ -121,7 +121,7 @@ extension SearchVC: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let g_search = _searchResult, let g_tracks = g_search.tracks?.results {
-            playerQueue.setNewTracks(g_tracks, queueKey: 100, playIndex: indexPath.row, playNow: true)
+            playerQueue.setNewTracks(g_tracks, playIndex: indexPath.row, playNow: true)
             return
         }
         if let g_suggestion = _suggestion {

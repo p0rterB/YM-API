@@ -24,10 +24,14 @@ public class User: Decodable {
     public let sex: String?
     ///Verified marker: User participates in 'playlist of a day' generation etc
     public let verified: Bool?
+    ///User tracks statistics info
+    public let statistics: UserStatistics?
+    ///User social profiles info
+    public let socialProfiles: [SocialProfile]?
     ///Regions list
     public let regions: [Int]?
 
-    public init(uid: Int, login: String, name: String?, displayName: String?, fullName: String?, sex: String?, verified: Bool?, regions: [Int]?) {
+    public init(uid: Int, login: String, name: String?, displayName: String?, fullName: String?, sex: String?, verified: Bool?, statistics: UserStatistics?, socialProfiles: [SocialProfile]?, regions: [Int]?) {
         self.uid = uid
         self.login = login
 
@@ -36,6 +40,8 @@ public class User: Decodable {
         self.fullName = fullName
         self.sex = sex
         self.verified = verified
+        self.statistics = statistics
+        self.socialProfiles = socialProfiles
         self.regions = regions
     }
     

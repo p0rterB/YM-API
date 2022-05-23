@@ -15,6 +15,7 @@ extension ApiFunction {
         case .rotor_account_status(let secret): return ["Authorization": "OAuth " + secret]
         case .account_status(let secret): return ["Authorization": "OAuth " + secret]
         case .account_avatar(_, let secret): return ["Ya-Consumer-Authorization": "OAuth " + secret]
+        case .user_info: return [:]
         case .account_experiments(let secret): return ["Authorization": "OAuth " + secret]
         case .account_settings(let secret): return ["Authorization": "OAuth " + secret]
         case .account_settings_edit(let secret, _): return ["Authorization": "OAuth " + secret]
@@ -54,6 +55,11 @@ extension ApiFunction {
         case .tag_playlists(_, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_create(_, _, _, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_content_change(_, _, _, _, let secret): return ["Authorization": "OAuth " + secret]
+        case .playlist_import(_, _, let secret): return [
+            "Content-Type": "charset=UTF-8",
+            "Authorization": "OAuth " + secret
+        ]
+        case .playlist_import_status(_, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_delete(_, _, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_edit_title(_, _, _, let secret): return ["Authorization": "OAuth " + secret]
         case .playlist_edit_visibility(_, _, _, let secret): return ["Authorization": "OAuth " + secret]

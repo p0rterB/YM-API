@@ -30,6 +30,10 @@
 
 "favourite_title" = "Favourite";
 
+"my_playlists_title" = "My playlists";
+"my_playlists_created_title" = "Created playlists";
+"my_playlists_liked_title" = "Liked playlists";
+
 "profile_title" = "Profile";
 "profile_logout_hint" = "Are you sure to logout?";
 "profile_traffic_economy" = "Traffic economy";

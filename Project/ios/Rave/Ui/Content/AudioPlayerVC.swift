@@ -348,6 +348,12 @@ extension AudioPlayerVC: UIPopoverPresentationControllerDelegate {
 }
 
 extension AudioPlayerVC: PlayerQueueDelegate {
+    func radioStreamTracksUpdated(_ allTracks: [Track]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
+    }
+    
     func trackChanged(_ track: Track, queueIndex: Int) {
         DispatchQueue.main.async {
             self.tableView.selectRow(at: IndexPath(row: queueIndex, section: 0), animated: true, scrollPosition: .none)

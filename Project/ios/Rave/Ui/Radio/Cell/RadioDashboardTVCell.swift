@@ -44,7 +44,14 @@ extension RadioDashboardTVCell: UICollectionViewDataSource, UICollectionViewDele
         let station = _stations[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RadioCVCell.className, for: indexPath) as! RadioCVCell
         let title = station.station?.name ?? station.rupTitle ?? AppService.localizedString(.radio_title)
-        cell.initializeCell(innerViewBgColor: UIColor.purple, stationImg: nil, title: title)
+        if (!playerQueue.stationStream) {
+            cell.initializeCell(innerViewBgColor: UIColor.purple, stationImg: nil, title: title)
+        } else if (!playerQueue.stationId.isEmpty && playerQueue.stationId.compare(station.station?.radioId ?? "") == .orderedSame) {
+            cell.initializeCell(innerViewBgColor: UIColor.blue, stationImg: nil, title: title)
+        } else {
+            cell.initializeCell(stationImg: nil, title: title)
+        }
+        
         return cell
     }
     

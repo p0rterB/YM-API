@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84019E3E282D00D90023DF28 /* PlaylistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E3D282D00D90023DF28 /* PlaylistsVC.swift */; };
 		840C8B7D27AC577800393E2B /* PopupTrackMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */; };
 		8411CE1927C610A500ADC355 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8411CE1B27C610A500ADC355 /* Auth.storyboard */; };
 		8411CE1D27C610C100ADC355 /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8411CE1F27C610C100ADC355 /* Content.storyboard */; };
@@ -78,6 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		84019E3D282D00D90023DF28 /* PlaylistsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsVC.swift; sourceTree = "<group>"; };
 		840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTrackMenuVC.swift; sourceTree = "<group>"; };
 		8411CE1727C60F8F00ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8411CE1827C60FB100ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -274,10 +276,10 @@
 		847CB2EE2702627400269A9C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				847CB2F22702627400269A9C /* PersonalPlaylistsTVCell.xib */,
 				847CB2EF2702627400269A9C /* PersonalPlaylistsTVCell.swift */,
 				847CB2F02702627400269A9C /* PersonalPlaylistCVCell.xib */,
 				847CB2F12702627400269A9C /* PersonalPlaylistCVCell.swift */,
-				847CB2F22702627400269A9C /* PersonalPlaylistsTVCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -316,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				847CB3042702627400269A9C /* Cell */,
+				84019E3D282D00D90023DF28 /* PlaylistsVC.swift */,
 				847CB3012702627400269A9C /* PlaylistVC.swift */,
 				847CB3022702627400269A9C /* AudioPlayerVC.swift */,
 				847CB3032702627400269A9C /* FavouriteVC.swift */,
@@ -463,6 +466,7 @@
 			files = (
 				847CB33A2702627400269A9C /* PopPasswordVC.swift in Sources */,
 				847CB3382702627400269A9C /* LoginVC.swift in Sources */,
+				84019E3E282D00D90023DF28 /* PlaylistsVC.swift in Sources */,
 				847CB3432702627400269A9C /* FavouriteIntroTVCell.swift in Sources */,
 				847CB34F2702627400269A9C /* PlayerWidgetView.swift in Sources */,
 				847CB32E2702627400269A9C /* LandingVC.swift in Sources */,
@@ -667,7 +671,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -675,8 +679,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
+				MARKETING_VERSION = 0.7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -692,7 +696,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -700,8 +704,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.rave;
+				MARKETING_VERSION = 0.7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

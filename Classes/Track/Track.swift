@@ -263,7 +263,7 @@ public class Track: YMBaseObject, Decodable {
                 return nil
             }
             for info in g_downloadInfo {
-                if info.codec == codec.codecType && info.bitrateInKbps == bitrate.value, let g_link = info.directLink, info.linkAlive {
+                if info.codec == codec.rawValue && info.bitrateInKbps == bitrate.rawValue, let g_link = info.directLink, info.linkAlive {
                     return g_link
                 }
             }
@@ -308,7 +308,7 @@ public class Track: YMBaseObject, Decodable {
                 return
             }
             for info in g_downloadInfo {
-                if (info.codec == codec.codecType && info.bitrateInKbps == bitrate.value) {
+                if (info.codec == codec.rawValue && info.bitrateInKbps == bitrate.rawValue) {
                     info.getDirectLink { result in
                         do {
                             let link = try result.get()
@@ -324,7 +324,7 @@ public class Track: YMBaseObject, Decodable {
                     return
                 }
             }
-            let msg: String = "Codec " + codec.codecType + " and bitrate " + bitrate.valueString + " not found"
+            let msg: String = "Codec " + codec.rawValue + " and bitrate " + bitrate.valueString + " not found"
             #if DEBUG
             print(msg)
             #endif
@@ -368,12 +368,12 @@ public class Track: YMBaseObject, Decodable {
                 return
             }
             for info in g_downloadInfo {
-                if (info.codec == codec.codecType && info.bitrateInKbps == bitrate.value) {
+                if (info.codec == codec.rawValue && info.bitrateInKbps == bitrate.rawValue) {
                     info.downloadTrack(completion: completion)
                     return
                 }
             }
-            let msg: String = "Codec " + codec.codecType + " and bitrate " + bitrate.valueString + " not found"
+            let msg: String = "Codec " + codec.rawValue + " and bitrate " + bitrate.valueString + " not found"
             #if DEBUG
             print(msg)
             #endif

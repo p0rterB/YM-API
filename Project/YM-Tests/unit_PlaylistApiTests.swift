@@ -347,6 +347,50 @@ class unit_PlaylistApiTests: XCTestCase {
         }
     }
     
+    func testImportPlaylistResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        let testTracks = ["MXMS - Gravedigger", "Dynoro - Hangover", "Hexari - Paradise"]
+        client.importPlaylist(title: "Import Test", tracks: testTracks) { result in
+            do {
+                let code = try result.get()
+                XCTAssertTrue(!code.isEmpty, "Playlist import ID is empty")
+                exp.fulfill()
+            } catch {
+                print(error)
+                XCTAssert(false, "Empty playlist object: " + error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testGetImportPlaylistStatusResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        let testID = "627cc2647ed0de338a450333"
+        client.getPlaylistImportStatus(importCode: testID) { result in
+            do {
+                let status = try result.get()
+                XCTAssertTrue(status.done || !status.status.isEmpty, "Playlist import status is empty")
+                exp.fulfill()
+            } catch {
+                print(error)
+                XCTAssert(false, "Empty playlist object: " + error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
     func testRemovePlaylistResponse() {
         let exp = self.expectation(description: "Request time-out expectation")
         client.getUserPlaylists(userId: String(accountUid), completion: { result in

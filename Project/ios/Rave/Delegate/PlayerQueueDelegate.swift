@@ -9,6 +9,7 @@ import Foundation
 import YmuzApi
 
 protocol PlayerQueueDelegate {
+    func radioStreamTracksUpdated(_ allTracks: [Track])
     func trackChanged(_ track: Track, queueIndex: Int)
     func playStateChanged(playing: Bool)
     func playbackPositionChanged(_ position: TimeInterval)

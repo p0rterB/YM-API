@@ -87,6 +87,50 @@ class unit_AccountApiTests: XCTestCase {
         }
     }
     
+    func testUserInfoByUidResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        let uid = 410060648
+        client.getUserInfo(uid) { result in
+            do {
+                let info = try result.get()
+                XCTAssert(uid == info.uid, "Actual and expected account UIDs are not same")
+            } catch {
+                print(error)
+                XCTAssert(false, "Empty user info object: " + error.localizedDescription)
+            }
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
+    func testUserInfoByNicknameResponse() {
+        let exp = self.expectation(description: "Request time-out expectation")
+        let login = "gleb.liutsko"
+        client.getUserInfo(login) { result in
+            do {
+                let info = try result.get()
+                XCTAssert(login == info.login, "Actual and expected account UIDs are not same")
+            } catch {
+                print(error)
+                XCTAssert(false, "Empty user info object: " + error.localizedDescription)
+            }
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 5) { error in
+            if let g_error = error
+            {
+                print(g_error)
+                XCTAssert(false, "Timeout error: " + g_error.localizedDescription)
+            }
+        }
+    }
+    
     func testAccountSettingsResponse() {
         let exp = self.expectation(description: "Request time-out expectation")
         client.getAccountSettings { result in

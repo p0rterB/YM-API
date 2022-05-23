@@ -81,6 +81,36 @@ class PlayerWidgetView: UIView {
         setupUI()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        UIView.animate(withDuration: 0.1) {
+            self.contentView.layer.backgroundColor = UIColor.lightGray.cgColor
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        contentView.layer.removeAllAnimations()
+        UIView.animate(withDuration: 0.1) {
+            if #available(iOS 13.0, *) {
+                self.contentView.layer.backgroundColor = UIColor.secondarySystemBackground.cgColor
+            } else {
+                self.contentView.layer.backgroundColor = self.contentView.backgroundColor?.cgColor
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        contentView.layer.removeAllAnimations()
+        UIView.animate(withDuration: 0.1) {
+            if #available(iOS 13.0, *) {
+                self.contentView.layer.backgroundColor = UIColor.secondarySystemBackground.cgColor
+            } else {
+                self.contentView.layer.backgroundColor = self.contentView.backgroundColor?.cgColor
+            }
+        }
+    }
+    
     func setData(coverImg: UIImage?, trackName: String?, artist: String?) {
         trackImage = coverImg
         trackTitle = trackName ?? AppService.localizedString(.player_unknown_track_title)

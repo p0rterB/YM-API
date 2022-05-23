@@ -87,20 +87,7 @@ extension RadioVC: SelectorDelegate {
                         }
                     }
                     if (tracks.count > 0) {
-                        //TODO playerRadioTracks set method
-                        playerQueue.setNewTracks(tracks, queueKey: 0)
-                        client.sendRadioStationStartListening(stationId: self._stations[index].station?.radioId ?? "") { result in
-                            #if DEBUG
-                            print("Send start radio status")
-                            print(result)
-                            #endif
-                        }
-                        client.sendRadioTrackStartListening(stationId: self._stations[index].station?.radioId ?? "", tracksBatchId: batch.batchId, trackId: tracks[0].trackId) { result in
-                            #if DEBUG
-                            print("Send start radio track status")
-                            print(result)
-                            #endif
-                        }
+                        playerQueue.setStationStream(stationId: self._stations[index].station?.radioId ?? "", startBatchId: batch.batchId, startTracks: tracks)                        
                     }
                 } catch {
                     #if DEBUG

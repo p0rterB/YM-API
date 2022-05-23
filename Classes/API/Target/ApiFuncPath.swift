@@ -18,6 +18,7 @@ extension ApiFunction {
         //Account
         case .account_status: return "account/status"
         case .account_avatar(let size, _): return "1/bundle/account/short_info?avatar_size=islands-" + String(size)
+        case .user_info(let userIdOrNickname): return "users/" + userIdOrNickname
         case .rotor_account_status: return "rotor/account/status"
         case .account_experiments: return "account/experiments"
         case .account_settings, .account_settings_edit: return "account/settings"
@@ -62,6 +63,8 @@ extension ApiFunction {
         case .tag_playlists(let tagId, _): return "tags/" + tagId + "/playlist-ids"
         case .playlist_create(let ownerId, _, _, _): return "users/" + ownerId + "/playlists/create"
         case .playlist_content_change(let ownerId, let playlistId, _, _, _): return "users/" + ownerId + "/playlists/" + playlistId + "/change"
+        case .playlist_import(let title, _, _): return "import/playlist?title=" + title
+        case .playlist_import_status(let importCode, _): return "import/" + importCode + "/playlists"
         case .playlist_delete(let ownerId, let playlistId, _): return "users/" + ownerId + "/playlists/" + playlistId + "/delete"
         case .playlist_edit_title(let ownerId, let playlistId, _, _): return "users/" + ownerId + "/playlists/" + playlistId + "/name"
         case .playlist_edit_visibility(let ownerId, let playlistId, _, _): return "users/" + ownerId + "/playlists/" + playlistId + "/visibility"

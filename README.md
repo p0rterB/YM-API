@@ -72,7 +72,7 @@ pod 'YM-API'
 
 ## Getting started
 
-You can interact with the API throw [YMClient](https://github.com/p0rterB/YM-API/blob/main/Classes/API/YMClient.swift) instance.
+You can interact with the API through [YMClient](https://github.com/p0rterB/YM-API/blob/main/Classes/API/YMClient.swift) instance.
 
 You can initialize the client in 2 ways:
 
@@ -239,7 +239,7 @@ This application can be installed on your device for testing in several ways:
  ### Advanced and paid
  You need mac and and a developer account with a paid license.
  On the [Apple Developer site](https://developer.apple.com/account/) you need to prepare the infrastructure for uploading: certificates, application ID (basic capabilities set), provision profiles set.
-  So you can use the application not only on your personal device (App Store Connect public testing throw TestFlight) and not for 7 days.
+  So you can use the application not only on your personal device (App Store Connect public testing through TestFlight) and not for 7 days.
   P.S. And if you want to show the whole breadth of your soul and, perhaps, thank the creator, you can upload the application to TestFlight for open testing and share the link, which I will post here =)
 
 ## Getting help

@@ -15,6 +15,7 @@ enum ApiFunction {
     //Account
     case account_status(secret: String)
     case account_avatar(size: Int, secret: String)
+    case user_info(userIdOrNickname: String)
     case rotor_account_status(secret: String)
     case account_experiments(secret: String)
     case account_settings(secret: String)
@@ -54,6 +55,8 @@ enum ApiFunction {
     case playlist_edit_title(ownerId: String, playlistId: String, newTitle: String, secret: String)
     case playlist_edit_visibility(ownerId: String, playlistId: String, newVisibility: String, secret: String)
     case playlist_content_change(ownerId: String, playlistId: String, revision: Int, changeOperationsJson: String, secret: String)
+    case playlist_import(title: String, tracksInfo: [String], secret: String)
+    case playlist_import_status(importCode: String, secret: String)
     case playlist_delete(ownerId: String, playlistId: String, secret: String)
     //Labels
     case label_data(labelID: String, dataType: String, page: Int, secret: String)

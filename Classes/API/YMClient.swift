@@ -55,7 +55,13 @@ public class YMClient {
     ///Passport Yandex access token
     var xToken: String
     ///User ID
-    var userID: Int?
+    fileprivate var userID: Int?
+    ///User ID
+    public var accountUid: Int {
+        get {
+            return userID ?? -1
+        }
+    }
     ///API responses language
     var apiLang: ApiLanguage
     ///Device info
@@ -276,6 +282,20 @@ public class YMClient {
     public func getAccountStatus(completion: @escaping (_ result: Result<Status, YMError>) -> Void)
     {
         getAccountStatusByApi(token: accountSecret, completion: completion)
+    }
+    ///Get user info by defined UID. Can be executed without active session
+    ///- Parameter userID: User ID
+    ///- Parameter completion: User info response handler
+    public func getUserInfo(_ userID: Int, completion: @escaping (_ result: Result<User, YMError>) -> Void)
+    {
+        getUserInfoByApi(userIdOrNickname: String(userID), completion: completion)
+    }
+    ///Get user info by defined nickname. Can be executed without active session
+    ///- Parameter nickname: User nickname
+    ///- Parameter completion: User info response handler
+    public func getUserInfo(_ nickname: String, completion: @escaping (_ result: Result<User, YMError>) -> Void)
+    {
+        getUserInfoByApi(userIdOrNickname: nickname, completion: completion)
     }
     ///Get account settings
     ///- Parameter completion: Parsed account settings response handler
@@ -552,6 +572,21 @@ public class YMClient {
     ///- Parameter completion: Updated playlist object data response handler
     public func playlistDeleteTracks(ownerId: String, playlistId: String, from: Int, to: Int, revision: Int, completion: @escaping (_ result: Result<Playlist, YMError>) -> Void) {
         deleteTracksFromPlaylistByApi(token: accountSecret, ownerId: ownerId, playlistId: playlistId, from: from, to: to, revision: revision, completion: completion)
+    }
+    ///Create new playlist by importing tracks' names
+    ///- Parameter title: Playlist title
+    ///- Parameter tracks: Tracks' array. Each track node has format '{Authors} - {Track name}'
+    ///- Parameter completion: Import playlist init status response handler
+    public func importPlaylist(title: String, tracks: [String], completion: @escaping (_ result: Result<String, YMError>) -> Void)
+    {
+        importTracksIntoNewPlaylistByApi(token: accountSecret, title: title, tracksInfo: tracks, completion: completion)
+    }
+    ///Get playlist import status
+    ///- Parameter importCode: Playlist import ID
+    ///- Parameter completion: Import playlist check status response handler
+    public func getPlaylistImportStatus(importCode: String, completion: @escaping (_ result: Result<PlaylistImportStatus, YMError>) -> Void)
+    {
+        getImportTracksStatusByApi(token: accountSecret, importCode: importCode, completion: completion)
     }
     ///Remove playlist
     ///- Parameter playlistId: Playlist ID ('kind')

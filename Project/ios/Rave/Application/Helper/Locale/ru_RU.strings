@@ -30,6 +30,10 @@
 
 "favourite_title" = "Избранное";
 
+"my_playlists_title" = "Мои плейлисты";
+"my_playlists_created_title" = "Созданные плейлисты";
+"my_playlists_liked_title" = "Понравившиеся плейлисты";
+
 "profile_title" = "Профиль";
 "profile_logout_hint" = "Вы уверены, что хотите выйти из учетной записи?";
 "profile_traffic_economy" = "Экономия трафика";

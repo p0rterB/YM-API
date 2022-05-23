@@ -9,6 +9,41 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--PlaylistsVC-->
+        <scene sceneID="hCA-Uj-PTQ">
+            <objects>
+                <viewController storyboardIdentifier="PlaylistsVC" id="8QQ-ld-Fal" customClass="PlaylistsVC" customModule="Rave" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Sl-Qp-waJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MmT-Me-OL4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <tableView key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Fhj-dD-AJn">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </tableView>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8hN-99-5WF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8hN-99-5WF" firstAttribute="bottom" secondItem="MmT-Me-OL4" secondAttribute="bottom" id="2bS-qF-2pu"/>
+                            <constraint firstItem="MmT-Me-OL4" firstAttribute="top" secondItem="8hN-99-5WF" secondAttribute="top" id="Oeg-20-eoD"/>
+                            <constraint firstItem="MmT-Me-OL4" firstAttribute="leading" secondItem="8hN-99-5WF" secondAttribute="leading" id="WyU-1M-70g"/>
+                            <constraint firstItem="8hN-99-5WF" firstAttribute="trailing" secondItem="MmT-Me-OL4" secondAttribute="trailing" id="xHx-k4-KMb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="MmT-Me-OL4" id="Wmk-df-mKT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tDt-So-Wi7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-204" y="815"/>
+        </scene>
         <!--PlaylistVC-->
         <scene sceneID="s0d-6b-0kx">
             <objects>

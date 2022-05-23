@@ -117,10 +117,28 @@ extension FavouriteVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if (indexPath.section == 1 && indexPath.row == 0) {
-            let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: PlaylistVC.className) as! PlaylistVC
-            vc.playlist = likedGeneratedPlaylist
-            self.navigationController?.pushViewController(vc, animated: true)
+        if (indexPath.section == 1) {
+            switch indexPath.row {
+            case 0:
+                let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: PlaylistVC.className) as! PlaylistVC
+                vc.playlist = likedGeneratedPlaylist
+                self.navigationController?.pushViewController(vc, animated: true)
+                break
+            case 1:
+                break
+            case 2:
+                break
+            case 3:
+                let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: PlaylistsVC.className) as! PlaylistsVC
+                self.navigationController?.pushViewController(vc, animated: true)
+                break
+            case 4:
+                break
+            case 5:
+                break
+            default:
+                break
+            }
         }
     }
 }

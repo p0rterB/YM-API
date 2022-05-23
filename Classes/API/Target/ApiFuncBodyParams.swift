@@ -33,6 +33,7 @@ extension ApiFunction {
 
         case .account_status: return [:]
         case .account_avatar: return [:]
+        case .user_info: return [:]
         case .rotor_account_status: return [:]
         case .account_experiments: return [:]
         case .account_settings: return [:]
@@ -96,6 +97,8 @@ extension ApiFunction {
         case .tag_playlists: return [:]
         case .playlist_create(_, let title, let visibilityType, _): return ["title": title, "visibility": visibilityType]
         case .playlist_content_change(_, let playlistId, let revision, let changeOps, _): return ["kind": playlistId, "revision": revision, "diff": changeOps]
+        case .playlist_import(_, let tracksInfo, _): return ["tracks": tracksInfo]
+        case .playlist_import_status: return [:]
         case .playlist_delete: return [:]
         case .playlist_edit_title(_, _, let newTitle, _): return ["value": newTitle]
         case .playlist_edit_visibility(_, _, let newVisibility, _): return ["value": newVisibility]

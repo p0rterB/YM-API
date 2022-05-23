@@ -11,6 +11,7 @@ import YmuzApi
 class MainMenuTBC: UITabBarController {
     
     var playerWidget: PlayerWidgetView!
+    fileprivate var openingFullscreenPlayer: Bool = false;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,25 +74,18 @@ class MainMenuTBC: UITabBarController {
         if (abs_y > abs_x)
         {
             //horizontal scroll prevent
-            if (transitionPoint.y < -50 && playerQueue.tracks.count > 0)
+            if (transitionPoint.y < -50 && playerQueue.tracks.count > 0 && !openingFullscreenPlayer)
             {
+                openingFullscreenPlayer = true
                 let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: AudioPlayerVC.className) as! AudioPlayerVC
-                self.present(vc, animated: true, completion: nil)
+                self.present(vc, animated: true) {
+                    self.openingFullscreenPlayer = false
+                }
             }
         }
     }
     
     @objc fileprivate func playerWidgetTap() {
-        let oldColor = playerWidget.contentView.backgroundColor
-        playerWidget.contentView.backgroundColor = UIColor.lightGray
-        UIView.animate(withDuration: 0.5, animations: {
-            self.playerWidget.contentView.layer.backgroundColor = oldColor?.cgColor
-        }) {
-            (finished) in
-            if (finished) {
-                self.playerWidget.contentView.backgroundColor = oldColor
-            }
-        }
         if (playerQueue.tracks.count > 0) {
             let vc = UIStoryboard(name: "Content", bundle: nil).instantiateViewController(withIdentifier: AudioPlayerVC.className) as! AudioPlayerVC
             self.present(vc, animated: true, completion: nil)
@@ -115,6 +109,8 @@ class MainMenuTBC: UITabBarController {
 }
 
 extension MainMenuTBC: PlayerQueueDelegate {
+    func radioStreamTracksUpdated(_ allTracks: [Track]) {}
+    
     func trackChanged(_ track: Track, queueIndex: Int) {
         DispatchQueue.main.async {
             self.playerWidget.setData(coverImg: UIImage(named: "ic_track_template"), trackName: track.trackTitle, artist: track.artistsName.joined(separator: ","))

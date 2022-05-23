@@ -25,11 +25,6 @@ class PlaylistVC: UIViewController {
         }
     }
     fileprivate var _playingIndex: Int = -1
-    fileprivate var playlistQueueKey: Int {
-        get {
-            return (playlist?.kind ?? 0) + playlistTracks.count + (playlist?.uid ?? 0)
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -38,8 +33,7 @@ class PlaylistVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.isHidden = true
+        super.viewWillDisappear(animated)        
         playerQueue.setDelegateHandler(nil)
     }
     
@@ -153,12 +147,20 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
                 }
                 return
             }
-            _playingIndex = indexPath.row
-            if (playerQueue.queueKey == playlistQueueKey) {
+            
+            
+            let playlistTr = playlistTracks
+            if (_playingIndex < 0) {
+                _playingIndex = indexPath.row
+            }
+            if (playerQueue.tracks.count >= playlistTr.count && playerQueue.currTrack?.trackId.compare(playlistTr[_playingIndex].trackId) == .orderedSame) {
+                _playingIndex = indexPath.row
                 playerQueue.setPlayingTrackByIndex(_playingIndex)
                 return
             }
-            playerQueue.setNewTracks(playlistTracks, queueKey: playlistQueueKey, playIndex: _playingIndex, playNow: true)
+            
+            _playingIndex = indexPath.row
+            playerQueue.setNewTracks(playlistTracks, playIndex: _playingIndex, playNow: true)
         }
     }
     
@@ -176,18 +178,10 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension PlaylistVC: PlayerQueueDelegate {
+    func radioStreamTracksUpdated(_ allTracks: [Track]) {}
+    
     func trackChanged(_ track: Track, queueIndex: Int) {
-        if (playerQueue.queueKey == playlistQueueKey) {
-            if (_playingIndex == queueIndex)
-            {
-                return
-            }
-            _playingIndex = queueIndex
-            DispatchQueue.main.async {
-                self.tableView.selectRow(at: IndexPath(row: queueIndex, section: 1), animated: true, scrollPosition: .none)
-            }
-            
-        } else if playlistTracks.count > 0 {
+        if playlistTracks.count > 0 {
             for i in 0 ... playlistTracks.count - 1 {
                 let playlistTrack = playlistTracks[i]
                 if (playlistTrack.id.compare(track.id) == .orderedSame) {

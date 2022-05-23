@@ -37,6 +37,40 @@ func getAccountStatusByApi(token: String, completion: @escaping (_ result: Resul
     }
 }
 
+func getUserInfoByApi(userIdOrNickname: String, completion: @escaping (_ result: Result<User, YMError>) -> Void)
+{
+    if (userIdOrNickname.isEmpty) {
+        completion(.failure(.badRequest(errCode: -1, description: "Empty userID or nickname")))
+        return
+    }
+    guard let req: URLRequest = buildRequest(for: .user_info(userIdOrNickname: userIdOrNickname)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build user info request"))); return}
+    requestYMResponse(req) { result in
+        var response: YMResponse?
+        do {
+            let ymResponse = try result.get()
+            response = ymResponse
+            if let g_error = ymResponse.error {
+                completion(.failure(.badResponseData(errCode: ymResponse.statusCode, data: ["errorName": g_error.name, "errorDescription": g_error.message])))
+                return
+            }
+            if let g_dict = ymResponse.result as? [String: Any] {
+                let data = try JSONSerialization.data(withJSONObject: g_dict)
+                let userInfo: User = try JSONDecoder().decode(User.self, from: data)
+                completion(.success(userInfo))
+                return
+            }
+            completion(.failure(.invalidObject(objType: String(describing: User.self), description: "No data for parsing")))
+        } catch {
+            var data: [String: Any] = ["description": error]
+            if let g_data = response?.result {
+                data["data"] = g_data
+            }
+            let parsed: YMError = error as? YMError ?? YMError.general(errCode: response?.statusCode ?? -1, data: data)
+            completion(.failure(parsed))
+        }
+    }
+}
+
 func getAccountSettingsByApi(token: String, completion: @escaping (_ result: Result<UserSettings, YMError>) -> Void) {
     guard let req: URLRequest = buildRequest(for: .account_settings(secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build account settings info request"))); return}
     requestYMResponse(req) { result in

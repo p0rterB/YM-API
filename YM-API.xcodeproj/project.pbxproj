@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84019E34282CE1360023DF28 /* UserStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E33282CE1360023DF28 /* UserStatistics.swift */; };
+		84019E35282CE1360023DF28 /* UserStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E33282CE1360023DF28 /* UserStatistics.swift */; };
+		84019E38282CE4EC0023DF28 /* SocialProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E37282CE4EC0023DF28 /* SocialProfile.swift */; };
+		84019E39282CE4EC0023DF28 /* SocialProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E37282CE4EC0023DF28 /* SocialProfile.swift */; };
+		84019E3B282CFAC90023DF28 /* PlaylistImportStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E3A282CFAC90023DF28 /* PlaylistImportStatus.swift */; };
+		84019E3C282CFAC90023DF28 /* PlaylistImportStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84019E3A282CFAC90023DF28 /* PlaylistImportStatus.swift */; };
 		8408F2E4266FEB6F00308FBF /* CryptoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408F2E3266FEB6F00308FBF /* CryptoUtil.swift */; };
 		8408F2E5266FEB6F00308FBF /* CryptoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408F2E3266FEB6F00308FBF /* CryptoUtil.swift */; };
 		8408F2E7266FF02000308FBF /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408F2E6266FF02000308FBF /* Cover.swift */; };
@@ -444,6 +450,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84019E33282CE1360023DF28 /* UserStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatistics.swift; sourceTree = "<group>"; };
+		84019E37282CE4EC0023DF28 /* SocialProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProfile.swift; sourceTree = "<group>"; };
+		84019E3A282CFAC90023DF28 /* PlaylistImportStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistImportStatus.swift; sourceTree = "<group>"; };
 		8408F2E3266FEB6F00308FBF /* CryptoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtil.swift; sourceTree = "<group>"; };
 		8408F2E6266FF02000308FBF /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
 		840980ED26A829FD004DFBBC /* unit_AlbumApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unit_AlbumApiTests.swift; sourceTree = "<group>"; };
@@ -765,6 +774,7 @@
 				84A3055826E13E7E001C7597 /* PlaylsitEditComand.swift */,
 				8479564626695E0B00CAEEF2 /* PlaylistFor.swift */,
 				847956522669633900CAEEF2 /* PlaylistId.swift */,
+				84019E3A282CFAC90023DF28 /* PlaylistImportStatus.swift */,
 				847956582669642000CAEEF2 /* PlaylistRecomendation.swift */,
 				840980EF26AEF7E6004DFBBC /* Preroll.swift */,
 				847956612669738F00CAEEF2 /* Tag.swift */,
@@ -1165,10 +1175,12 @@
 				84FF3985267373F800A72BAC /* Product.swift */,
 				847956362669584B00CAEEF2 /* PurchaseSuggestions.swift */,
 				84FF3988267377C900A72BAC /* RenewableReminder.swift */,
+				84019E37282CE4EC0023DF28 /* SocialProfile.swift */,
 				84FF398B2673785100A72BAC /* Status.swift */,
 				84FF398E26737AEE00A72BAC /* Subscription.swift */,
 				84795664266974C800CAEEF2 /* User.swift */,
 				84FF399126737C6B00A72BAC /* UserSettings.swift */,
+				84019E33282CE1360023DF28 /* UserStatistics.swift */,
 				84DE27412720B0530098D63E /* XPassportObj.swift */,
 			);
 			path = Account;
@@ -1474,6 +1486,7 @@
 				84F6ABF7269D973C0051FD92 /* AccountF.swift in Sources */,
 				84D9707F26D77F43005361C3 /* Podcast.swift in Sources */,
 				8479564D266961A200CAEEF2 /* PlayCounter.swift in Sources */,
+				84019E34282CE1360023DF28 /* UserStatistics.swift in Sources */,
 				84F6AC2026A007250051FD92 /* SearchResultVideos.swift in Sources */,
 				84412C522719D382006AD72D /* MusicLabel.swift in Sources */,
 				84C5BC5C265D38B7006E41AE /* PoetryLovelMatch.swift in Sources */,
@@ -1521,6 +1534,7 @@
 				84FF39B326738C7E00A72BAC /* ApiFuncID.swift in Sources */,
 				84F6AC1426A005C70051FD92 /* SearchResultAlbums.swift in Sources */,
 				84FF397126736E6B00A72BAC /* Deactivation.swift in Sources */,
+				84019E38282CE4EC0023DF28 /* SocialProfile.swift in Sources */,
 				84C5BCD8265E408E006E41AE /* Suggestion.swift in Sources */,
 				84FF396E26736D0500A72BAC /* Autorenewable.swift in Sources */,
 				84FF397D2673717D00A72BAC /* Permissions.swift in Sources */,
@@ -1587,6 +1601,7 @@
 				8479565C2669655200CAEEF2 /* Playlist.swift in Sources */,
 				84C5BC63265D3993006E41AE /* LicenseTextPart.swift in Sources */,
 				84FF39A5267382D300A72BAC /* YMClient.swift in Sources */,
+				84019E3B282CFAC90023DF28 /* PlaylistImportStatus.swift in Sources */,
 				84F6AC0C269ECB020051FD92 /* DateUtil.swift in Sources */,
 				84FF39AE26738B1000A72BAC /* ApiLanguage.swift in Sources */,
 				84FF398F26737AEE00A72BAC /* Subscription.swift in Sources */,
@@ -1692,6 +1707,7 @@
 				84F6ABF8269D973C0051FD92 /* AccountF.swift in Sources */,
 				84D9708026D77F43005361C3 /* Podcast.swift in Sources */,
 				8479564E266961A200CAEEF2 /* PlayCounter.swift in Sources */,
+				84019E35282CE1360023DF28 /* UserStatistics.swift in Sources */,
 				84F6AC2126A007250051FD92 /* SearchResultVideos.swift in Sources */,
 				84412C532719D382006AD72D /* MusicLabel.swift in Sources */,
 				84C5BC5D265D38B7006E41AE /* PoetryLovelMatch.swift in Sources */,
@@ -1739,6 +1755,7 @@
 				84F6AC1526A005C70051FD92 /* SearchResultAlbums.swift in Sources */,
 				84FF397226736E6B00A72BAC /* Deactivation.swift in Sources */,
 				8479564B26695FC800CAEEF2 /* OpenGraphData.swift in Sources */,
+				84019E39282CE4EC0023DF28 /* SocialProfile.swift in Sources */,
 				84FF396F26736D0500A72BAC /* Autorenewable.swift in Sources */,
 				84FF397E2673717D00A72BAC /* Permissions.swift in Sources */,
 				847956882669812400CAEEF2 /* LandingList.swift in Sources */,
@@ -1805,6 +1822,7 @@
 				84FF39592673507000A72BAC /* Album.swift in Sources */,
 				8479565D2669655200CAEEF2 /* Playlist.swift in Sources */,
 				84FF39A6267382D300A72BAC /* YMClient.swift in Sources */,
+				84019E3C282CFAC90023DF28 /* PlaylistImportStatus.swift in Sources */,
 				84C5BC64265D3993006E41AE /* LicenseTextPart.swift in Sources */,
 				84F6AC0D269ECB020051FD92 /* DateUtil.swift in Sources */,
 				84FF39AF26738B1000A72BAC /* ApiLanguage.swift in Sources */,
@@ -1973,7 +1991,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2005,7 +2023,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.6.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2062,7 +2080,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2088,7 +2106,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.6.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.ym.ios;
@@ -2286,10 +2304,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KTJ3SX58WK;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2317,7 +2335,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.6.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2369,10 +2387,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KTJ3SX58WK;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2394,7 +2412,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.6.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.ym.mac;

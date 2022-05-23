@@ -102,6 +102,10 @@ enum LocalizationKeys: String
 
     case favourite_title
     
+    case my_playlists_title
+    case my_playlists_created_title
+    case my_playlists_liked_title
+    
     case profile_title
     case profile_logout_hint
     case profile_traffic_economy

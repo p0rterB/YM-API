@@ -4,16 +4,15 @@
 //
 //  Created by Developer on 23.08.2021.
 //
-
 import MediaPlayer
 import YmuzApi
 
 class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     
-    fileprivate var _queueKey: Int
-    var queueKey: Int {get {return _queueKey}}
-    fileprivate var _playFlags: BitBool8
+    fileprivate var _flags: BitBool8
     fileprivate var _currIndex: Int = -1
+    fileprivate var _stationId: String = ""
+    fileprivate var _stationBatchId: String = ""
     fileprivate var _tracks: [Track] = []
     var tracks: [Track]
     {
@@ -49,6 +48,14 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         
     }
     
+    var stationStream: Bool {
+        get { return !_stationId.isEmpty && !_stationBatchId.isEmpty}
+    }
+    
+    var stationId: String {
+        get {return _stationId}
+    }
+    
     fileprivate var _delegate: PlayerQueueDelegate?
     var playerDelegate: PlayerQueueDelegate? {get {return _delegate}}
     fileprivate var _playerWidgetDelegate: PlayerQueueDelegate?
@@ -81,23 +88,27 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     }
     
     var shuffleTracks: Bool {
-        get { return _playFlags.getFlagPropertyValue(for: 0) }
+        get { return _flags.getFlagPropertyValue(for: 0) }
         set {
-            _playFlags.setFlagPropertyValue(for: 0, value: newValue)
+            _flags.setFlagPropertyValue(for: 0, value: newValue)
         }
     }
     
     var repeatTracks: Bool {
-        get { return _playFlags.getFlagPropertyValue(for: 1) }
+        get { return _flags.getFlagPropertyValue(for: 1) }
     }
     
     var repeatSingleTrack: Bool {
-        get { return _playFlags.getFlagPropertyValue(for: 2) }
+        get { return _flags.getFlagPropertyValue(for: 2) }
     }
     
-    init(queueKey: Int, tracks: [Track], playIndex: Int, playNow: Bool, playerWidgetDelegate: PlayerQueueDelegate?, delegate: PlayerQueueDelegate?) {
-        _playFlags = BitBool8(initVal: 0)
-        _queueKey = queueKey
+    var hasObservers: Bool {
+        get { return _flags.getFlagPropertyValue(for: 3) }
+        set {_flags.setFlagPropertyValue(for: 3, value: newValue) }
+    }
+    
+    init(tracks: [Track], playIndex: Int, playNow: Bool, playerWidgetDelegate: PlayerQueueDelegate?, delegate: PlayerQueueDelegate?) {
+        _flags = BitBool8(initVal: 0)
         _tracks = tracks
         _currIndex = playIndex
         _player = AVPlayer()
@@ -138,19 +149,19 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     
     func toggleRepeatMode() {
         if (!repeatTracks && !repeatSingleTrack) {
-            _playFlags.setFlagPropertyValue(for: 1, value: true)
+            _flags.setFlagPropertyValue(for: 1, value: true)
         }
         else if (repeatTracks && !repeatSingleTrack) {
-            _playFlags.setFlagPropertyValue(for: 1, value: false)
-            _playFlags.setFlagPropertyValue(for: 2, value: true)
+            _flags.setFlagPropertyValue(for: 1, value: false)
+            _flags.setFlagPropertyValue(for: 2, value: true)
         }
         else if (!repeatTracks && repeatSingleTrack) {
-            _playFlags.setFlagPropertyValue(for: 1, value: false)
-            _playFlags.setFlagPropertyValue(for: 2, value: false)
+            _flags.setFlagPropertyValue(for: 1, value: false)
+            _flags.setFlagPropertyValue(for: 2, value: false)
         }
         else {
-            _playFlags.setFlagPropertyValue(for: 1, value: false)
-            _playFlags.setFlagPropertyValue(for: 2, value: false)
+            _flags.setFlagPropertyValue(for: 1, value: false)
+            _flags.setFlagPropertyValue(for: 2, value: false)
         }
     }
     
@@ -174,6 +185,17 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     
     func setPlayingTrackByIndex(_ index: Int, playNow: Bool = true) {
         if (index >= 0 && index < _tracks.count) {
+            if (stationStream && index >= _tracks.count - 5 && currIndex < index) {
+                //if index in last 5 tracks' indexes in list
+                DispatchQueue.global(qos: .background).async {
+                    client.sendRadioTrackSkip(stationId: self._stationId, trackId: self._tracks[self.currIndex].trackId, playedSeconds: self.trackPlaybackPosition) { result in
+                        #if DEBUG
+                        print("Send radio track " + self._tracks[self.currIndex].trackId + "  skip status")
+                        print(result)
+                        #endif
+                    }
+                }
+            }
             _currIndex = index
             if (playing)
             {
@@ -194,7 +216,78 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func setNewTracks(_ tracks: [Track], queueKey: Int, playIndex: Int = 0, playNow: Bool = true) {
+    fileprivate func downloadStreamTracks() {
+        if let g_track = currTrack, !g_track.trackId.isEmpty, stationStream {
+            client.getRadioStationTracksBatch(stationId: _stationId, lastTrackId: g_track.trackId) { batchResult in
+                do {
+                    let batch = try batchResult.get()
+                    var batchTracks: [Track] = []
+                    for seqItem in batch.sequence {
+                        if let g_track = seqItem.track {
+                            var add: Bool = true
+                            for track in self._tracks {
+                                if (track.trackId.compare(g_track.trackId) == .orderedSame) {
+                                    add = false
+                                    break
+                                }
+                            }
+                            if (add) {
+                                batchTracks.append(g_track)
+                            }
+                        }
+                    }
+                    #if DEBUG
+                    print("Loaded unique tracks from current batch " + self._stationBatchId + " - " + String(batchTracks.count))
+                    #endif
+                    if (batchTracks.count > 0) {
+                        self._stationBatchId = batch.batchId
+                        self._tracks.append(contentsOf: batchTracks)
+                        self._delegate?.radioStreamTracksUpdated(self._tracks)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    func setStationStream(stationId: String, startBatchId: String?, startTracks: [Track], playNow: Bool = true) {
+        _stationId = stationId
+        if let g_batchId = startBatchId, startTracks.count > 0 && !g_batchId.isEmpty {
+            _stationBatchId = g_batchId
+            setNewTracks(startTracks, radioStream: true)
+        } else {
+            client.getRadioStationTracksBatch(stationId: stationId, lastTrackId: nil) { batchResult in
+                do {
+                    let batch = try batchResult.get()
+                    var batchTracks: [Track] = []
+                    for seqItem in batch.sequence {
+                        if let g_track = seqItem.track {
+                            batchTracks.append(g_track)
+                        }
+                    }
+                    if (batchTracks.count > 0) {
+                        self._stationBatchId = batch.batchId
+                        self.setNewTracks(startTracks, radioStream: true)
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        client.sendRadioStationStartListening(stationId: _stationId) { result in
+            #if DEBUG
+            print("Send start radio status")
+            print(result)
+            #endif
+        }
+    }
+    
+    func setNewTracks(_ tracks: [Track], playIndex: Int = 0, playNow: Bool = true, radioStream: Bool = false) {
+        if (!radioStream) {
+            _stationId = ""
+            _stationBatchId = ""
+        }
         if (playing) {
             _player.pause()
             let seekTime: CMTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
@@ -209,7 +302,6 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             }
         }
         _tracks = tracks
-        _queueKey = queueKey
         _currIndex = playIndex
         if let g_track = currTrack {
             _delegate?.trackChanged(g_track, queueIndex: _currIndex)
@@ -238,8 +330,12 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         }
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: _player.currentItem)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
-        _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
-        _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+        if (hasObservers) {
+            _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
+            _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+            hasObservers = false
+        }
+        
         if (_currIndex - 1 >= 0 && _currIndex < _tracks.count) {
             _currIndex -= 1
             if (playing) {
@@ -284,10 +380,29 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                 _delegate?.playStateChanged(playing: false)
                 _playerWidgetDelegate?.playStateChanged(playing: false)
             }
+            
+            if (stationStream) {
+                let position = Int(trackPlaybackPosition)
+                let durationS = (currTrack?.durationMs ?? 0) / 1000
+                if let g_track = currTrack, position - durationS > 7 {
+                    DispatchQueue.global(qos: .background).async {
+                        client.sendRadioTrackSkip(stationId: self._stationId, trackId: g_track.trackId, playedSeconds: self.trackPlaybackPosition) { result in
+                            #if DEBUG
+                            print("Send radio track " + g_track.trackId + "  skip status")
+                            print(result)
+                            #endif
+                        }
+                    }
+                }
+            }
+            
             NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: _player.currentItem)
             NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
-            _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
-            _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+            if (hasObservers) {
+                _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
+                _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+                hasObservers = false
+            }
             if (_currIndex + 1 < tracks.count) {
                 _currIndex += 1
                 while _currIndex < tracks.count && tracks[_currIndex].available == false {
@@ -298,6 +413,17 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                     _delegate?.trackChanged(g_track, queueIndex: _currIndex)
                     _playerWidgetDelegate?.trackChanged(g_track, queueIndex: _currIndex)
                     setupNowPlaying()
+                    if (stationStream) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.downloadStreamTracks()
+                            client.sendRadioTrackStartListening(stationId: self._stationId, tracksBatchId: self._stationBatchId, trackId: g_track.trackId) { result in
+    #if DEBUG
+                                print("Send radio start track " + g_track.trackId + " listening status")
+                                print(result)
+    #endif
+                            }
+                        }
+                    }
                     if (play) {
                         initPlay()
                     }
@@ -345,8 +471,37 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     func initPlay() {
         if (_currIndex >= 0 || _currIndex < _tracks.count) {
             let currTrack = _tracks[_currIndex]
-            let bitrate = appService.properties.trafficEconomy ? TrackBitrate.kbps_64 : TrackBitrate.kbps_192
-            let codec = appService.properties.trafficEconomy ? TrackCodec.aac : TrackCodec.mp3
+            var bitrate = TrackBitrate.kbps_192
+            var codec = TrackCodec.mp3
+            if let g_maxQualityDownloadInfo = currTrack.maxQualityDownloadInfo, let g_minQualityDownloadInfo = currTrack.minQualityDownloadInfo {
+                if (appService.properties.trafficEconomy) {
+                    if let g_bitrate = TrackBitrate.init(rawValue: UInt16(g_minQualityDownloadInfo.bitrateInKbps)), let g_codec = TrackCodec.init(rawValue: g_minQualityDownloadInfo.codec) {
+                        bitrate = g_bitrate
+                        codec = g_codec
+                    }
+                } else {
+                    if let g_bitrate = TrackBitrate.init(rawValue: UInt16(g_maxQualityDownloadInfo.bitrateInKbps)), let g_codec = TrackCodec.init(rawValue: g_maxQualityDownloadInfo.codec) {
+                        bitrate = g_bitrate
+                        codec = g_codec
+                    }
+                }
+            } else {
+                DispatchQueue.global(qos: .background).async {
+                    currTrack.getDownloadInfo { result in
+                        do {
+                            let dInfo = try result.get()
+                            if (dInfo.count > 0) {
+                                self.initPlay()
+                            }
+                        } catch {
+                            #if DEBUG
+                            print(error)
+                            #endif
+                        }
+                    }
+                }
+                return
+            }
             if let g_link = currTrack.getDownloadLinkSync(codec: codec, bitrate: bitrate), let g_url = URL(string: g_link) {
                 let item = AVPlayerItem(url: g_url)
                 _player.replaceCurrentItem(with: item)
@@ -358,6 +513,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                 //Track load properties
                 item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
                 item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
+                hasObservers = true
                 _player.play()
                 if let g_track = self.currTrack {
                     self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
@@ -384,6 +540,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                                     //Track load properties
                                     item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
                                     item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
+                                    self.hasObservers = true
                                     self._player.play()
                                     if let g_track = self.currTrack {
                                         self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
@@ -503,6 +660,19 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: _player.currentItem)
         _player.currentItem?.removeObserver(self, forKeyPath: "status", context: nil)
         _player.currentItem?.removeObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", context: nil)
+        hasObservers = false
+        if (stationStream) {
+            DispatchQueue.global(qos: .background).async {
+                self.downloadStreamTracks()
+                client.sendRadioTrackFinished(stationId: self._stationId, tracksBatchId: self._stationBatchId, trackId: self.currTrack?.trackId ?? "", playedDurationInS: self.trackPlaybackPosition) { result in
+                    #if DEBUG
+                    print("Send radio track finish status")
+                    print(result)
+                    #endif
+                }
+            }
+            
+        }
         if (_currIndex + 1 < _tracks.count) {
             _currIndex += 1
             if let g_track = currTrack {
