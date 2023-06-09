@@ -11,25 +11,9 @@ extension ApiFunction {
 
         case .download: return [:]
 
-        case .auth_init(let login, let lang, _, _, _, _, _, _, _, _): return [
-            "client_id": clientId, "client_secret": clientSecret, "display_language": lang.rawValue, "login": login,
-            "payment_auth_retpath": "yandexmusic%3A%2F%2Fam%2Fpayment_auth", "x_token_client_id": xTokenClientId, "x_token_client_secret": xTokenClientSecret
-        ]
-        case .auth_pass(let trackId, let pass, let captchaAnswer, let captchaKey):
-            var dict: [String: Any] = ["password": pass, "track_id": trackId]
-            if let g_answer = captchaAnswer, let g_key = captchaKey {
-                dict["x_captcha_answer"] = g_answer
-                dict["x_captcha_key"] = g_key
-            }
-            return dict
-        case .auth_generate_token(let xToken, _, _, _, _, _, _, _): return ["access_token": xToken, "client_id": clientId, "client_secret": clientSecret, "grant_type": "x-token", "payment_auth_retpath": "yandexmusic%3A%2F%2Fam%2Fpayment_auth"]
-        case .auth_legacy(let login, let pass, _, let captchaAnswer, let captchaKey):
-            var dict: [String: Any] = ["grant_type": "password", "client_id": clientId, "client_secret": clientSecret, "username": login, "password": pass]
-            if let g_answer = captchaAnswer, let g_key = captchaKey {
-                dict["x_captcha_answer"] = g_answer
-                dict["x_captcha_key"] = g_key
-            }
-            return dict
+        case .auth_init_session: return [:]
+        case .auth_generate_x_token(let xClientId, let xClientSecret, _, let trackId, _, _, _, _, _, _, _): return ["client_id": xClientId, "client_secret": xClientSecret, "track_id": trackId]
+        case .auth_generate_ym_token(let xToken, let ymClientId, let ymClientSecret, _, _, _, _, _, _): return ["access_token": xToken, "client_id": ymClientId, "client_secret": ymClientSecret, "grant_type": "x-token", "payment_auth_retpath": "https%3A%2F%2Fpassport.yandex.ru%2Fclosewebview"]
 
         case .account_status: return [:]
         case .account_avatar: return [:]
@@ -60,6 +44,8 @@ extension ApiFunction {
             return ["trackIds": paramString]
         case .tracks_similar: return [:]
         case .track_download_info: return [:]
+        case .track_lyrics_download_info: return [:]
+        case .track_download_info_v2: return [:]
         case .track_supplement: return [:]
             
         case .artists(let ids, _):

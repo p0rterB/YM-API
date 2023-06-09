@@ -118,58 +118,24 @@ let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, uid: Int,
 
 Для работы с сервисом при отсутствии активной сессии необходимо авторизоваться.
 
-Вход по логину и паролю (помечен как *устаревший*, но Яндексом поддерживается):
+Авторизация происходит в 3 этапа. Основное требование - использование WKWebView
+
+**I Шаг** - Сгенерировать ссылку для инициализации авторизации 
 
 ```swift
-client.authByCredentials(login: String, pass: String, captchaAnswer: nil, 
-    captchaKey: nil, captchaCallback: nil) { result in
-    //Действия с результатом выполнения запроса
-}
+//String - Строковое представление ссылки
+//URLRequest? - Объект запроса по сгенерированной ссылке
+let pair: (String, URLRequest?) = client.generateInitAuthSessionRequest()
 ```
 
-Вход по логину и паролю через новую систему входа (passport.yandex):
+**II Шаг** - Авторизация в *passport.yandex.ru* через WKWebView через свою учетную запись, как это реализовано в официальном приложении Яндекс Музыка
 
-**Method 1**
 ```swift
-client.initializeAuthorization(login: login) { result in
-    //Получить trackID для продолжения процесса
-    ...
-    self.client.authorizeWithPassword(trackId: trackId, pass: pass, 
-    captchaAnswer: nil, captchaKey: nil, captchaCallback: nil) { result2 in
-        //Получить XPassport объект со статусом авторизации
-        //('ok' вместе с 'xToken' или ошибка с описанием)
-        //'xToken' также можно сохранить для получения аватарки пользователя
-        ...
-        self.client.generateYMTokenFromXToken(xToken: xRespObj.x_token!) { result3 in
-        ///Получить сгенерированный токен доступа к сервису API Яндекс Музыки
-        }
-    }
-}
+webView_auth.navigationDelegate = self//Использование делегата необходимо для извлечения trackID и Ya-Client-Cookie из успешной авторизации
+webView_auth.load(request)
 ```
 
-**Method 2**
-```swift
-client.authByCredentials(login: login, pass: pass, trackId: trackId, captchaAnswer: nil, captchaKey: nil, captchaCallback: nil, xToken: xToken) { result in
-    do {
-        let dict = try result.get()
-        //Fully authorized account (with X Token)
-        completion(.success(dict))
-    } catch YMError.unfinishedAuthorization(let apiTrackId, let apiXToken, let err) {
-        //Error during some authorization step (generating trackId, sending pass and getting XPassport instacne)
-        if (retries - 1 >= 0) {
-            self.newAuthMethod(login: login, pass: pass, trackId: apiTrackId, xToken: apiXToken, retries: retries - 1, completion: completion)
-        } else {
-            completion(.failure(YMError.unfinishedAuthorization(trackId: apiTrackId, xToken: apiXToken, innerErr: err)))
-        }
-    } catch {
-        if (retries - 1 >= 0) {
-            self.newAuthMethod(login: login, pass: pass, trackId: trackId, xToken: xToken, retries: retries - 1, completion: completion)
-        } else {
-            completion(.failure(.unfinishedAuthorization(trackId: trackId, xToken: xToken, innerErr: error)))
-        }
-    }
-}
-```
+**III Шаг** - Использование извлеченных trackID и Ya-Client-Cookie для генерации X-Токена и токена для яндекс музыки
 
 ## Примеры использования
 
@@ -217,7 +183,7 @@ track.getDownloadLink(codec: .mp3, bitrate: .kbps_192) {result in
 <img src="https://github.com/p0rterB/YM-API/blob/main/Project/ios/Images/appIcon.png?raw=true">
 </p>
 
-Под данное API было создано приложение под iOS (10.0+).
+Под данное API было создано приложение под iOS (11.0+).
 В нем реализован рабочий минимум: генерируемые Яндексом плейлисты, отображение содержимого этих плейлистов,
 проигрывание композиций, возможность их лайкнуть или дизлайкнуть,
 отображение 'моей коллекции' треков с возможностью прослушивания и поиск по трекам.

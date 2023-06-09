@@ -5,8 +5,6 @@
 //  Created by Developer on 03.06.2021.
 //
 
-import Foundation
-
 ///Promo code activation status
 public class PromoCodeStatus: Decodable {
     

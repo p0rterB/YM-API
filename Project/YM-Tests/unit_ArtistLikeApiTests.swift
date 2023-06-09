@@ -18,9 +18,9 @@ class unit_ArtistLikeApiTests: XCTestCase {
     var client: YMClient!
     var device: YMDevice {get {return TestConstants.device}}
     var apiLang: ApiLanguage {get {return TestConstants.apiLang}}
-    var token: String {get {return TestConstants.token}}
-    var xToken: String {get {return TestConstants.xToken}}
-    var uid: Int {get {return TestConstants.uid}}
+    var token: String {get {return TestCredentials.token}}
+    var xToken: String {get {return TestCredentials.xToken}}
+    var uid: Int {get {return TestCredentials.uid}}
     
     override func setUp() {
         client = YMClient.initialize(device: device, lang: apiLang, uid: uid, token: token, xToken: xToken)

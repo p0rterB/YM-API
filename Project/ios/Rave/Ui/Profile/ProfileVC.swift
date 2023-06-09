@@ -78,7 +78,7 @@ class ProfileVC: UIViewController {
             AppService.saveToken("")
             appService = AppService()
             let navVC = self.navigationController?.navigationController
-            let loginVC = UIStoryboard(name: "Auth", bundle: nil).instantiateViewController(withIdentifier: LoginVC.className) as! LoginVC
+            let loginVC = UIStoryboard(name: "Auth", bundle: nil).instantiateViewController(withIdentifier: LoginWebVC.className) as! LoginWebVC
             navVC?.setViewControllers([loginVC], animated: true)
         }))
         alertVC.addAction(UIAlertAction(title: AppService.localizedString(.general_no), style: .cancel, handler: nil))

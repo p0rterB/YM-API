@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainNavVC") as! UINavigationController
         if (!appService.properties.isAuthed) {
             
-            let loginVC = UIStoryboard(name: "Auth", bundle: nil).instantiateViewController(withIdentifier: LoginVC.className) as! LoginVC
+            let loginVC = UIStoryboard(name: "Auth", bundle: nil).instantiateViewController(withIdentifier: LoginWebVC.className) as! LoginWebVC
             navVc.setViewControllers([loginVC], animated: false)
         }
         

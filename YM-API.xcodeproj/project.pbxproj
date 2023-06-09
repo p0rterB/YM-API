@@ -276,7 +276,6 @@
 		84D9708326D7916B005361C3 /* unit_AlbumLikeApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9706926D6AE14005361C3 /* unit_AlbumLikeApiTests.swift */; };
 		84D9708426D7916D005361C3 /* unit_ArtistApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1635926AEE892008D9F84 /* unit_ArtistApiTests.swift */; };
 		84D9708526D79170005361C3 /* unit_ArtistLikeApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9706B26D6AEC4005361C3 /* unit_ArtistLikeApiTests.swift */; };
-		84D9708626D79172005361C3 /* unit_AuthApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC8D26A04C250051FD92 /* unit_AuthApiTests.swift */; };
 		84D9708726D79174005361C3 /* unit_DateUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC0E269ECCF00051FD92 /* unit_DateUtilTests.swift */; };
 		84D9708826D79177005361C3 /* unit_DownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1635726A81525008D9F84 /* unit_DownloaderTests.swift */; };
 		84D9708926D79179005361C3 /* unit_FeedApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1634626A6A554008D9F84 /* unit_FeedApiTests.swift */; };
@@ -336,7 +335,6 @@
 		84F6AC2726A008680051FD92 /* SearchResultUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC2526A008680051FD92 /* SearchResultUsers.swift */; };
 		84F6AC8B26A0381F0051FD92 /* ApiAuthKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC8A26A0381F0051FD92 /* ApiAuthKeys.swift */; };
 		84F6AC8C26A0381F0051FD92 /* ApiAuthKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC8A26A0381F0051FD92 /* ApiAuthKeys.swift */; };
-		84F6AC8E26A04C250051FD92 /* unit_AuthApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC8D26A04C250051FD92 /* unit_AuthApiTests.swift */; };
 		84F6AC9226A150640051FD92 /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC9126A150640051FD92 /* TestConstants.swift */; };
 		84F6AC9426A158B50051FD92 /* unit_AccountApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AC9326A158B50051FD92 /* unit_AccountApiTests.swift */; };
 		84FF393C2671E82D00A72BAC /* ArtistAlbums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF393B2671E82D00A72BAC /* ArtistAlbums.swift */; };
@@ -409,8 +407,6 @@
 		84FF39AF26738B1000A72BAC /* ApiLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39AD26738B1000A72BAC /* ApiLanguage.swift */; };
 		84FF39B326738C7E00A72BAC /* ApiFuncID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B226738C7E00A72BAC /* ApiFuncID.swift */; };
 		84FF39B426738C7E00A72BAC /* ApiFuncID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B226738C7E00A72BAC /* ApiFuncID.swift */; };
-		84FF39B626738C8D00A72BAC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B526738C8D00A72BAC /* Constants.swift */; };
-		84FF39B726738C8D00A72BAC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B526738C8D00A72BAC /* Constants.swift */; };
 		84FF39B926738CFD00A72BAC /* ApiBaseUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B826738CFD00A72BAC /* ApiBaseUrl.swift */; };
 		84FF39BA26738CFD00A72BAC /* ApiBaseUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39B826738CFD00A72BAC /* ApiBaseUrl.swift */; };
 		84FF39BC26738D2100A72BAC /* ApiFuncPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39BB26738D2100A72BAC /* ApiFuncPath.swift */; };
@@ -423,6 +419,24 @@
 		84FF39C626738DE700A72BAC /* ApiFuncBodyParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39C426738DE700A72BAC /* ApiFuncBodyParams.swift */; };
 		84FF39C826739FDA00A72BAC /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39C726739FDA00A72BAC /* Downloader.swift */; };
 		84FF39C926739FDA00A72BAC /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF39C726739FDA00A72BAC /* Downloader.swift */; };
+		8B102E2E2A2C7D8B008544C1 /* AuthVariantsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E2D2A2C7D8B008544C1 /* AuthVariantsResponse.swift */; };
+		8B102E2F2A2C7D8B008544C1 /* AuthVariantsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E2D2A2C7D8B008544C1 /* AuthVariantsResponse.swift */; };
+		8B102E312A2C7EAA008544C1 /* AuthMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E302A2C7EAA008544C1 /* AuthMethod.swift */; };
+		8B102E322A2C7EAA008544C1 /* AuthMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E302A2C7EAA008544C1 /* AuthMethod.swift */; };
+		8B102E342A2C82BE008544C1 /* AuthSentPasswordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E332A2C82BE008544C1 /* AuthSentPasswordResponse.swift */; };
+		8B102E352A2C82BE008544C1 /* AuthSentPasswordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E332A2C82BE008544C1 /* AuthSentPasswordResponse.swift */; };
+		8B102E372A2C8439008544C1 /* AuthChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E362A2C8439008544C1 /* AuthChallenge.swift */; };
+		8B102E382A2C8439008544C1 /* AuthChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E362A2C8439008544C1 /* AuthChallenge.swift */; };
+		8B102E3A2A2C84F9008544C1 /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E392A2C84F9008544C1 /* ChallengeType.swift */; };
+		8B102E3B2A2C84F9008544C1 /* ChallengeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E392A2C84F9008544C1 /* ChallengeType.swift */; };
+		8B3496C229B07D6B00EF0990 /* YMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3496C129B07D6B00EF0990 /* YMConstants.swift */; };
+		8B3496C329B07D6B00EF0990 /* YMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3496C129B07D6B00EF0990 /* YMConstants.swift */; };
+		8B3496C629B08D7200EF0990 /* LyricsDownloadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3496C529B08D7200EF0990 /* LyricsDownloadInfo.swift */; };
+		8B3496C729B08D7200EF0990 /* LyricsDownloadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3496C529B08D7200EF0990 /* LyricsDownloadInfo.swift */; };
+		8B45B4822A33A1D900D01C78 /* CustomWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B45B4812A33A1D900D01C78 /* CustomWave.swift */; };
+		8B45B4832A33A1D900D01C78 /* CustomWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B45B4812A33A1D900D01C78 /* CustomWave.swift */; };
+		8BF5CB3229AFEECB0062620C /* TestCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5CB3129AFEEBF0062620C /* TestCredentials.swift */; };
+		8BF5CB3329AFEECC0062620C /* TestCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5CB3129AFEEBF0062620C /* TestCredentials.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -627,7 +641,6 @@
 		84F6AC2226A007E20051FD92 /* SearchResultPodcasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultPodcasts.swift; sourceTree = "<group>"; };
 		84F6AC2526A008680051FD92 /* SearchResultUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultUsers.swift; sourceTree = "<group>"; };
 		84F6AC8A26A0381F0051FD92 /* ApiAuthKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAuthKeys.swift; sourceTree = "<group>"; };
-		84F6AC8D26A04C250051FD92 /* unit_AuthApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unit_AuthApiTests.swift; sourceTree = "<group>"; };
 		84F6AC9126A150640051FD92 /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 		84F6AC9326A158B50051FD92 /* unit_AccountApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unit_AccountApiTests.swift; sourceTree = "<group>"; };
 		84F7497826E65E1A0033A6D6 /* YM-API.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "YM-API.podspec"; sourceTree = "<group>"; };
@@ -676,13 +689,22 @@
 		84FF39AA2673870300A72BAC /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		84FF39AD26738B1000A72BAC /* ApiLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiLanguage.swift; sourceTree = "<group>"; };
 		84FF39B226738C7E00A72BAC /* ApiFuncID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFuncID.swift; sourceTree = "<group>"; };
-		84FF39B526738C8D00A72BAC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84FF39B826738CFD00A72BAC /* ApiBaseUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiBaseUrl.swift; sourceTree = "<group>"; };
 		84FF39BB26738D2100A72BAC /* ApiFuncPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFuncPath.swift; sourceTree = "<group>"; };
 		84FF39BE26738D9500A72BAC /* ApiHttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHttpMethod.swift; sourceTree = "<group>"; };
 		84FF39C126738DC100A72BAC /* ApiFuncHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFuncHeaders.swift; sourceTree = "<group>"; };
 		84FF39C426738DE700A72BAC /* ApiFuncBodyParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFuncBodyParams.swift; sourceTree = "<group>"; };
 		84FF39C726739FDA00A72BAC /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		8B102E2D2A2C7D8B008544C1 /* AuthVariantsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVariantsResponse.swift; sourceTree = "<group>"; };
+		8B102E302A2C7EAA008544C1 /* AuthMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthMethod.swift; sourceTree = "<group>"; };
+		8B102E332A2C82BE008544C1 /* AuthSentPasswordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSentPasswordResponse.swift; sourceTree = "<group>"; };
+		8B102E362A2C8439008544C1 /* AuthChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthChallenge.swift; sourceTree = "<group>"; };
+		8B102E392A2C84F9008544C1 /* ChallengeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeType.swift; sourceTree = "<group>"; };
+		8B3496C129B07D6B00EF0990 /* YMConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConstants.swift; sourceTree = "<group>"; };
+		8B3496C529B08D7200EF0990 /* LyricsDownloadInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsDownloadInfo.swift; sourceTree = "<group>"; };
+		8B45B4812A33A1D900D01C78 /* CustomWave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWave.swift; sourceTree = "<group>"; };
+		8BE299802A326AAE00DE1D1D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		8BF5CB3129AFEEBF0062620C /* TestCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -766,6 +788,7 @@
 			children = (
 				8479564026695C4900CAEEF2 /* CaseForms.swift */,
 				8479564326695D2300CAEEF2 /* Contest.swift */,
+				8B45B4812A33A1D900D01C78 /* CustomWave.swift */,
 				8479564926695FC800CAEEF2 /* OpenGraphData.swift */,
 				8479564C266961A200CAEEF2 /* PlayCounter.swift */,
 				8479565B2669655200CAEEF2 /* Playlist.swift */,
@@ -897,13 +920,13 @@
 		84C5BC00265D1775006E41AE /* YM-Tests */ = {
 			isa = PBXGroup;
 			children = (
+				8BE299802A326AAE00DE1D1D /* .gitignore */,
 				84F6AC9326A158B50051FD92 /* unit_AccountApiTests.swift */,
 				840980ED26A829FD004DFBBC /* unit_AlbumApiTests.swift */,
 				84D9706926D6AE14005361C3 /* unit_AlbumLikeApiTests.swift */,
 				84E1635926AEE892008D9F84 /* unit_ArtistApiTests.swift */,
 				84D9706B26D6AEC4005361C3 /* unit_ArtistLikeApiTests.swift */,
 				84A3055226E0FD59001C7597 /* unit_ApiProviderTests.swift */,
-				84F6AC8D26A04C250051FD92 /* unit_AuthApiTests.swift */,
 				84F6AC0E269ECCF00051FD92 /* unit_DateUtilTests.swift */,
 				84E1635726A81525008D9F84 /* unit_DownloaderTests.swift */,
 				84E1634626A6A554008D9F84 /* unit_FeedApiTests.swift */,
@@ -918,6 +941,7 @@
 				84E1635226A6D309008D9F84 /* unit_TrackApiTests.swift */,
 				84D9706726D6A60D005361C3 /* unit_TrackLikeApiTests.swift */,
 				84A3054626E0168E001C7597 /* unit_QueueApiTests.swift */,
+				8BF5CB3129AFEEBF0062620C /* TestCredentials.swift */,
 				84F6AC9126A150640051FD92 /* TestConstants.swift */,
 				84C5BC03265D1775006E41AE /* macInfo.plist */,
 				84D9709126D792DD005361C3 /* iOSInfo.plist */,
@@ -951,6 +975,7 @@
 			isa = PBXGroup;
 			children = (
 				84C5BC75265D3C93006E41AE /* Lyrics.swift */,
+				8B3496C529B08D7200EF0990 /* LyricsDownloadInfo.swift */,
 				84C5BC7C265D5430006E41AE /* Supplement.swift */,
 				84C5BC83265D557F006E41AE /* VideoSupplement.swift */,
 			);
@@ -1067,6 +1092,7 @@
 			children = (
 				84F7497B26E661150033A6D6 /* Exclude */,
 				84FF3997267381E900A72BAC /* API */,
+				8B102E2B2A2C7D58008544C1 /* Auth */,
 				84FF396326735B7B00A72BAC /* Account */,
 				84FF39562673505B00A72BAC /* Album */,
 				84FF393A2671E49E00A72BAC /* Artist */,
@@ -1093,6 +1119,7 @@
 				84795639266959C900CAEEF2 /* PromoCodeStatus.swift */,
 				84C5BCA0265D6626006E41AE /* Video.swift */,
 				84F6AC10269F621B0051FD92 /* YMBaseObject.swift */,
+				8B3496C129B07D6B00EF0990 /* YMConstants.swift */,
 				847CB3B72702809900269A9C /* ios-Info.plist */,
 				847CB3B62702809900269A9C /* osx-Info.plist */,
 			);
@@ -1193,7 +1220,6 @@
 				84FF39CA2673A03600A72BAC /* Provider */,
 				84F6AC8A26A0381F0051FD92 /* ApiAuthKeys.swift */,
 				84FF39AD26738B1000A72BAC /* ApiLanguage.swift */,
-				84FF39B526738C8D00A72BAC /* Constants.swift */,
 				84F6ABF6269D973C0051FD92 /* AccountF.swift */,
 				84F6AC02269DBEBD0051FD92 /* Albums.swift */,
 				84F6ABFF269DA99C0051FD92 /* Artists.swift */,
@@ -1236,6 +1262,18 @@
 				84FF3998267381F500A72BAC /* ApiProvider.swift */,
 			);
 			path = Provider;
+			sourceTree = "<group>";
+		};
+		8B102E2B2A2C7D58008544C1 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				8B102E302A2C7EAA008544C1 /* AuthMethod.swift */,
+				8B102E332A2C82BE008544C1 /* AuthSentPasswordResponse.swift */,
+				8B102E2D2A2C7D8B008544C1 /* AuthVariantsResponse.swift */,
+				8B102E362A2C8439008544C1 /* AuthChallenge.swift */,
+				8B102E392A2C84F9008544C1 /* ChallengeType.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1337,7 +1375,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					84C5BBD2265D16BD006E41AE = {
 						CreatedOnToolsVersion = 12.4;
@@ -1454,6 +1492,7 @@
 				84F6ABFD269DA9900051FD92 /* Tracks.swift in Sources */,
 				8479566E266977F900CAEEF2 /* Like.swift in Sources */,
 				847956AF2669949700CAEEF2 /* GenreTitle.swift in Sources */,
+				8B102E342A2C82BE008544C1 /* AuthSentPasswordResponse.swift in Sources */,
 				84498F8126D7C0350026CD16 /* Rotors.swift in Sources */,
 				84C5BCC2265D6D3A006E41AE /* Shot.swift in Sources */,
 				84FF393E2671E91F00A72BAC /* ArtistTracks.swift in Sources */,
@@ -1461,6 +1500,7 @@
 				84C5BD1E265E4BD7006E41AE /* RadioSequence.swift in Sources */,
 				84FF394526734A2400A72BAC /* ArtistShortInfo.swift in Sources */,
 				84498F7E26D7A5A50026CD16 /* StationType.swift in Sources */,
+				8B102E312A2C7EAA008544C1 /* AuthMethod.swift in Sources */,
 				84F6AC8B26A0381F0051FD92 /* ApiAuthKeys.swift in Sources */,
 				84C5BD30265E4DD1006E41AE /* RotorSettings.swift in Sources */,
 				84D9707526D6DA7A005361C3 /* SearchType.swift in Sources */,
@@ -1469,6 +1509,7 @@
 				84C5BC76265D3C93006E41AE /* Lyrics.swift in Sources */,
 				84C5BC8C265D5796006E41AE /* CaptchaResponse.swift in Sources */,
 				8479568A266982E500CAEEF2 /* Landing.swift in Sources */,
+				8B102E2E2A2C7D8B008544C1 /* AuthVariantsResponse.swift in Sources */,
 				840980F026AEF7E6004DFBBC /* Preroll.swift in Sources */,
 				84C5BCB0265D6B99006E41AE /* ShotType.swift in Sources */,
 				847956312669543800CAEEF2 /* QueueItem.swift in Sources */,
@@ -1499,6 +1540,7 @@
 				847956502669629300CAEEF2 /* PlaylistAbsence.swift in Sources */,
 				847956372669584B00CAEEF2 /* PurchaseSuggestions.swift in Sources */,
 				847956B92669971600CAEEF2 /* FeedDay.swift in Sources */,
+				8B3496C229B07D6B00EF0990 /* YMConstants.swift in Sources */,
 				84F6AC1726A0065B0051FD92 /* SearchResultTracks.swift in Sources */,
 				847CB3D62718815F00269A9C /* ListenHistoryContextType.swift in Sources */,
 				84F6AC2626A008680051FD92 /* SearchResultUsers.swift in Sources */,
@@ -1521,7 +1563,6 @@
 				84C5BD37265E4F5F006E41AE /* AdParams.swift in Sources */,
 				84D9707826D6DBB3005361C3 /* TrackCodec.swift in Sources */,
 				8479567526697B2100CAEEF2 /* Block.swift in Sources */,
-				84FF39B626738C8D00A72BAC /* Constants.swift in Sources */,
 				84FF399B267381F600A72BAC /* ApiProvider.swift in Sources */,
 				84FF394926734D4F00A72BAC /* Description.swift in Sources */,
 				84FF396A26735FE500A72BAC /* Alert.swift in Sources */,
@@ -1533,6 +1574,7 @@
 				84A3053B26DFC248001C7597 /* LandingBlock.swift in Sources */,
 				84FF39B326738C7E00A72BAC /* ApiFuncID.swift in Sources */,
 				84F6AC1426A005C70051FD92 /* SearchResultAlbums.swift in Sources */,
+				8B102E3A2A2C84F9008544C1 /* ChallengeType.swift in Sources */,
 				84FF397126736E6B00A72BAC /* Deactivation.swift in Sources */,
 				84019E38282CE4EC0023DF28 /* SocialProfile.swift in Sources */,
 				84C5BCD8265E408E006E41AE /* Suggestion.swift in Sources */,
@@ -1545,6 +1587,7 @@
 				8479569F26698BCE00CAEEF2 /* TrackShortOld.swift in Sources */,
 				84F6ABFA269D9CDF0051FD92 /* Player.swift in Sources */,
 				847956A226698DB700CAEEF2 /* YMInvocationInfo.swift in Sources */,
+				8B45B4822A33A1D900D01C78 /* CustomWave.swift in Sources */,
 				84C5BC84265D557F006E41AE /* VideoSupplement.swift in Sources */,
 				847956C226699B7900CAEEF2 /* GeneratedPlaylist.swift in Sources */,
 				8479567B26697D5D00CAEEF2 /* ChartInfoMenu.swift in Sources */,
@@ -1574,6 +1617,7 @@
 				84795696266987F700CAEEF2 /* PlayContextData.swift in Sources */,
 				84A3053826DFBDD2001C7597 /* Landings.swift in Sources */,
 				84F6ABF4269D72790051FD92 /* Likes.swift in Sources */,
+				8B102E372A2C8439008544C1 /* AuthChallenge.swift in Sources */,
 				847956A526698EBD00CAEEF2 /* Icon.swift in Sources */,
 				8479568126697F2C00CAEEF2 /* ChartItem.swift in Sources */,
 				847956AC2669932700CAEEF2 /* GenreImage.swift in Sources */,
@@ -1595,6 +1639,7 @@
 				84FF39832673734000A72BAC /* Price.swift in Sources */,
 				84FF39802673729000A72BAC /* PlusSubscription.swift in Sources */,
 				840980F626AF07D2004DFBBC /* LikeLibrary.swift in Sources */,
+				8B3496C629B08D7200EF0990 /* LyricsDownloadInfo.swift in Sources */,
 				84FF39582673507000A72BAC /* Album.swift in Sources */,
 				84FF397A2673710800A72BAC /* PassportPhone.swift in Sources */,
 				84A3054D26E0F6A0001C7597 /* YMResponse.swift in Sources */,
@@ -1622,7 +1667,6 @@
 			files = (
 				84A3053E26DFC4D0001C7597 /* unit_LandingApiTests.swift in Sources */,
 				84D9708E26D79185005361C3 /* unit_TrackApiTests.swift in Sources */,
-				84D9708626D79172005361C3 /* unit_AuthApiTests.swift in Sources */,
 				84D9708226D79169005361C3 /* unit_AlbumApiTests.swift in Sources */,
 				84D9708126D79129005361C3 /* unit_AccountApiTests.swift in Sources */,
 				84D9708526D79170005361C3 /* unit_ArtistLikeApiTests.swift in Sources */,
@@ -1639,6 +1683,7 @@
 				84D9709026D79189005361C3 /* TestConstants.swift in Sources */,
 				847CB3DC2718868800269A9C /* unit_RecentListenApiTests.swift in Sources */,
 				84D9708726D79174005361C3 /* unit_DateUtilTests.swift in Sources */,
+				8BF5CB3229AFEECB0062620C /* TestCredentials.swift in Sources */,
 				84D9708C26D79180005361C3 /* unit_PlaylistLikeApiTests.swift in Sources */,
 				84D9708B26D7917E005361C3 /* unit_PlaylistApiTests.swift in Sources */,
 				84D9708A26D7917B005361C3 /* unit_JsonUtilTests.swift in Sources */,
@@ -1675,6 +1720,7 @@
 				84F6ABFE269DA9900051FD92 /* Tracks.swift in Sources */,
 				84FF396B26735FE500A72BAC /* Alert.swift in Sources */,
 				8479566F266977F900CAEEF2 /* Like.swift in Sources */,
+				8B102E352A2C82BE008544C1 /* AuthSentPasswordResponse.swift in Sources */,
 				84498F8226D7C0350026CD16 /* Rotors.swift in Sources */,
 				847956B02669949700CAEEF2 /* GenreTitle.swift in Sources */,
 				84C5BCC3265D6D3A006E41AE /* Shot.swift in Sources */,
@@ -1682,6 +1728,7 @@
 				84C5BD1F265E4BD7006E41AE /* RadioSequence.swift in Sources */,
 				84C5BD31265E4DD1006E41AE /* RotorSettings.swift in Sources */,
 				84498F7F26D7A5A50026CD16 /* StationType.swift in Sources */,
+				8B102E322A2C7EAA008544C1 /* AuthMethod.swift in Sources */,
 				84F6AC8C26A0381F0051FD92 /* ApiAuthKeys.swift in Sources */,
 				8479568526697FF800CAEEF2 /* Chart.swift in Sources */,
 				84D9707626D6DA7A005361C3 /* SearchType.swift in Sources */,
@@ -1690,6 +1737,7 @@
 				84FF395526734F4500A72BAC /* Vinyl.swift in Sources */,
 				84C5BC8D265D5796006E41AE /* CaptchaResponse.swift in Sources */,
 				8479568B266982E600CAEEF2 /* Landing.swift in Sources */,
+				8B102E2F2A2C7D8B008544C1 /* AuthVariantsResponse.swift in Sources */,
 				840980F126AEF7E6004DFBBC /* Preroll.swift in Sources */,
 				84C5BCB1265D6B99006E41AE /* ShotType.swift in Sources */,
 				847956322669543800CAEEF2 /* QueueItem.swift in Sources */,
@@ -1720,6 +1768,7 @@
 				84FF394B26734D5100A72BAC /* Counts.swift in Sources */,
 				847956382669584B00CAEEF2 /* PurchaseSuggestions.swift in Sources */,
 				847956BA2669971600CAEEF2 /* FeedDay.swift in Sources */,
+				8B3496C329B07D6B00EF0990 /* YMConstants.swift in Sources */,
 				84F6AC1826A0065B0051FD92 /* SearchResultTracks.swift in Sources */,
 				847CB3D72718815F00269A9C /* ListenHistoryContextType.swift in Sources */,
 				84F6AC2726A008680051FD92 /* SearchResultUsers.swift in Sources */,
@@ -1742,7 +1791,6 @@
 				84C5BD38265E4F5F006E41AE /* AdParams.swift in Sources */,
 				84D9707926D6DBB3005361C3 /* TrackCodec.swift in Sources */,
 				8479567626697B2100CAEEF2 /* Block.swift in Sources */,
-				84FF39B726738C8D00A72BAC /* Constants.swift in Sources */,
 				84FF399C267381F600A72BAC /* ApiProvider.swift in Sources */,
 				8479569D26698A0A00CAEEF2 /* TrackId.swift in Sources */,
 				84795673266979CC00CAEEF2 /* BlockEntity.swift in Sources */,
@@ -1754,6 +1802,7 @@
 				84A3053C26DFC248001C7597 /* LandingBlock.swift in Sources */,
 				84F6AC1526A005C70051FD92 /* SearchResultAlbums.swift in Sources */,
 				84FF397226736E6B00A72BAC /* Deactivation.swift in Sources */,
+				8B102E3B2A2C84F9008544C1 /* ChallengeType.swift in Sources */,
 				8479564B26695FC800CAEEF2 /* OpenGraphData.swift in Sources */,
 				84019E39282CE4EC0023DF28 /* SocialProfile.swift in Sources */,
 				84FF396F26736D0500A72BAC /* Autorenewable.swift in Sources */,
@@ -1766,6 +1815,7 @@
 				847956A326698DB700CAEEF2 /* YMInvocationInfo.swift in Sources */,
 				84F6ABFB269D9CDF0051FD92 /* Player.swift in Sources */,
 				84C5BC85265D557F006E41AE /* VideoSupplement.swift in Sources */,
+				8B45B4832A33A1D900D01C78 /* CustomWave.swift in Sources */,
 				847956C326699B7900CAEEF2 /* GeneratedPlaylist.swift in Sources */,
 				8479567C26697D5D00CAEEF2 /* ChartInfoMenu.swift in Sources */,
 				84C5BCFE265E4649006E41AE /* Station.swift in Sources */,
@@ -1795,6 +1845,7 @@
 				84FF394C26734D5400A72BAC /* ArtistShortInfo.swift in Sources */,
 				84A3053926DFBDD2001C7597 /* Landings.swift in Sources */,
 				84F6ABF5269D72790051FD92 /* Likes.swift in Sources */,
+				8B102E382A2C8439008544C1 /* AuthChallenge.swift in Sources */,
 				84795697266987F700CAEEF2 /* PlayContextData.swift in Sources */,
 				847956A626698EBD00CAEEF2 /* Icon.swift in Sources */,
 				8479568226697F2C00CAEEF2 /* ChartItem.swift in Sources */,
@@ -1816,6 +1867,7 @@
 				84FF39842673734000A72BAC /* Price.swift in Sources */,
 				84FF39812673729000A72BAC /* PlusSubscription.swift in Sources */,
 				840980F726AF07D2004DFBBC /* LikeLibrary.swift in Sources */,
+				8B3496C729B08D7200EF0990 /* LyricsDownloadInfo.swift in Sources */,
 				84FF395F267359CD00A72BAC /* Label.swift in Sources */,
 				84FF397B2673710800A72BAC /* PassportPhone.swift in Sources */,
 				84A3054E26E0F6A0001C7597 /* YMResponse.swift in Sources */,
@@ -1843,7 +1895,6 @@
 			files = (
 				84A3053F26DFC4D0001C7597 /* unit_LandingApiTests.swift in Sources */,
 				84D9706E26D6AEFF005361C3 /* unit_PlaylistLikeApiTests.swift in Sources */,
-				84F6AC8E26A04C250051FD92 /* unit_AuthApiTests.swift in Sources */,
 				84F6AC0F269ECCF00051FD92 /* unit_DateUtilTests.swift in Sources */,
 				84E1634E26A6B59B008D9F84 /* unit_PlaylistApiTests.swift in Sources */,
 				84E1634726A6A554008D9F84 /* unit_FeedApiTests.swift in Sources */,
@@ -1860,6 +1911,7 @@
 				84E1635A26AEE892008D9F84 /* unit_ArtistApiTests.swift in Sources */,
 				847CB3DD2718868800269A9C /* unit_RecentListenApiTests.swift in Sources */,
 				84F6AC9426A158B50051FD92 /* unit_AccountApiTests.swift in Sources */,
+				8BF5CB3329AFEECC0062620C /* TestCredentials.swift in Sources */,
 				84D9706A26D6AE14005361C3 /* unit_AlbumLikeApiTests.swift in Sources */,
 				840980EE26A829FD004DFBBC /* unit_AlbumApiTests.swift in Sources */,
 				84F6AC9226A150640051FD92 /* TestConstants.swift in Sources */,
@@ -1903,6 +1955,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1912,7 +1965,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_VERSION = 5.0;
@@ -1940,6 +1992,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1948,7 +2001,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2023,7 +2075,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.3;
+				MARKETING_VERSION = 0.6.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2106,7 +2158,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.3;
+				MARKETING_VERSION = 0.6.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeit.ym.ios;
@@ -2181,7 +2233,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Project/YM-Tests/iOSInfo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2249,7 +2301,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Project/YM-Tests/iOSInfo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2305,6 +2357,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 20;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2388,6 +2441,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 20;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2464,6 +2518,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2538,6 +2593,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				ENABLE_NS_ASSERTIONS = NO;

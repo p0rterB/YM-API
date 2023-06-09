@@ -18,11 +18,18 @@ class FavouriteVC: UIViewController {
             guard let g_likedTracks = likedTracks?.tracks else {return nil}
             var tracksData: [TrackShort] = []
             for track in g_likedTracks {
-                if let idStr = track.id, let id = Int(idStr) {
-                    tracksData.append(TrackShort(id: id, timestamp: track.timestamp ?? "", originalIndex: nil, albumId: track.albumId, playCount: nil, recent: nil, chart: nil, track: nil))
+                if let idStr = track.id {
+                    if let id = Int(idStr) {
+                        //default YM liked track
+                        tracksData.append(TrackShort(id: id, timestamp: track.timestamp ?? "", originalIndex: nil, albumId: track.albumId, playCount: nil, recent: nil, chart: nil, track: nil))
+                    } else {
+                        //uploaded by user track
+                        tracksData.append(TrackShort(id: 0, timestamp: track.timestamp ?? "", originalIndex: nil, albumId: idStr, playCount: nil, recent: nil, chart: nil, track: nil))
+                    }
+                    
                 }
             }
-            let playlist = Playlist(owner: nil, cover: nil, madeFor: nil, playCounter: nil, playlistAbsence: nil, uid: appService.properties.uid, kind: -1, title: AppService.localizedString(.playlist_favourite_title), trackCount: g_likedTracks.count, tags: [], revision: nil, snapshot: nil, visibility: nil, collective: nil, urlPart: nil, created: nil, modified: nil, available: nil, isBanner: nil, isPremiere: nil, durationMs: nil, ogImage: nil, ogTitle: nil, ogDescription: nil, image: nil, coverWithoutText: nil, contest: nil, backgroundColor: nil, backgroundImageUrl: nil, textColor: nil, idForFrom: nil, dummyDescription: nil, dummyPageDescription: nil, dummyCover: nil, dummyRolloverCover: nil, ogData: nil, branding: nil, metrikaId: nil, coauthors: nil, topArtist: nil, recentTracks: nil, tracks: tracksData, pager: nil, prerolls: nil, likesCount: nil, similarPlaylists: nil, lastOwnerPlaylists: nil, generatedPlaylistType: nil, animatedCoverUri: nil, everPlayed: nil, description: nil, descriptionFormatted: nil, playlistUuid: nil, type: nil, ready: nil, isForFrom: nil, regions: nil)
+            let playlist = Playlist(owner: nil, cover: nil, madeFor: nil, playCounter: nil, playlistAbsence: nil, uid: appService.properties.uid, kind: -1, title: AppService.localizedString(.playlist_favourite_title), trackCount: g_likedTracks.count, tags: [], revision: nil, snapshot: nil, visibility: nil, collective: nil, urlPart: nil, created: nil, modified: nil, available: nil, isBanner: nil, isPremiere: nil, durationMs: nil, ogImage: nil, ogTitle: nil, ogDescription: nil, image: nil, coverWithoutText: nil, contest: nil, backgroundColor: nil, backgroundImageUrl: nil, textColor: nil, idForFrom: nil, dummyDescription: nil, dummyPageDescription: nil, dummyCover: nil, dummyRolloverCover: nil, ogData: nil, branding: nil, metrikaId: nil, coauthors: nil, topArtist: nil, recentTracks: nil, tracks: tracksData, pager: nil, prerolls: nil, likesCount: nil, similarPlaylists: nil, lastOwnerPlaylists: nil, generatedPlaylistType: nil, animatedCoverUri: nil, everPlayed: nil, description: nil, descriptionFormatted: nil, playlistUuid: nil, type: nil, ready: nil, isForFrom: nil, regions: nil, customWave: nil)
             return playlist
         }
     }

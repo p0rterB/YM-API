@@ -7,7 +7,7 @@
 
 import Foundation
 
-///Represents radio station object
+///Represents radio station object with settings
 public class StationResult: Decodable {
     
     ///Radio station info
@@ -16,6 +16,8 @@ public class StationResult: Decodable {
     public let rupTitle: String?
     ///Radio station description (russian)
     public let rupDescription: String?
+    ///Radio station another name
+    public let customName: String?
     ///Radio station settings set
     public let settings: RotorSettings?
     ///Radio station settings set
@@ -27,10 +29,11 @@ public class StationResult: Decodable {
     ///Prerolls TODO
     public let prerolls: [String]?
     
-    public init(station: Station?, rupTitle: String?, rupDescription: String?, settings: RotorSettings?, settings2: RotorSettings?, adParams: AdParams?, explanation: String?, prerolls: [String]?) {
+    public init(station: Station?, rupTitle: String?, rupDescription: String?, customName: String?, settings: RotorSettings?, settings2: RotorSettings?, adParams: AdParams?, explanation: String?, prerolls: [String]?) {
         self.station = station
         self.rupTitle = rupTitle
         self.rupDescription = rupDescription
+        self.customName = customName
         self.settings = settings
         self.settings2 = settings2
         self.adParams = adParams

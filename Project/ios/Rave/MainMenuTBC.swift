@@ -37,6 +37,7 @@ class MainMenuTBC: UITabBarController {
         }
         localeUI()
     }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -53,18 +54,10 @@ class MainMenuTBC: UITabBarController {
         view.addGestureRecognizer(scroller)
         playerWidget.addGestureRecognizer(tapRec)
         self.view.addSubview(playerWidget)
-        let subs = self.view.subviews
-        for i in 0 ... subs.count - 1 {
-            let sub = subs[i]
-            if !(sub is UITabBar) && !(sub is PlayerWidgetView) {
-                sub.translatesAutoresizingMaskIntoConstraints = false
-                sub.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-                sub.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-                sub.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-                sub.bottomAnchor.constraint(equalTo: playerWidget.bottomAnchor, constant: -16).isActive = true
-                break
-            }
-        }
+        
+        playerWidget.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        playerWidget.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        playerWidget.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: 0.0).isActive = true
     }
     
     @objc fileprivate func playerWidgetUpGesture(with scroller: UIPanGestureRecognizer) {

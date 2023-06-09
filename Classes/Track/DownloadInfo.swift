@@ -12,6 +12,8 @@ public class DownloadInfo: Decodable {
     
     ///Audio file codec
     public let codec: String
+    ///Audio file container type (for streaming)
+    public let container: String?
     ///Audio file bitrate in kbps
     public let bitrateInKbps: Int
     ///Gain marker TODO
@@ -20,9 +22,9 @@ public class DownloadInfo: Decodable {
     public let preview: Bool
     ///XML file url, which contains track donwload info
     public let downloadInfoUrl: String
-    ///Audio file direct link. It is available after fetching link
+    ///Audio file direct link. It is available after fetching link (library-purpose field)
     public var directLink: String?
-    ///Audio direct link fetching timestamp
+    ///Audio direct link fetching timestamp (library-purpose field)
     var linkFetchTimestamp: TimeInterval?
     ///Audio direct link live marker. Link will be inactive in 1 hour after fetching
     public var linkAlive: Bool {
@@ -31,8 +33,9 @@ public class DownloadInfo: Decodable {
     ///Direct link marker
     public let direct: Bool
 
-    public init(codec: String, bitrateInKbps: Int, gain: Bool, preview: Bool, downloadInfoUrl: String, directLink: String?, linkFetchTimestamp: TimeInterval?, direct: Bool) {
+    public init(codec: String, container: String?, bitrateInKbps: Int, gain: Bool, preview: Bool, downloadInfoUrl: String, directLink: String?, linkFetchTimestamp: TimeInterval?, direct: Bool) {
         self.codec = codec
+        self.container = container
         self.bitrateInKbps = bitrateInKbps
         self.gain = gain
         self.preview = preview

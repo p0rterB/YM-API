@@ -144,6 +144,69 @@ func getTrackDownloadInfoByApi(token: String, trackId: String, completion: @esca
     }
 }
 
+func getTrackDownloadInfoV2ByApi(token: String, trackId: String, canUseStreaming: Bool, timestamp: String, completion: @escaping (_ result: Result<[DownloadInfo], YMError>) -> Void)
+{
+    guard let sign = CryptoUtil.generateSign(trackId: trackId, timestamp: timestamp) else {completion(.failure(.badRequest(errCode: -1, description: "Unable create sign for track download info request"))); return}
+                        
+    guard let req: URLRequest = buildRequest(for: .track_download_info_v2(trackId: trackId, canUseStreaming: canUseStreaming, timestamp: timestamp, sign: sign, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build track donwload info request"))); return}
+    requestYMResponse(req) { result in
+        var response: YMResponse?
+        do {
+            let ymResponse = try result.get()
+            response = ymResponse
+            if let g_error = ymResponse.error {
+                completion(.failure(.badResponseData(errCode: ymResponse.statusCode, data: ["errorName": g_error.name, "errorDescription": g_error.message])))
+                return
+            }
+            if let g_dict = ymResponse.result as? [[String: Any]] {
+                let data = try JSONSerialization.data(withJSONObject: g_dict)
+                let tracks: [DownloadInfo] = try JSONDecoder().decode([DownloadInfo].self, from: data)
+                completion(.success(tracks))
+                return
+            }
+            completion(.failure(.invalidObject(objType: String(describing: Album.self), description: "No data for parsing. Type mismatch (expected array)")))
+        } catch {
+            var data: [String: Any] = ["description": error]
+            if let g_data = response?.result {
+                data["data"] = g_data
+            }
+            let parsed: YMError = error as? YMError ?? YMError.general(errCode: response?.statusCode ?? -1, data: data)
+            completion(.failure(parsed))
+        }
+    }
+}
+
+func getTrackLyricsDownloadInfoByApi(token: String, trackId: String, format: String, durationInMs: Int, timestamp: String, completion: @escaping (_ result: Result<LyricsDownloadInfo, YMError>) -> Void) {
+    guard let sign = CryptoUtil.generateSign(trackId: trackId, timestamp: timestamp) else {completion(.failure(.badRequest(errCode: -1, description: "Unable create sign for track lyrics download info request"))); return}
+                        
+    guard let req: URLRequest = buildRequest(for: .track_lyrics_download_info(trackId: trackId, format: format, durationInMs: durationInMs, timestamp: timestamp, sign: sign, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build track lyrics donwload info request"))); return}
+    requestYMResponse(req) { result in
+        var response: YMResponse?
+        do {
+            let ymResponse = try result.get()
+            response = ymResponse
+            if let g_error = ymResponse.error {
+                completion(.failure(.badResponseData(errCode: ymResponse.statusCode, data: ["errorName": g_error.name, "errorDescription": g_error.message])))
+                return
+            }
+            if let g_dict = ymResponse.result as? [String: Any] {
+                let data = try JSONSerialization.data(withJSONObject: g_dict)
+                let lyrics: LyricsDownloadInfo = try JSONDecoder().decode(LyricsDownloadInfo.self, from: data)
+                completion(.success(lyrics))
+                return
+            }
+            completion(.failure(.invalidObject(objType: String(describing: LyricsDownloadInfo.self), description: "No data for parsing. Type mismatch (expected dictionary)")))
+        } catch {
+            var data: [String: Any] = ["description": error]
+            if let g_data = response?.result {
+                data["data"] = g_data
+            }
+            let parsed: YMError = error as? YMError ?? YMError.general(errCode: response?.statusCode ?? -1, data: data)
+            completion(.failure(parsed))
+        }
+    }
+}
+
 func getTrackSupplementByApi(token: String, trackId: String, completion: @escaping (_ result: Result<Supplement, YMError>) -> Void)
 {
     guard let req: URLRequest = buildRequest(for: .track_supplement(trackId: trackId, secret: token)) else {completion(.failure(.badRequest(errCode: -1, description: "Unable to build track supplement info request"))); return}

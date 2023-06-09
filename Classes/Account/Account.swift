@@ -29,6 +29,8 @@ public class Account: Decodable {
     public let displayName: String?
     ///Account not only user type marker
     public let hostedUser: Bool?
+    ///Child account marker. Possibly allows to restricts content to children
+    public let child: Bool
     ///User birthday date
     public let birthday: String?
     ///Account mobile numbers
@@ -48,6 +50,7 @@ public class Account: Decodable {
                 firstName: String?,
                 displayName: String?,
                 hostedUser: Bool?,
+                child: Bool,
                 birthday: String?,
                 passportPhones: [PassportPhone]?,
                 registeredAt: String?,
@@ -63,6 +66,7 @@ public class Account: Decodable {
         self.firstName = firstName
         self.displayName = displayName
         self.hostedUser = hostedUser
+        self.child = child
         self.passportPhones = passportPhones
         self.birthday = birthday
         self.registeredAt = registeredAt

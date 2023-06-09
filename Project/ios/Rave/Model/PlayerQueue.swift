@@ -515,12 +515,8 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                 item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
                 hasObservers = true
                 _player.play()
-                if let g_track = self.currTrack {
-                    self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
-                    self._playerWidgetDelegate?.playStateChanged(playing: true)
-                    self._delegate?.trackChanged(g_track, queueIndex: self.currIndex)
-                    self._delegate?.playStateChanged(playing: true)
-                }
+                self._playerWidgetDelegate?.playStateChanged(playing: true)
+                self._delegate?.playStateChanged(playing: true)
             } else {
                 self.setupNowPlaying()
                 DispatchQueue.global(qos: .background).async {
@@ -542,12 +538,8 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                                     item.addObserver(self, forKeyPath: "isPlaybackLikelyToKeepUp", options: .new, context: nil)
                                     self.hasObservers = true
                                     self._player.play()
-                                    if let g_track = self.currTrack {
-                                        self._playerWidgetDelegate?.trackChanged(g_track, queueIndex: self._currIndex)
-                                        self._playerWidgetDelegate?.playStateChanged(playing: true)
-                                        self._delegate?.trackChanged(g_track, queueIndex: self.currIndex)
-                                        self._delegate?.playStateChanged(playing: true)
-                                    }
+                                    self._playerWidgetDelegate?.playStateChanged(playing: true)
+                                    self._delegate?.playStateChanged(playing: true)
                                 }
                             }
                         } catch {

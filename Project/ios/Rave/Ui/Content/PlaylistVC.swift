@@ -46,8 +46,7 @@ class PlaylistVC: UIViewController {
     
     fileprivate func loadData() {
         if let g_playlist = playlist, let g_tracks = g_playlist.tracks {
-            let count = g_tracks.count
-            if (count == 0) {
+            if (g_tracks.count == 0) {
                 return
             }
             if let g_currTrack = playerQueue.currTrack {
@@ -59,21 +58,27 @@ class PlaylistVC: UIViewController {
                     }
                 }
             }
-            for i in 0 ... count - 1 {
+            let count = g_tracks.count
+            var i: Int = 0, loaded: UInt32 = 0
+            let loadCount = count >= 70 ? 70 : count
+            while loaded != loadCount && i < count {
                 if g_tracks[i].track == nil {
-                    playlist?.tracks?[i].fetchTrack(completion: { result in
+                    loaded += 1
+                    let rowIndex = i
+                    playlist?.tracks?[rowIndex].fetchTrack(completion: { result in
                         do {
                             _ = try result.get()
                             DispatchQueue.main.async {
-                                self.tableView.reloadRows(at: [IndexPath(row: i, section: 1)], with: .automatic)
+                                self.tableView.reloadRows(at: [IndexPath(row: rowIndex, section: 1)], with: .automatic)
                             }
                         } catch {
 #if DEBUG
                             print(error)
-#endif                            
+#endif
                         }
                     })
                 }
+                i += 1
             }
         }
     }
@@ -139,8 +144,10 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
                 return
             }
         }
+        
         if indexPath.section == 1 {
-            if playlistTracks[indexPath.row].available == false {
+            let loadedTracks = playlistTracks
+            if loadedTracks.count < indexPath.row || loadedTracks[indexPath.row].available == false {
                 tableView.deselectRow(at: indexPath, animated: true)
                 if (_playingIndex >= 0) {
                     tableView.selectRow(at: IndexPath(row: _playingIndex, section: 1), animated: true, scrollPosition: .none)
@@ -148,12 +155,10 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-            
-            let playlistTr = playlistTracks
             if (_playingIndex < 0) {
                 _playingIndex = indexPath.row
             }
-            if (playerQueue.tracks.count >= playlistTr.count && playerQueue.currTrack?.trackId.compare(playlistTr[_playingIndex].trackId) == .orderedSame) {
+            if (playerQueue.tracks.count >= loadedTracks.count && playerQueue.currTrack?.trackId.compare(loadedTracks[_playingIndex].trackId) == .orderedSame) {
                 _playingIndex = indexPath.row
                 playerQueue.setPlayingTrackByIndex(_playingIndex)
                 return
@@ -164,12 +169,32 @@ extension PlaylistVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let trackShort = playlist?.tracks?[indexPath.row]
+            if (trackShort?.track != nil) {
+                return
+            }
+            trackShort?.fetchTrack(completion: { result in
+                do {
+                    _ = try result.get()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                } catch {
+#if DEBUG
+                    print(error)
+#endif
+                }
+            })
+        }
+    }
+    
     @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         if indexPath.section == 1, let g_tracks = playlist?.tracks, let g_track = g_tracks[indexPath.row].track {
             return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions in
                 return PopupTrackMenuVC.initializeContextMenu(parentVC: self, track: g_track)
-                
             }
             
         }
@@ -181,23 +206,42 @@ extension PlaylistVC: PlayerQueueDelegate {
     func radioStreamTracksUpdated(_ allTracks: [Track]) {}
     
     func trackChanged(_ track: Track, queueIndex: Int) {
-        if playlistTracks.count > 0 {
-            for i in 0 ... playlistTracks.count - 1 {
-                let playlistTrack = playlistTracks[i]
+        let loadedTracks = playlistTracks
+        let playlistItemsCount = playlist?.tracks?.count ?? 0
+        if queueIndex + 2 < playlistItemsCount && queueIndex + 2 >= loadedTracks.count && playlistItemsCount > loadedTracks.count {
+            let trackShort = playlist?.tracks?[queueIndex + 2]
+            if (trackShort?.track == nil) {
+                trackShort?.fetchTrack(completion: { result in
+                    do {
+                        _ = try result.get()
+                        DispatchQueue.main.async {
+                            self.tableView.reloadRows(at: [IndexPath(row: queueIndex + 2, section: 1)], with: .automatic)
+                        }
+                        playerQueue.setNewTracks(self.playlistTracks, playIndex: queueIndex, playNow: true)
+                    } catch {
+    #if DEBUG
+                        print(error)
+    #endif
+                    }
+                })
+            }
+        }
+        if loadedTracks.count > 0 {
+            for i in 0 ... loadedTracks.count - 1 {
+                let playlistTrack = loadedTracks[i]
                 if (playlistTrack.id.compare(track.id) == .orderedSame) {
                     _playingIndex = i
                     DispatchQueue.main.async {
                         self.tableView.selectRow(at: IndexPath(row: queueIndex, section: 1), animated: true, scrollPosition: .none)
                     }
-                    break
+                    return
                 }
             }
-        } else  {
-            // no index
-            _playingIndex = -1
-            DispatchQueue.main.async {
-                self.tableView.reloadSections(IndexSet(arrayLiteral: 1), with: .automatic)
-            }
+        }
+        // no index
+        _playingIndex = -1
+        DispatchQueue.main.async {
+            self.tableView.reloadSections(IndexSet(arrayLiteral: 1), with: .automatic)
         }
     }
     

@@ -8,10 +8,16 @@ extension ApiFunction {
     
     var headers: [String: String] {
         switch self {
-        case .auth_init(_, let lang, _, _, _, _, _, _, _, _): return ["Accept-Language": lang.rawValue]
-        case .auth_pass: return [:]
-        case .auth_generate_token: return [:]
-        case .auth_legacy(_, _, let lang, _, _): return ["Accept-Language": lang.rawValue]
+        case .auth_init_session(_, let appId, _, _, _, _, _, _, _, _): return [
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+            "X-Requested-With": appId
+        ]
+        case .auth_generate_x_token(_, _, let yaClientCookie, _, _, _, _, _, _, _, _): return [
+            "Ya-Client-Host": "passport.yandex.ru",
+            "Ya-Client-Cookie": yaClientCookie,
+            "User-Agent": "com.yandex.mobile.auth.sdk/7.33.2.733022870",
+        ]
+        case .auth_generate_ym_token: return ["User-Agent": "com.yandex.mobile.auth.sdk/7.33.2.733022870"]
         case .rotor_account_status(let secret): return ["Authorization": "OAuth " + secret]
         case .account_status(let secret): return ["Authorization": "OAuth " + secret]
         case .account_avatar(_, let secret): return ["Ya-Consumer-Authorization": "OAuth " + secret]
@@ -36,7 +42,9 @@ extension ApiFunction {
             
         case .tracks(_, _, let secret): return ["Authorization": "OAuth " + secret]
         case .tracks_similar(_, let secret): return ["Authorization": "OAuth " + secret]
+        case .track_lyrics_download_info(_, _, _, _, _, let secret): return ["Authorization": "OAuth " + secret]
         case .track_download_info(_, let secret): return ["Authorization": "OAuth " + secret]
+        case .track_download_info_v2(_, _, _, _, let secret): return ["Authorization": "OAuth " + secret]
         case .track_supplement(_, let secret): return ["Authorization": "OAuth " + secret]
             
         case .artists(_, let secret): return ["Authorization": "OAuth " + secret]

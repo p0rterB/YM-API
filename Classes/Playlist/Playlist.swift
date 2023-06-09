@@ -135,6 +135,8 @@ public class Playlist: YMBaseObject, Decodable {
     public let isForFrom: String?//Stock: AnyHashable?
     ///Playlist available regions
     public let regions: [String]?
+    ///Playlist description
+    public let customWave: CustomWave?
 
     public var isMine: Bool {
         get {return owner?.uid == accountUid}
@@ -225,7 +227,8 @@ public class Playlist: YMBaseObject, Decodable {
                 type: String?,
                 ready: Bool?,
                 isForFrom: String?,
-                regions: [String]?) {
+                regions: [String]?,
+                customWave: CustomWave?) {
         self.owner = owner
         self.cover = cover
         self.madeFor = madeFor
@@ -283,6 +286,7 @@ public class Playlist: YMBaseObject, Decodable {
         self.ready = ready
         self.isForFrom = isForFrom
         self.regions = regions
+        self.customWave = customWave
         self.tags = tags
     }
     

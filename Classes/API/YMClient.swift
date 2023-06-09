@@ -6,14 +6,12 @@
 //
 
 import Foundation
-import CoreMedia
 
-var xYmClient = "YandexMusicAndroid/24010621"//YM app data from 27.12.21 (android:versionCode)
-//"YandexMusicAndroid/23020251" - old
-var xTokenClientId = "c0ebe342af7d48fbbbfcf2d2eedb8f9e"
-var xTokenClientSecret = "ad0a908f0aa341a182a37ecd75bc319e"
-var clientId = "23cabbbdc6cd418abb4b39c32c41195d"
-var clientSecret = "53bc75238f0c4d08a118e51fe9203300"
+var xYmClient = YMConstants.xYmClient
+var xTokenClientId = YMConstants.xTokenClientId
+var xTokenClientSecret = YMConstants.xTokenClientSecret
+var clientId = YMConstants.clientId
+var clientSecret = YMConstants.clientSecret
 
 var accountUidStr: String {
     get {
@@ -93,14 +91,14 @@ public class YMClient {
     ///Initialize client with authorized session
     ///- Parameter device: Device info
     ///- Parameter lang: API responses language
-    ///- Parameter ymClientId: Yandex Music client name
+    ///- Parameter ymClientId: Yandex Music client bundle name
     ///- Parameter appClientId: Yandex Music client application ID
     ///- Parameter appClientSecret: Yandex Music client application secret
     ///- Parameter uid: User ID
     ///- Parameter token: User authorization token
     ///- Parameter xToken: Passport Yandex access token
     ///- Returns: YMClient instance
-    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = "YandexMusicAndroid/23020251", appClientId: String = "23cabbbdc6cd418abb4b39c32c41195d", appClientSecret: String = "53bc75238f0c4d08a118e51fe9203300", uid: Int, token: String, xToken: String) -> YMClient{
+    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = YMConstants.xYmClient, appClientId: String = YMConstants.clientId, appClientSecret: String = YMConstants.clientSecret, uid: Int, token: String, xToken: String) -> YMClient{
         if (ymClientId.compare("") != .orderedSame)
         {
             xYmClient = ymClientId
@@ -124,11 +122,11 @@ public class YMClient {
     ///Initialize client without active session (first launch, for example)
     ///- Parameter device: Device info
     ///- Parameter lang: API responses language
-    ///- Parameter ymClientId: Yandex Music client name
+    ///- Parameter ymClientId: Yandex Music client bundle name
     ///- Parameter appClientId: Yandex Music client application ID
     ///- Parameter appClientSecret: Yandex Music client application secret
     ///- Returns: YMClient instance
-    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = "YandexMusicAndroid/23020251", appClientId: String = "23cabbbdc6cd418abb4b39c32c41195d", appClientSecret: String = "53bc75238f0c4d08a118e51fe9203300") -> YMClient {
+    public static func initialize(device: YMDevice, lang: ApiLanguage, ymClientId: String = YMConstants.xYmClient, appClientId: String = YMConstants.clientId, appClientSecret: String = YMConstants.clientSecret) -> YMClient {
         return initialize(device: device, lang: lang, ymClientId: ymClientId, appClientId: appClientId, appClientSecret: appClientSecret, uid: -1, token: "", xToken: "")
     }
     
@@ -140,7 +138,7 @@ public class YMClient {
     ///- Parameter method: Request method
     ///- Parameter bodyData: Request body data (for POST request)
     ///- Parameter completion: Parsed response data handler
-    public func sendRawDataRequest(basePath: String = "https://api.music.yandex.net/", payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<YMResponse, YMError>) -> Void) {
+    public func sendRawDataRequest(basePath: String = YMConstants.apiBasePath, payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<YMResponse, YMError>) -> Void) {
         guard let req = buildRequest(basePath: basePath, payloadPath: payloadPath, authHeaderValue: authHeaderValue, headers: headers, method: method, bodyData: bodyData) else {
             completion(.failure(.badRequest(errCode: -1, description: "Error during building request")))
             return
@@ -155,7 +153,7 @@ public class YMClient {
     ///- Parameter method: Request method
     ///- Parameter bodyData: Request body data (for POST request)
     ///- Parameter completion: Key-value dictionary response data handler
-    public func sendRawDataRequest(basePath: String = "https://api.music.yandex.net/", payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<[String: Any], YMError>) -> Void) {
+    public func sendRawDataRequest(basePath: String = YMConstants.apiBasePath, payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<[String: Any], YMError>) -> Void) {
         guard let req = buildRequest(basePath: basePath, payloadPath: payloadPath, authHeaderValue: authHeaderValue, headers: headers, method: method, bodyData: bodyData) else {
             completion(.failure(.badRequest(errCode: -1, description: "Error during building request")))
             return
@@ -170,24 +168,44 @@ public class YMClient {
     ///- Parameter method: Request method
     ///- Parameter bodyData: Request body data (for POST request)
     ///- Parameter completion: Raw response data handler
-    public func sendRawDataRequest(basePath: String = "https://api.music.yandex.net/", payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<Data, YMError>) -> Void) {
+    public func sendRawDataRequest(basePath: String = YMConstants.apiBasePath, payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?, completion: @escaping (_ result: Result<Data, YMError>) -> Void) {
         guard let req = buildRequest(basePath: basePath, payloadPath: payloadPath, authHeaderValue: authHeaderValue, headers: headers, method: method, bodyData: bodyData) else {
             completion(.failure(.badRequest(errCode: -1, description: "Error during building request")))
             return
         }
         requestData(req, completion: completion)
     }
+    ///Initialize authorization session URL string (with new Yandex authorization system)
+    ///- Parameter amPassportVersion: Authorization module version
+    ///- Parameter appId: Application identifier
+    ///- Parameter appVersion: Application version
+    ///- Returns Key-Value object, where key is url string and value is url request
+    public func generateInitAuthSessionRequest(amPassportVersion: String = YMConstants.amPassportVersionName, appId: String = YMConstants.appBundleId, appVersion: String = version) -> (String, URLRequest?) {
+        let apiFuncTarget = ApiFunction.auth_init_session(lang: apiLang, appId: appId, uuid: device.uuid, amVersionaName: amPassportVersion, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, deviceName: device.name, platform: device.apiPlatform, model: device.model)
+        let pathEncoded = apiFuncTarget.path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlStr = apiFuncTarget.baseURL + pathEncoded
+        let req = buildRequest(for: apiFuncTarget)
+        let res = (urlStr, req)
     
-    ///Sign in to system by account login and password
-    ///- Parameter login: Account login
-    ///- Parameter pass: Account password
-    ///- Parameter captchaAnswer: Captcha answer from previous authorization response
-    ///- Parameter captchaKey: Captcha ID key from previous authorization response
-    ///- Parameter captchaCallback: Captcha parsed object from previous authorization response
+        return res
+    }
+    ///Generate X token from successfully passed challenge track ID
+    ///- Parameter trackId: Track ID from successfully passed challenge
+    ///- Parameter appId: Application identifier
+    ///- Parameter appVersion: Application version
+    ///- Parameter amAppVersionName: AM authorization challenge client version
     ///- Parameter completion: Authorization status response handler
-    @available(*, deprecated, message: "Use new authorization system, if you want to retrieve user avatar or your login method isn't only by password (Password+SMS or 2FA)")
-    public func authByCredentials(login: String, pass: String, captchaAnswer: String?, captchaKey: String?, captchaCallback: CaptchaResponse?, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
-        authFromCredentialsByApi(login: login, password: pass, lang: apiLang, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback) { result in
+    public func generateXTokenFromChallengeTrackId(trackId: String, yaClientCookie: String, appId: String = YMConstants.appBundleId, appVersion: String = version, amAppVersionName: String = YMConstants.amPassportVersionName, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
+        generateXTokenByAmApi(xClientId: xTokenClientId, xClientSecret: xTokenClientSecret, yaClientCookie: yaClientCookie, trackId: trackId, manufacturer: device.manufacturer, model: device.model, platform: device.platform, amVersionName: amAppVersionName, appId: appId, appVersionName: appVersion, deviceId: device.deviceId, completion: completion)
+    }
+    ///Generate Yandex Music token from authorization X Token (with new Yandex authorization system)
+    ///- Parameter xToken: X Token from previous step of authorization
+    ///- Parameter appId: Application identifier
+    ///- Parameter appVersion: Application version
+    ///- Parameter amAppVersionName: AM authorization challenge client version
+    ///- Parameter completion: Authorization status response handler
+    public func generateYMTokenFromXToken(xToken: String, appId: String = YMConstants.appBundleId, appVersion: String = version, amAppVersionName: String = YMConstants.amPassportVersionName, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
+        generateYMTokenByApi(xToken: xToken, ymClientId: clientId, ymClientSecret: clientSecret, appId: appId, amVersionName: amAppVersionName, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, platform: device.platform) { result in
             do {
                 let dict = try result.get()
                 YMClient.shared.token = dict[.access_token] ?? ""
@@ -195,87 +213,6 @@ public class YMClient {
             } catch {}
             completion(result)
         }
-    }
-    ///Sign in to system by new Yandex authorization system
-    ///- Parameter login: Account login
-    ///- Parameter appId: Application identifier
-    ///- Parameter appVersion: Application version
-    ///- Parameter pass: Account password
-    ///- Parameter captchaAnswer: Captcha answer from previous authorization response
-    ///- Parameter captchaKey: Captcha ID key from previous authorization response
-    ///- Parameter captchaCallback: Captcha parsed object from previous authorization response
-    ///- Parameter xToken: X Token from previous step of authorization
-    ///- Parameter appId: Application identifier
-    ///- Parameter appVersion: Application version
-    ///- Parameter completion: Authorization status response handler (including Passport X Token). Failure results may contain only YMerror.unfinishedAuthorization instance
-    public func authByCredentials(appId: String = "ru.yandex.mobile.music", appVersion: String = version, login: String, pass: String, trackId: String?, captchaAnswer: String?, captchaKey: String?, captchaCallback: CaptchaResponse?, xToken: String?, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
-        if let g_xToken = xToken {
-            generateYMTokenFromXToken(xToken: g_xToken, appId: appId, appVersion: appVersion) { result in
-                do {
-                    var dict = try result.get()
-                    YMClient.shared.token = dict[.access_token] ?? ""
-                    YMClient.shared.userID = Int(dict[.uid] ?? "-1") ?? -1
-                    dict[.x_token] = g_xToken
-                    completion(.success(dict))
-                } catch {
-                    let parsed: YMError = .unfinishedAuthorization(trackId: trackId, xToken: g_xToken, innerErr: error)
-                    completion(.failure(parsed))
-                }
-            }
-        } else if let g_trackId = trackId {
-            authorizeWithPassword(trackId: g_trackId, pass: pass, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback) { result in
-                do {
-                    let xPassport = try result.get()
-                    if let g_errors = xPassport.errors, g_errors.count > 0 {
-                        let parsed: YMError = .unfinishedAuthorization(trackId: g_trackId, xToken: nil, innerErr: YMError.invalidToken(description: g_errors.joined(separator: ";")))
-                        completion(.failure(parsed))
-                    } else if let g_xToken = xPassport.x_token, !g_xToken.isEmpty {
-                        self.authByCredentials(appId: appId, appVersion: appVersion, login: login, pass: pass, trackId: trackId, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback, xToken: g_xToken, completion: completion)
-                    } else {
-                        let parsed: YMError = .unfinishedAuthorization(trackId: g_trackId, xToken: nil, innerErr: YMError.invalidToken(description: "X Token is empty"))
-                        completion(.failure(parsed))
-                    }
-                } catch {
-                    let parsed: YMError = .unfinishedAuthorization(trackId: g_trackId, xToken: nil, innerErr: error)
-                    completion(.failure(parsed))
-                }
-            }
-        } else {
-            initializeAuthorization(login: login, appId: appId, appVersion: appVersion) { result in
-                do {
-                    let responseTrackId = try result.get()
-                    self.authByCredentials(appId: appId, appVersion: appVersion, login: login, pass: pass, trackId: responseTrackId, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback, xToken: xToken, completion: completion)
-                } catch {
-                    let parsed: YMError = .unfinishedAuthorization(trackId: nil, xToken: nil, innerErr: error)
-                    completion(.failure(parsed))
-                }
-            }
-        }
-    }
-    ///Initialize authorization procedure for the defined login (with new Yandex authorization system)
-    ///- Parameter login: Account login
-    ///- Parameter appId: Application identifier
-    ///- Parameter appVersion: Application version
-    ///- Parameter completion: Authorization initialize response handler (contains Track ID field)
-    public func initializeAuthorization(login: String, appId: String = "ru.yandex.mobile.music", appVersion: String = version, completion: @escaping (_ result: Result<String, YMError>) -> Void) {
-        initializeAuthorizationByApi(login: login, lang: apiLang, appId: appId, uuid: device.uuid, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, deviceName: device.name, platform: device.platform, model: device.model, completion: completion)
-    }
-    ///Authorize with the defined pasword (with new Yandex authorization system)
-    ///- Parameter pass: Account password
-    ///- Parameter captchaAnswer: Captcha answer from previous authorization response
-    ///- Parameter captchaKey: Captcha ID key from previous authorization response
-    ///- Parameter captchaCallback: Captcha parsed object from previous authorization response
-    ///- Parameter completion: Authorization status response handler
-    public func authorizeWithPassword(trackId: String, pass: String, captchaAnswer: String?, captchaKey: String?, captchaCallback: CaptchaResponse?, completion: @escaping (_ result: Result<XPassportObj, YMError>) -> Void) {
-        authByPasswordByApi(trackId: trackId, password: pass, captchaAnswer: captchaAnswer, captchaKey: captchaKey, captchaCallback: captchaCallback, completion: completion)
-    }
-    ///Generate Yandex Music token from authorization X Token (with new Yandex authorization system)
-    ///- Parameter xToken: X Token from previous step of authorization
-    ///- Parameter appId: Application identifier
-    ///- Parameter appVersion: Application version
-    ///- Parameter completion: Authorization status response handler
-    public func generateYMTokenFromXToken(xToken: String, appId: String = "ru.yandex.mobile.music", appVersion: String = version, completion: @escaping (_ result: Result<[ApiAuthKeys: String], YMError>) -> Void) {
-        generateYMTokenByApi(xToken: xToken, appId: appId, uuid: device.uuid, appVersionName: appVersion, manufacturer: device.manufacturer, deviceId: device.deviceId, deviceName: device.name, platform: device.platform, model: device.model, completion: completion)
     }
     ///Get account info
     ///- Parameter completion: Parsed account info response handler

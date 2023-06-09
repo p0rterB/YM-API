@@ -10,6 +10,7 @@
 "auth_enter_password" = "Enter password for user";
 "auth_empty_login_error" = "Empty username field";
 "auth_empty_pass_error" = "Empty password field";
+"auth_generating_access_token" = "Generating access token";
 
 "landing_title" = "Main";
 "landing_personal_playlists_title" = "Collected for you";
@@ -49,6 +50,7 @@
 "general_password" = "Password";
 "general_error" = "Error";
 "general_next" = "Next";
+"general_restart" = "Restart";
 "general_today" = "Today";
 "general_yesterday" = "Yesterday";
 "general_download" = "Download";

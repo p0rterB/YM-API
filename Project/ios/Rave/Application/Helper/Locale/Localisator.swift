@@ -82,6 +82,7 @@ enum LocalizationKeys: String
     case auth_enter_password
     case auth_empty_login_error
     case auth_empty_pass_error
+    case auth_generating_access_token
     
     case landing_title
     case landing_personal_playlists_title
@@ -121,6 +122,7 @@ enum LocalizationKeys: String
     case general_password
     case general_error
     case general_next
+    case general_restart
     case general_today
     case general_yesterday
     case general_download

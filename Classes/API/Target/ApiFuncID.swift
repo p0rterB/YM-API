@@ -8,10 +8,9 @@ enum ApiFunction {
     //General
     case download(fullPath: String)
     //Reg,Auth
-    case auth_init(login: String, lang: ApiLanguage, appId: String, uuid: String, appVersionName: String, manufacturer: String, deviceId: String, deviceName: String, platform: String, model: String)
-    case auth_pass(trackId: String, pass: String, captchaAnswer: String?, captchaKey: String?)
-    case auth_generate_token(xToken: String, appId: String, appVersionName: String, deviceId: String, manufacturer: String, deviceName: String, platform: String, model: String)
-    case auth_legacy(login: String, pass: String, lang: ApiLanguage, captchaAnswer: String?, captchaKey: String?)
+    case auth_init_session(lang: ApiLanguage, appId: String, uuid: String, amVersionaName: String, appVersionName: String, manufacturer: String, deviceId: String, deviceName: String, platform: String, model: String)
+    case auth_generate_x_token(xClientId: String, xClientSecret: String, yaClientCookie: String, trackId: String, manufacturer: String, model: String, platform: String, amVersionName: String, appId: String, appVersionName: String, deviceId: String)
+    case auth_generate_ym_token(xToken: String, ymClientId: String, ymClientSecret: String, appId: String, amVersionName: String, appVersionName: String, deviceId: String, manufacturer: String, platform: String)
     //Account
     case account_status(secret: String)
     case account_avatar(size: Int, secret: String)
@@ -34,7 +33,9 @@ enum ApiFunction {
     //Tracks
     case tracks(ids: [String], positions: Bool, secret: String)
     case tracks_similar(trackId: String, secret: String)
+    case track_lyrics_download_info(trackId: String, format: String, durationInMs: Int, timestamp: String, sign: String, secret: String)
     case track_download_info(trackId: String, secret: String)
+    case track_download_info_v2(trackId: String, canUseStreaming: Bool, timestamp: String, sign: String, secret: String)
     case track_supplement(trackId: String, secret: String)
     //Artists
     case artists(ids: [String], secret: String)

@@ -35,12 +35,18 @@ public class TrackShort: Decodable {
     public let chart: Chart?
     ///Track full info
     public var track: Track?
-    ///Unique track id. Contains its number and album number or just track number
+    ///Unique track id. Contains its number and album number or just track number for YM tracks or only album id for uploaded tracks
     public var trackId: String {
         get {
             if let g_albumID = albumId {
-                return String(id) + ":" + g_albumID
+                if (id > 0) {
+                    //general YM track id
+                    return String(id) + ":" + g_albumID
+                }
+                //uploaded track by user
+                return g_albumID
             }
+            //general YM track id
             return String(id)
         }
     }

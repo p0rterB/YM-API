@@ -10,6 +10,7 @@
 "auth_enter_password" = "Введите пароль для логина";
 "auth_empty_login_error" = "Пустое поле логина";
 "auth_empty_pass_error" = "Пустое поле пароля";
+"auth_generating_access_token" = "Создание токена доступа";
 
 "landing_title" = "Главное";
 "landing_personal_playlists_title" = "Собрано для тебя";
@@ -49,6 +50,7 @@
 "general_password" = "Пароль";
 "general_error" = "Ошибка";
 "general_next" = "Далее";
+"general_restart" = "Повторить";
 "general_today" = "Сегодня";
 "general_yesterday" = "Вчера";
 "general_download" = "Скачать";

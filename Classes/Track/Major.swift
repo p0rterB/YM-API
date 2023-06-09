@@ -11,10 +11,12 @@ import Foundation
 public class Major: Decodable {
     public let id: Int
     public let name: String
+    public let prettyName: String?
 
-    public init(id: Int, name: String)
+    public init(id: Int, name: String, prettyName: String?)
     {
         self.id = id
         self.name = name
+        self.prettyName = prettyName
     }
 }

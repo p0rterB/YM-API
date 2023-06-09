@@ -1,5 +1,37 @@
 #  Changelog
 
+## Version 0.7.0
+**09.06.2023**
+
+**New API methods**
+
+- New multi-step authorization procedure with *passport.yandex.ru* through webview and with *mobileproxy.passport.yandex.net* through API
+- Track download info V2, supports streaming containers. This feature requires tokens from the new multi-step authorization. Experimental
+- Track lyrics support
+
+**Sample app changes**
+
+- iOS 16 tab bar ui adopt
+- *Favourite* tracks list load speed up
+- New authorization procedure
+- Minimum iOS SDK version is 11.0 to support WKWebView features and the new authorization procedure
+
+**Other changes**
+
+- Updated YM client credentials (client ID, secret etc.) according actual app
+- new *LyricsDownloadInfo* model
+
+**Breaking changes**
+
+- Legacy authorization through oauth.yandex.ru has been deleted. It doesn't work for auth anymore. Use the new multi-step authorization. Tokens from this auth still remains active
+- Passport authorization through only mobileproxy.passport.yandex.net has been deleted. It doesn't work for auth anymore. It is a part of multi-step authorization procedure for now. Tokens from this auth still remains active
+- **It is no longer possible to authorize and generate access token through only YM-API. This action can be done through WKWebView**
+- Album model update: new field *availableForOptions*
+- Track model update: new fields *trackSource*, *availableForOptions* and *lyricsInfo*
+- Playlist model update: new field *hadAnySubscription*
+- Account model update: new field *child*
+- Status model update: new fields *pretrialActive* and *userhash*
+
 ## Version 0.6.3
 **23.05.2022**
 

@@ -11,10 +11,10 @@ extension ApiFunction {
         //General
         case .download: return ""
         //Auth
-        case .auth_init(_, _, let appId, let uuid, let appVersionName, let manufacturer, let deviceId, let deviceName, let platform, let model): return "2/bundle/mobile/start/?app_id=" + appId + "&uuid=" + uuid + "&app_version_name=" + appVersionName + "&manufacturer=" + manufacturer + "&deviceid=" + deviceId + "&device_name" + deviceName + "&device_id=" + deviceId + "&app_platform=" + platform + "&model=" + model
-        case .auth_pass: return "1/bundle/mobile/auth/password"
-        case .auth_generate_token(_, let appId, let appVersionName, let deviceId, let manufacturer, let deviceName, let platform, let model): return "1/token?app_id=" + appId + "&app_version_name=" + appVersionName + "&manufacturer=" + manufacturer + "&deviceid=" + deviceId + "&device_name" + deviceName + "&device_id=" + deviceId + "&app_platform=" + platform + "&model=" + model
-        case .auth_legacy: return "token"
+        //am_app = '{app_id}+{app_version_name}'
+        case .auth_init_session(let lang, let appId, let uuid, let amVersionName, let appVersionName, let manufacturer, let deviceId, let deviceName, let platform, let model): return "am?lang=" + lang.rawValue + "&app_id=" + appId + "&app_platform=" + platform + "&manufacturer=" + manufacturer + "&model=" + model + "&am_version_name=" + amVersionName + "&app_version_name=" + appVersionName + "&device_id=" + deviceId + "&theme=dark&source=null&device_name=" + deviceName + "&uuid=" + uuid + "&nosocial=false&auth_type=yandex,lite,social,pdd,children&reg_type=neophonish&noreturn=0&enable_2fa=false&mode=welcome"
+        case .auth_generate_x_token(_, _, _, _, let manufacturer, let model, let platform, let amVersionName, let appId, let appVersionName, let deviceId): return "1/bundle/oauth/token_by_sessionid?manufacturer=" + manufacturer + "&model=" + model + "&app_platform=" + platform +  "&am_version_name=" + amVersionName + "&app_id=" + appId + "&app_version_name=" + appVersionName + "&am_app=" + appId + "+" + appVersionName + "&deviceid=" + deviceId + "&device_id=" + deviceId
+        case .auth_generate_ym_token(_, _, _, let appId, let amVersionName, let appVersionName, let deviceId, let manufacturer, let platform): return "1/token?app_id=" + appId + "&am_version_name=" + amVersionName + "&app_version_name=" + appVersionName + "&am_app=" + appId + "+" + appVersionName + "&manufacturer=" + manufacturer + "&deviceid=" + deviceId + "&device_id=" + deviceId + "&app_platform=" + platform
         //Account
         case .account_status: return "account/status"
         case .account_avatar(let size, _): return "1/bundle/account/short_info?avatar_size=islands-" + String(size)
@@ -36,7 +36,9 @@ extension ApiFunction {
             
         case .tracks(_, let positions, _): return "tracks?with-positions=" + String(positions)
         case .tracks_similar(let trackId, _): return "tracks/" + trackId + "/similar"
+        case .track_lyrics_download_info(let trackId, let format, let durationInMs, let timestamp, let sign, _): return "tracks/" + trackId + "/lyrics?format=" + format + "&durationMs=" + String(durationInMs) + "&timeStamp=" + timestamp + "&sign=" + sign
         case .track_download_info(let trackId, _): return "tracks/" + trackId + "/download-info"
+        case .track_download_info_v2(let trackId, let can_use_streaming, let timestamp, let sign, _): return "tracks/" + trackId + "/download-info?can_use_streaming=" + String(can_use_streaming) + "&ts=" + timestamp + "&sign=" + sign
         case .track_supplement(let trackId, _): return "tracks/" + trackId + "/supplement"
             
         case .artists: return "artists"

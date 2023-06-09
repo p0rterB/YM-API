@@ -10,6 +10,8 @@ import Foundation
 ///Represents composition track
 public class Track: YMBaseObject, Decodable {
     
+    //Известные значения поля `track_sharing_flag`: `VIDEO_ALLOWED`, `COVER_ONLY`. Известные значения поля `track_source`: `OWN`, `OWN_REPLACED_TO_UGC`. Известные значения поля `available_for_options`: `bookmate`.
+    
     //Note: Так как в разных запросах id у артиста может быть как int, так и string [wtf?], то надо переопределять дефолтный декодер
     enum CodingKeys: CodingKey {
         case id
@@ -53,6 +55,8 @@ public class Track: YMBaseObject, Decodable {
         case backgroundVideoUri
         case shortDescription
         case isSuitableForChildren
+        case trackSource
+        case availableForOptions
     }
     
     ///Track UID
@@ -188,6 +192,7 @@ public class Track: YMBaseObject, Decodable {
         }
         return res
     }
+    public var lyrics: LyricsDownloadInfo?
     ///Owner of track (file) info
     public let userInfo: User?
     ///Track metadata info
@@ -212,8 +217,12 @@ public class Track: YMBaseObject, Decodable {
     public let shortDescription: String?
     ///Acceptable for children marker
     public let isSuitableForChildren: Bool?
+    ///Track source name
+    public let trackSource: String?
+    ///Track available options
+    public let availableForOptions: [String]?
     
-    ///Gets track download info variants (codec, bitrate and etc) without trtack direct download links. Download info will be active for 2 minutes after first direct downloa link fetching
+    ///Gets track download info variants (codec, bitrate and etc) without trtack direct download links. Download info will be active for 2 minutes after first direct download link fetching
     public func getDownloadInfo( completion: @escaping (_ result: Result<[DownloadInfo], YMError>) -> Void){
         getTrackDownloadInfoByApi(token: accountSecret, trackId: trackId) { result in
             do {
@@ -226,6 +235,51 @@ public class Track: YMBaseObject, Decodable {
         }
     }
     
+    ///Gets track download info (version 2, with streaming support) variants (codec, bitrate and etc) without trtack direct download links. Download info will be active for 2 minutes after first direct download link fetching
+    ///- Parameter canUseStreaming: Apply stream containers use flag
+    public func getDownloadInfoV2(canUseStreaming: Bool, completion: @escaping (_ result: Result<[DownloadInfo], YMError>) -> Void){
+        let timestamp = Int(Date().timeIntervalSince1970)
+        
+        getTrackDownloadInfoV2ByApi(token: accountSecret, trackId: trackId, canUseStreaming: canUseStreaming, timestamp: String(timestamp)) { result in
+            do {
+                let downloadInfos = try result.get()
+                self.downloadInfo = downloadInfos
+                completion(result)
+            } catch {
+                completion(result)
+            }
+        }
+    }
+    
+    ///Retrieves from API track lyrics if exists
+    ///
+    ///- Parameter format: Lyrics format. Known values: LRC - text with timestamps; Text - simple text
+    ///- Parameter completion: API response or previously downloaded item handler
+    public func getLyricsDownloadInfo(format: String, completion: @escaping (_ result: Result<LyricsDownloadInfo, YMError>) -> Void) {
+        if (lyricsAvailable == nil || lyricsAvailable == false) {
+            completion(.failure(.invalidObject(objType: self.objType, description: "Track lyrics is unavailable")))
+            return
+        }
+        if let g_lyrics = lyrics {
+            completion(.success(g_lyrics))
+            return
+        }
+        let timestamp = Int(Date().timeIntervalSince1970)
+        getTrackLyricsDownloadInfoByApi(token: accountSecret, trackId: trackId, format: format, durationInMs: durationMs, timestamp: String(timestamp)) { result in
+            do {
+                let downloadInfo = try result.get()
+                self.lyrics = downloadInfo
+            } catch {
+                #if DEBUG
+                print(error)
+                #endif
+            }
+            completion(result)
+        }
+    }
+    
+    ///Retrieves track additional info
+    @available(*, deprecated, message: "For retrieving track lyrics use getLyricsDownloadInfo instead")
     public func getSupplement(completion: @escaping (_ result: Result<Supplement, YMError>) -> Void) {
         getTrackSupplementByApi(token: accountSecret, trackId: trackId, completion: completion)
     }
@@ -457,7 +511,9 @@ public class Track: YMBaseObject, Decodable {
                 trackSharingFlag: String?,
                 backgroundVideoUri: String?,
                 shortDescription: String?,
-                forChildren: Bool?) {
+                forChildren: Bool?,
+                trackSource: String?,
+                availableForOptions: [String]?) {
         
         self.id = String(id)
         self.title = title
@@ -499,6 +555,8 @@ public class Track: YMBaseObject, Decodable {
         self.backgroundVideoUri = backgroundVideoUri
         self.shortDescription = shortDescription
         self.isSuitableForChildren = forChildren
+        self.trackSource = trackSource
+        self.availableForOptions = availableForOptions
 
         self.downloadInfo = []
     }
@@ -552,6 +610,8 @@ public class Track: YMBaseObject, Decodable {
         self.backgroundVideoUri = try? container.decodeIfPresent(String.self, forKey: .backgroundVideoUri)
         self.shortDescription = try? container.decodeIfPresent(String.self, forKey: .shortDescription)
         self.isSuitableForChildren = try? container.decodeIfPresent(Bool.self, forKey: .isSuitableForChildren)
+        self.trackSource = try? container.decodeIfPresent(String.self, forKey: .trackSource)
+        self.availableForOptions = try? container.decodeIfPresent([String].self, forKey: .availableForOptions)
         
         //upd. track unavailable
         do {

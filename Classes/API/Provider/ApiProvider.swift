@@ -9,14 +9,14 @@ import Foundation
 
 ///Initializes request with raw parameters
 func buildRequest(basePath: String, payloadPath: String, authHeaderValue: String?, headers: [String: String], method: String, bodyData: Data?) -> URLRequest? {
-    let path_encoded = payloadPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-    guard let url: URL = URL(string: basePath + path_encoded) else {return nil}
+    let pathEncoded = payloadPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    guard let url: URL = URL(string: basePath + pathEncoded) else {return nil}
     
     var urlReq: URLRequest = URLRequest(url: url)
     urlReq.httpMethod = method
     
     urlReq.allHTTPHeaderFields = headers
-    urlReq.allHTTPHeaderFields?["User-Agent"] = USER_AGENT
+    urlReq.allHTTPHeaderFields?["User-Agent"] = YMConstants.userAgent
     urlReq.allHTTPHeaderFields?["X-Yandex-Music-Client"] = xYmClient
     if let g_authHeaderValue = authHeaderValue {
         urlReq.allHTTPHeaderFields?["Authorization"] = g_authHeaderValue
@@ -32,14 +32,14 @@ func buildRequest(basePath: String, payloadPath: String, authHeaderValue: String
 
 ///Initializes request for predefined api methods
 func buildRequest(for method: ApiFunction) -> URLRequest? {
-    let path_encoded = method.path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-    guard let url: URL = URL(string: method.baseURL + path_encoded) else {return nil}
+    let pathEncoded = method.path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    guard let url: URL = URL(string: method.baseURL + pathEncoded) else {return nil}
     
     var urlReq: URLRequest = URLRequest(url: url)
     urlReq.httpMethod = method.method
     
     urlReq.allHTTPHeaderFields = method.headers
-    urlReq.allHTTPHeaderFields?["User-Agent"] = USER_AGENT
+    urlReq.allHTTPHeaderFields?["User-Agent"] = YMConstants.userAgent
     urlReq.allHTTPHeaderFields?["X-Yandex-Music-Client"] = xYmClient
     
     if method.parameters.count > 0 {

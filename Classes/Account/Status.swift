@@ -12,6 +12,8 @@ public class Status: Decodable {
     
     ///Account info
     public let account: Account?
+    ///User ID hash code
+    public let userhash: String?
     ///User permissions
     public let permissions: Permissions?
     ///Ads text
@@ -32,6 +34,8 @@ public class Status: Decodable {
     public let skipsPerHour: Int?
     ///Personal station existance marker
     public let stationExists: Bool?
+    ///TODO
+    public let pretrialActive: Bool?
     ///Personal station information
     public let stationData: StationData?
     ///Block with alert below (subscription ends, gifts etc)
@@ -41,7 +45,7 @@ public class Status: Decodable {
     ///Test feature ID TODO
     public let experiment: Int?
     
-    public init(account: Account?,
+    public init(account: Account?, userhash: String?,
                 permissions: Permissions?,
                 advertisement: String?,
                 subscription: Subscription?,
@@ -52,11 +56,13 @@ public class Status: Decodable {
                 defaultEmail: String?,
                 skipsPerHour: Int?,
                 stationExists: Bool?,
+                pretrialActive: Bool?,
                 stationData: StationData?,
                 barBelow: Alert?,
                 premiumRegion: Int?,
                 experiment: Int?) {
         self.account = account
+        self.userhash = userhash
         self.permissions = permissions
 
         self.advertisement = advertisement
@@ -68,6 +74,7 @@ public class Status: Decodable {
         self.defaultEmail = defaultEmail
         self.skipsPerHour = skipsPerHour
         self.stationExists = stationExists
+        self.pretrialActive = pretrialActive
         self.stationData = stationData
         self.barBelow = barBelow
         self.premiumRegion = premiumRegion

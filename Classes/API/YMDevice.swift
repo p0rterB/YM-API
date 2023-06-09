@@ -32,6 +32,19 @@ public class YMDevice {
     public let name: String
     ///Device platform
     public let platform: String
+    ///Device platform API key
+    public var apiPlatform: String {
+        get {
+            let lowercased = platform.lowercased()
+            if (lowercased.contains("android")) {
+                return "android"
+            }
+            if (lowercased == "ios" || lowercased == "iphone") {
+                return "ios"
+            }
+            return "android"
+        }
+    }
     ///Device model name
     public let model: String
     ///Device app client ID (google-play, for example)

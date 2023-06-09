@@ -9,7 +9,7 @@ import Foundation
 
 ///Represents album
 public class Album: YMBaseObject, Decodable {
-    //Note: Известные типы альбома: `single` - сингл, `compilation` - сборник. Известные предупреждения о содержимом: `explicit` - ненормативная лексика. Известные ошибки: `not-found` - альбом с таким ID не существует. Известные значения поля `meta_type`: `music`.
+    //Note: Известные типы альбома: `single` - сингл, `compilation` - сборник. Известные предупреждения о содержимом: `explicit` - ненормативная лексика. Известные ошибки: `not-found` - альбом с таким ID не существует. Известные значения поля `meta_type`: `music` Известные значения поля `available_for_options`: `bookmate`.
     
     enum CodingKeys: CodingKey {
         case id
@@ -57,6 +57,7 @@ public class Album: YMBaseObject, Decodable {
         case likesCount
         case deprecation
         case availableRegions
+        case availableForOptions
     }
     
     ///Album ID
@@ -149,6 +150,8 @@ public class Album: YMBaseObject, Decodable {
     public let deprecation: Deprecation?
     ///Album available regions
     public let availableRegions: [String]?
+    ///Album options
+    public let availableForOptions: [String]?
     
     public var artistsName: [String] {
         get {
@@ -208,7 +211,8 @@ public class Album: YMBaseObject, Decodable {
                 startDate: String?,
                 likesCount: Int?,
                 deprecation: Deprecation?,
-                availableRegions: [String]?) {
+                availableRegions: [String]?,
+                availableForOptions: [String]?) {
         self.id = id
         self.error = error
         self.title = title
@@ -254,6 +258,7 @@ public class Album: YMBaseObject, Decodable {
         self.likesCount = likesCount
         self.deprecation = deprecation
         self.availableRegions = availableRegions
+        self.availableForOptions = availableForOptions
     }
     
     public required init(from decoder: Decoder) throws {
@@ -312,6 +317,7 @@ public class Album: YMBaseObject, Decodable {
         self.likesCount = try? container.decodeIfPresent(Int.self, forKey: .likesCount)
         self.deprecation = try? container.decodeIfPresent(Deprecation.self, forKey: .deprecation)
         self.availableRegions = try? container.decodeIfPresent([String].self, forKey: .availableRegions)
+        self.availableForOptions = try? container.decodeIfPresent([String].self, forKey: .availableForOptions)
     }
     
     public func withTracks(completion: @escaping (Result<Album, YMError>) -> Void) {

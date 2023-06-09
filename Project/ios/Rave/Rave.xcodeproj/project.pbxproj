@@ -37,8 +37,6 @@
 		847CB3352702627400269A9C /* RadioDashboardTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2F72702627400269A9C /* RadioDashboardTVCell.swift */; };
 		847CB3362702627400269A9C /* RadioDashboardTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CB2F82702627400269A9C /* RadioDashboardTVCell.xib */; };
 		847CB3372702627400269A9C /* RadioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2F92702627400269A9C /* RadioVC.swift */; };
-		847CB3382702627400269A9C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FB2702627400269A9C /* LoginVC.swift */; };
-		847CB33A2702627400269A9C /* PopPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FD2702627400269A9C /* PopPasswordVC.swift */; };
 		847CB33B2702627400269A9C /* MainMenuTBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB2FE2702627400269A9C /* MainMenuTBC.swift */; };
 		847CB33D2702627400269A9C /* PlaylistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB3012702627400269A9C /* PlaylistVC.swift */; };
 		847CB33E2702627400269A9C /* AudioPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB3022702627400269A9C /* AudioPlayerVC.swift */; };
@@ -62,6 +60,7 @@
 		847CB351270262B700269A9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CB350270262B700269A9C /* AppDelegate.swift */; };
 		847CB3A62702644400269A9C /* YmuzApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847CB3A52702644400269A9C /* YmuzApi.framework */; };
 		847CB3A72702644400269A9C /* YmuzApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 847CB3A52702644400269A9C /* YmuzApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B102E3D2A2C8F65008544C1 /* LoginWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B102E3C2A2C8F65008544C1 /* LoginWebVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,7 +82,6 @@
 		840C8B7C27AC577800393E2B /* PopupTrackMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTrackMenuVC.swift; sourceTree = "<group>"; };
 		8411CE1727C60F8F00ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8411CE1827C60FB100ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8411CE1A27C610A500ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Auth.storyboard; sourceTree = "<group>"; };
 		8411CE1C27C610AF00ADC355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Auth.storyboard; sourceTree = "<group>"; };
 		8411CE1E27C610C100ADC355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Content.storyboard; sourceTree = "<group>"; };
 		8411CE2127C610C700ADC355 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Content.strings; sourceTree = "<group>"; };
@@ -115,8 +113,6 @@
 		847CB2F72702627400269A9C /* RadioDashboardTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioDashboardTVCell.swift; sourceTree = "<group>"; };
 		847CB2F82702627400269A9C /* RadioDashboardTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RadioDashboardTVCell.xib; sourceTree = "<group>"; };
 		847CB2F92702627400269A9C /* RadioVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioVC.swift; sourceTree = "<group>"; };
-		847CB2FB2702627400269A9C /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		847CB2FD2702627400269A9C /* PopPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopPasswordVC.swift; sourceTree = "<group>"; };
 		847CB2FE2702627400269A9C /* MainMenuTBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuTBC.swift; sourceTree = "<group>"; };
 		847CB3012702627400269A9C /* PlaylistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistVC.swift; sourceTree = "<group>"; };
 		847CB3022702627400269A9C /* AudioPlayerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerVC.swift; sourceTree = "<group>"; };
@@ -140,6 +136,7 @@
 		847CB350270262B700269A9C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		847CB3A52702644400269A9C /* YmuzApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YmuzApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		847CB3A9270266E200269A9C /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		8B102E3C2A2C8F65008544C1 /* LoginWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,9 +304,8 @@
 		847CB2FA2702627400269A9C /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				847CB2FB2702627400269A9C /* LoginVC.swift */,
+				8B102E3C2A2C8F65008544C1 /* LoginWebVC.swift */,
 				8411CE1B27C610A500ADC355 /* Auth.storyboard */,
-				847CB2FD2702627400269A9C /* PopPasswordVC.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -464,8 +460,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				847CB33A2702627400269A9C /* PopPasswordVC.swift in Sources */,
-				847CB3382702627400269A9C /* LoginVC.swift in Sources */,
 				84019E3E282D00D90023DF28 /* PlaylistsVC.swift in Sources */,
 				847CB3432702627400269A9C /* FavouriteIntroTVCell.swift in Sources */,
 				847CB34F2702627400269A9C /* PlayerWidgetView.swift in Sources */,
@@ -483,6 +477,7 @@
 				847CB32F2702627400269A9C /* PersonalPlaylistsTVCell.swift in Sources */,
 				847CB3202702627400269A9C /* NSObject.swift in Sources */,
 				847CB3342702627400269A9C /* RadioCVCell.swift in Sources */,
+				8B102E3D2A2C8F65008544C1 /* LoginWebVC.swift in Sources */,
 				847CB32B2702627400269A9C /* Properties.swift in Sources */,
 				840C8B7D27AC577800393E2B /* PopupTrackMenuVC.swift in Sources */,
 				847CB3452702627400269A9C /* LoadingTVCell.swift in Sources */,
@@ -509,7 +504,6 @@
 		8411CE1B27C610A500ADC355 /* Auth.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8411CE1A27C610A500ADC355 /* ru */,
 				8411CE1C27C610AF00ADC355 /* Base */,
 			);
 			name = Auth.storyboard;
@@ -597,7 +591,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -653,7 +647,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -671,15 +665,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -696,15 +691,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = KTJ3SX58WK;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.zeit.rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

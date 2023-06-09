@@ -9,6 +9,7 @@ extension ApiFunction {
     var method: String {
         switch self {
         case .download: return "GET"
+        case .auth_init_session: return "GET"
         case .account_status: return "GET"
         case .account_avatar: return "GET"
         case .user_info: return "GET"
@@ -22,7 +23,9 @@ extension ApiFunction {
         case .queue: return "GET"
         case .queues_list: return "GET"
         case .tracks_similar: return "GET"
+        case .track_lyrics_download_info: return "GET"
         case .track_download_info: return "GET"
+        case .track_download_info_v2: return "GET"
         case .track_supplement: return "GET"
         case .artists_tracks: return "GET"
         case .artists_direct_albums: return "GET"
