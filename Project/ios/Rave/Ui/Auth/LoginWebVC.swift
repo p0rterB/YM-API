@@ -7,7 +7,7 @@
 
 import UIKit
 import WebKit
-import YmuzApi
+import YMAPI
 
 class LoginWebVC: UIViewController {
     

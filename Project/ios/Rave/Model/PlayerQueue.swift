@@ -5,7 +5,7 @@
 //  Created by Developer on 23.08.2021.
 //
 import MediaPlayer
-import YmuzApi
+import YMAPI
 
 class PlayerQueue: NSObject, AVAudioPlayerDelegate {
     
@@ -487,7 +487,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
                 }
             } else {
                 DispatchQueue.global(qos: .background).async {
-                    currTrack.getDownloadInfo { result in
+                    currTrack.getDownloadInfoWeb { result in
                         do {
                             let dInfo = try result.get()
                             if (dInfo.count > 0) {
@@ -520,7 +520,7 @@ class PlayerQueue: NSObject, AVAudioPlayerDelegate {
             } else {
                 self.setupNowPlaying()
                 DispatchQueue.global(qos: .background).async {
-                    currTrack.getDownloadLink(codec: codec, bitrate: bitrate) { result in
+                    currTrack.getDownloadLink(codec: codec, bitrate: bitrate, web: true) { result in
                         currTrack.fetchAllDownloadlinks()
                         do {
                             let link = try result.get()

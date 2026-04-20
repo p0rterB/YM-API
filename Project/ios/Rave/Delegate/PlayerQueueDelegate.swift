@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import YmuzApi
+import YMAPI
 
 protocol PlayerQueueDelegate {
     func radioStreamTracksUpdated(_ allTracks: [Track])

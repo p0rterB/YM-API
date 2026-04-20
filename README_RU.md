@@ -41,7 +41,7 @@
 
 Библиотека предоставляет интерфейс взаимодействия с API Яндекс Музыки.
 
-Модуль разработан под macOS (10.14 и новее) и iOS (10.0 и новее).
+Модуль разработан под macOS (10.12 и новее), iOS (10.0 и новее), tvOS (10.0 и новее), watchOS (3.0 и новее) и visionOS.
 
 ### Доступ к вашим данным на Яндексе
 
@@ -52,6 +52,20 @@ Microsoft Store. Так как API является закрытым и испо
 [oauth.yandex.ru](https://oauth.yandex.ru),  а следовательно, использовать свои значения констант.
 
 ## Установка
+
+### Swift Package Manager
+
+YM-API доступно с помощью SPM
+
+```swift
+//Package dependencies parameter
+.package(url: "https://github.com/p0rterB/YM-API.git", .from(from: "0.7.1"))
+
+//Target dependencies parameter
+.product(name: "YMAPI", package: "YMAPI")
+```
+
+### CocoaPods
 
 YM-API доступно с помощью CocoaPods. Чтобы установить модуль, просто добавьте имя модуля в Podfile:
 
@@ -64,7 +78,21 @@ pod 'YM-API'
 
 - Для macOS
 ```ruby
-platform :osx, '10.14'
+platform :osx, '10.12'
+...
+pod 'YM-API'
+```
+
+- Для tvOS
+```ruby
+platform :tvos, '10.0'
+...
+pod 'YM-API'
+```
+
+- Для watchOS
+```ruby
+platform :watchos, '3.0'
 ...
 pod 'YM-API'
 ```

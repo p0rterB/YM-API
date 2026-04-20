@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import YmuzApi
+import YMAPI
 
 class PlaylistsVC: UIViewController {
 

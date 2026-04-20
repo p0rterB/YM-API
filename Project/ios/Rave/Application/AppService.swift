@@ -8,7 +8,7 @@
 
 import Foundation
 import AVFoundation
-import YmuzApi
+import YMAPI
 
 var appService = AppService.shared
 let client = appService.client
@@ -29,6 +29,8 @@ class AppService
         properties = Properties.load()
         properties.refreshLocale()
         playerQueue = PlayerQueue(tracks: [], playIndex: -1, playNow: false, playerWidgetDelegate: nil, delegate: nil)
+        //let uuid = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        //let device = YMDevice.generateWebMimicDevice(uuid: uuid)
         let device = YMDevice(os: "iOS", osVer: FeedbackInfoCarver.osVer, manufacturer: "Apple", name: "iPhone_13m", platform: "iPhone", model: FeedbackInfoCarver.model, clid: "app-store", deviceId: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased(), uuid: UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())
         let lang = ApiLanguage.ru
         if (properties.isAuthed) {

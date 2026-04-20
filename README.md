@@ -43,7 +43,7 @@ Thanks to [MarshalX](https://github.com/MarshalX) for his [Yandex Music API rese
 
 The library provides an interface for interacting with the Yandex Music API.
 
-macOS 10.14+ and iOS 10.0+ are supported by the module.
+macOS 10.12+, iOS 10.0+, tvOS 10.0+, watchOS 3.0+ and visionOS 1.0+ are supported by the module.
 
 ### Yandex personal data access
 
@@ -53,6 +53,20 @@ Since the API is private and only used internally, it is impossible to register 
 [oauth.yandex.ru](https://oauth.yandex.ru), and therefore, use your own constant values.
 
 ## Setup
+
+### Swift Package Manager
+
+YM-API is available through SPM
+
+```swift
+//Package dependencies parameter
+.package(url: "https://github.com/p0rterB/YM-API.git", .from(from: "0.7.1"))
+
+//Target dependencies parameter
+.product(name: "YMAPI", package: "YMAPI")
+```
+
+### CocoaPods
 
 YM-API is available with CocoaPods. To install a module, just add the module name to the Podfile:
 
@@ -65,7 +79,21 @@ pod 'YM-API'
 
 - macOS
 ```ruby
-platform :osx, '10.14'
+platform :osx, '10.12'
+...
+pod 'YM-API'
+```
+
+- tvOS
+```ruby
+platform :tvos, '10.0'
+...
+pod 'YM-API'
+```
+
+- watchOS
+```ruby
+platform :watchos, '3.0'
 ...
 pod 'YM-API'
 ```
@@ -79,7 +107,7 @@ You can initialize the client in 2 ways:
 ### Basic, at first launch or logout state
 
 ```swift
-import YM_API
+import YMAPI
 
 let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage)
 ```
@@ -106,7 +134,7 @@ enum ApiLanguage: String {
 ### Extended, if there is an active session
 
 ```swift
-import YM_API
+import YMAPI
 
 let client = YMClient.initialize(device: YMDevice, lang: ApiLanguage, 
     uid: Int, token: String, xToken: String)

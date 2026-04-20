@@ -1,5 +1,18 @@
 #  Changelog
 
+## Version 0.7.1
+**20.04.2026**
+
+**Other changes**
+
+- Web API flow support (track download info, download link)
+- Wider OS support: added tvOS & watchOS
+- SPM support
+
+**Sample app changes**
+
+- Migration to web download info and link retrieve 
+
 ## Version 0.7.0
 **09.06.2023**
 
